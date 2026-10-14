@@ -6,10 +6,11 @@ Cooling control for Windows. Connect a temperature sensor to a fan or pump, shap
 
 **Preview software.** QUADRO and motherboard control are implemented, but hardware support is deliberately bounded. See the [compatibility matrix](docs/COMPATIBILITY.md) before handing over cooling.
 
-![Lutra curve editor with labelled synthetic data](docs/images/curves.png)
+![Lutra dark monitoring overview with labelled synthetic data](docs/images/overview.png)
 
 ## What it does
 
+- Dark monitoring overview with temperature and flow gauges, large RPM readings, PWM bars and simultaneous temperature/RPM history.
 - Independent curves with selectable temperature inputs and output channels.
 - QUADRO fan/pump control, including hardware curves, startup temperature, minimum, maximum and fallback duty.
 - Motherboard fan headers exposed by LibreHardwareMonitor 0.9.6.
@@ -20,6 +21,7 @@ Cooling control for Windows. Connect a temperature sensor to a fan or pump, shap
 - Local history: 15 minutes, 1 hour, 6 hours, 24 hours, 7 days or 30 days; configurable 1–30 day retention.
 - English by default, Finnish selectable immediately.
 - A Windows service for control and logging; the monitor can remain in the notification area.
+- About page with project links and on-demand GitHub updates, package checksum verification and recovery of the previous installation.
 
 No RGB features. No Aquasuite installation, UI assets or executable code required. This project is independent of Aqua Computer, EK, Noctua and LibreHardwareMonitor.
 
@@ -36,6 +38,8 @@ The application begins in **read-only monitoring** when its service is not insta
 5. Add a curve, select its input/output and limits, then **Apply changes**. Read back the resulting RPM and test loss of input before leaving the system unattended.
 
 The installer uses `%ProgramFiles%\Lutra` and `%ProgramData%\Lutra`. It does not disable, uninstall or modify other cooling software. An existing Lutra configuration is preserved on upgrade. Alarms need the monitor running (visible or in the notification area) for desktop notifications; logging continues in the service.
+
+From version 0.5, use **About & updates → Check for updates → Install update** to update an installed copy. Preview versions include newer previews by default. Windows requests administrator approval; settings and history are retained. See [update verification and recovery](docs/UPDATES.md).
 
 **Do not assume every motherboard is supported.** Only controls actually exposed by the library are offered. Their physical header mapping and minimum effective speed must be checked on the machine. BIOS control resumes on a normal service exit; a system or driver crash does not guarantee restoration. Configure an appropriate BIOS cooling profile too.
 

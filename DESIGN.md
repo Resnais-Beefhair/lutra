@@ -1,30 +1,41 @@
 ---
 name: Lutra
-description: A precise native Windows cooling control desk.
-# Portable px notation below represents WPF device-independent pixels (DIPs), not physical pixels.
+description: A dark native Windows cooling instrument desk.
+# Portable px notation encodes WPF device-independent pixels (DIPs), not physical screen pixels.
 colors:
-  forest: "#256450"
-  focus-green: "#287F62"
-  mint-mark: "#99CDB7"
-  ink: "#202A28"
-  muted: "#596763"
-  porcelain: "#FFFFFF"
-  workspace: "#F0F2F0"
-  graphite: "#252E2C"
-  rail-selected: "#43564F"
-  rail-meta: "#D0DDD7"
-  rail-subtle: "#B4C6BE"
-  line: "#D9DFDC"
-  selection: "#DFEBE4"
-  text-selection: "#C5DED4"
-  table-header: "#EFF3F0"
-  table-alternate: "#F7F9F7"
-  chart-grid: "#DFE5E1"
-  live-amber: "#A4631D"
-  amber-ink: "#854D12"
-  device-caution: "#8B4D19"
-  alarm-red: "#9B352C"
+  accent: "#72D3AE"
+  water: "#6DC5EA"
+  amber: "#E4C584"
+  violet: "#B8ABEA"
+  danger: "#F29A8F"
+  workspace: "#101715"
+  surface: "#18221F"
+  raised: "#202D28"
+  rail: "#0C1210"
+  ink: "#ECF3EF"
+  muted: "#A0B2A8"
+  line: "#304139"
+  selection: "#2B4639"
+  thumb: "#60786B"
+  rail-meta: "#C1CFC7"
+  nav-text: "#FFFFFF"
 typography:
+  reading:
+    fontFamily: "Segoe UI"
+    fontSize: "38px"
+    fontWeight: 400
+  reading-compact:
+    fontFamily: "Segoe UI"
+    fontSize: "32px"
+    fontWeight: 400
+  rpm:
+    fontFamily: "Segoe UI"
+    fontSize: "34px"
+    fontWeight: 400
+  rpm-compact:
+    fontFamily: "Segoe UI"
+    fontSize: "28px"
+    fontWeight: 400
   headline:
     fontFamily: "Segoe UI"
     fontSize: "30px"
@@ -32,6 +43,10 @@ typography:
   brand:
     fontFamily: "Segoe UI"
     fontSize: "25px"
+    fontWeight: 600
+  section-large:
+    fontFamily: "Segoe UI"
+    fontSize: "22px"
     fontWeight: 600
   section:
     fontFamily: "Segoe UI"
@@ -41,14 +56,26 @@ typography:
     fontFamily: "Segoe UI"
     fontSize: "18px"
     fontWeight: 600
-  plot-title:
+  instrument-title:
     fontFamily: "Segoe UI"
     fontSize: "17px"
+    fontWeight: 600
+  title:
+    fontFamily: "Segoe UI"
+    fontSize: "16px"
+    fontWeight: 600
+  duty-compact:
+    fontFamily: "Segoe UI"
+    fontSize: "15px"
     fontWeight: 600
   item-title:
     fontFamily: "Segoe UI"
     fontSize: "14px"
     fontWeight: 600
+  prose:
+    fontFamily: "Segoe UI"
+    fontSize: "14px"
+    fontWeight: 400
   body:
     fontFamily: "Segoe UI"
     fontSize: "13px"
@@ -69,86 +96,138 @@ typography:
     fontFamily: "Segoe UI"
     fontSize: "11px"
     fontWeight: 400
+  micro:
+    fontFamily: "Segoe UI"
+    fontSize: "10px"
+    fontWeight: 400
 rounded:
   square: "0px"
+  check: "2px"
   control: "3px"
 spacing:
+  fine: "4px"
   label-gap: "6px"
   action-gap: "8px"
-  compact-gap: "10px"
-  cell-inset: "12px"
+  compact-inset: "12px"
   field-gap: "13px"
-  form-gap: "16px"
+  chart-inset: "14px"
+  instrument-inset: "16px"
   section-gap: "18px"
   surface-inset: "20px"
   pane-gap: "22px"
-  shell-top: "24px"
+  about-inset: "24px"
   shell-inline: "30px"
 components:
   button-primary:
-    backgroundColor: "{colors.forest}"
-    textColor: "{colors.porcelain}"
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.workspace}"
     typography: "{typography.action}"
     rounded: "{rounded.control}"
     padding: "8px 13px"
   button-secondary:
-    backgroundColor: "{colors.porcelain}"
+    backgroundColor: "{colors.raised}"
     textColor: "{colors.ink}"
     typography: "{typography.body}"
     rounded: "{rounded.control}"
     padding: "8px 13px"
-  text-field:
-    backgroundColor: "{colors.porcelain}"
+  button-compact:
+    backgroundColor: "{colors.raised}"
     textColor: "{colors.ink}"
-    typography: "{typography.body}"
-    padding: "7px 9px"
-  select-field:
-    backgroundColor: "{colors.porcelain}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body}"
-    padding: "6px 8px"
-  navigation-rail:
-    backgroundColor: "{colors.graphite}"
-    rounded: "{rounded.square}"
-    width: "176px"
-  navigation-item:
-    backgroundColor: "transparent"
-    textColor: "{colors.porcelain}"
     typography: "{typography.body}"
     rounded: "{rounded.control}"
-    padding: "11px 8px 11px 12px"
+    padding: "5px 10px"
+  range-selected:
+    backgroundColor: "{colors.selection}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.control}"
+  text-field:
+    backgroundColor: "{colors.workspace}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body}"
+    rounded: "{rounded.control}"
+    padding: "7px 9px"
+  select-field:
+    backgroundColor: "{colors.workspace}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body}"
+    rounded: "{rounded.control}"
+    padding: "7px 32px 7px 9px"
+  checkbox:
+    backgroundColor: "{colors.workspace}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.check}"
+    size: "17px"
+  checkbox-checked:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.workspace}"
+    rounded: "{rounded.check}"
+    size: "17px"
+  navigation-rail:
+    backgroundColor: "{colors.rail}"
+    rounded: "{rounded.square}"
+    width: "176px"
   navigation-item-selected:
-    backgroundColor: "{colors.rail-selected}"
-    textColor: "{colors.porcelain}"
+    backgroundColor: "{colors.selection}"
+    textColor: "{colors.nav-text}"
     typography: "{typography.body}"
     rounded: "{rounded.control}"
     padding: "11px 8px 11px 12px"
   surface-panel:
-    backgroundColor: "{colors.porcelain}"
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
     rounded: "{rounded.square}"
     padding: "{spacing.surface-inset}"
+  live-instrument:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.square}"
+    padding: "{spacing.instrument-inset}"
+  live-instrument-compact:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.square}"
+    padding: "{spacing.compact-inset}"
+  output-instrument:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.square}"
+    padding: "{spacing.instrument-inset}"
+  output-instrument-compact:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.square}"
+    padding: "{spacing.compact-inset}"
+  trend-panel:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.muted}"
+    rounded: "{rounded.square}"
+    padding: "{spacing.chart-inset}"
+  trend-panel-compact:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.muted}"
+    rounded: "{rounded.square}"
+    padding: "10px"
   data-row:
-    backgroundColor: "{colors.porcelain}"
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
     typography: "{typography.body}"
     height: "37px"
     padding: "0px 12px"
   data-header:
-    backgroundColor: "{colors.table-header}"
+    backgroundColor: "{colors.raised}"
     textColor: "{colors.muted}"
     typography: "{typography.action}"
     height: "36px"
     padding: "0px 12px"
-  rule-selector-selected:
-    backgroundColor: "{colors.selection}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.control}"
-    padding: "8px 13px"
   curve-plot:
-    backgroundColor: "{colors.porcelain}"
+    backgroundColor: "{colors.surface}"
     textColor: "{colors.muted}"
     typography: "{typography.annotation}"
+  about-panel:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.square}"
+    padding: "{spacing.about-inset}"
   brand-mark:
     size: "32px"
 ---
@@ -157,175 +236,217 @@ components:
 
 ## Overview
 
-**Creative North Star: "Graphite-and-porcelain control desk"**
+**Creative North Star: "Dark graphite cooling instrument desk"**
 
-Lutra is a precise, approachable native Windows instrument. Porcelain working surfaces sit on a cool gray workspace, with a graphite navigation rail and restrained forest-green actions. The original twin-channel L mark gives the application its own identity; the interface relies on readable controls and plotted evidence rather than decorative imagery.
+Lutra is a native Windows cooling instrument for a desk in dim lighting. Deep graphite surrounds slightly lighter working surfaces; mint identifies deliberate actions, while cyan, amber and violet distinguish measured signals. The original twin-channel L mark and Segoe UI remain the visual identity.
 
-The visual system is compact and flat. Segoe UI, ruled rows, aligned fields and generous chart space make device relationships and editable values easy to scan. Native controls retain their Windows behavior, and state is stated in text alongside color. The owner approved this direction and delegated its name and visual identity.
+The owner explicitly replaced the earlier light work area with this dark direction. Monitoring now gives temperature and flow dials, actual RPM/PWM readings and simultaneous trends priority. Curve editing remains a precise workbench with explicit draft state. Flat surfaces, ruled data and direct labels keep the application readable without decorative motion.
 
 **Key Characteristics:**
 
-- Graphite navigation, porcelain working panels and forest-green action emphasis.
-- Native Segoe UI with a compact regular/semibold hierarchy.
-- Square ruled surfaces, small button corners and visible keyboard focus.
-- Prominent plots with distinct response, startup and live-temperature marks.
-- Explicit draft, unavailable-reading and pending-coordinate states.
+- Dark surfaces throughout the application, including input wells, dropdowns and scrollbars.
+- Mint action emphasis and a labeled cyan/amber/violet measurement vocabulary.
+- Large tabular readouts with a compact native layout for short windows.
+- Temperature and RPM traces visible together, with gaps and unavailable values preserved.
+- Original vector L mark, native Segoe UI and English/Finnish copy.
+- Explicit draft, connection and on-request update states.
 
-This is the implemented Windows WPF system, documented on 14 October 2026. The frontmatter is normative for the values recorded here. Its portable `px` strings encode **WPF device-independent pixels (DIPs)**, where one DIP is one logical 1/96 inch; actual device pixels depend on Windows scaling. No web or mobile layout is specified.
+This records the implemented 0.5 design on 14 October 2026. Frontmatter values are normative for this document. Its portable `px` strings represent **WPF device-independent pixels (DIPs)**: one logical 1/96 inch, scaled by Windows rather than assumed to be a physical pixel.
 
-Source authority: [Theme.xaml](src/Lutra.App/Theme.xaml), [Ui.cs](src/Lutra.App/Ui.cs), [MainWindow.cs](src/Lutra.App/MainWindow.cs), [Views.cs](src/Lutra.App/Views.cs), [CurveForm.cs](src/Lutra.App/CurveForm.cs), and the `CurvePlot` / `HistoryPlot` classes in [Plot.cs](src/Lutra.App/Plot.cs). The approved [direction](.impeccable/direction.md) supplies the name of the world; the implementation supplies the values.
+Authority is the current [WPF theme](src/Lutra.App/Theme.xaml), [UI helpers](src/Lutra.App/Ui.cs), [shell](src/Lutra.App/MainWindow.cs), [monitor](src/Lutra.App/MonitorView.cs), [About & updates](src/Lutra.App/AboutView.cs), [other views](src/Lutra.App/Views.cs), [curve form](src/Lutra.App/CurveForm.cs) and [plots](src/Lutra.App/Plot.cs). The [owner-approved direction](.impeccable/direction.md) establishes the dark world. Old literal color strings routed through `Ui.Color` are compatibility aliases; their resolved dark values, not the old literals, are recorded here.
 
-Rendered evidence checked: all seven PNGs in [.impeccable/review](.impeccable/review), covering Curves in English and Finnish, Overview, Alarms, History, Devices and Settings. They show demo data and default states. Their filenames identify the requested window size; the PNGs contain the content region without Windows chrome. Hashes, actual image dimensions and component provenance are recorded in [.impeccable/design.json](.impeccable/design.json). This document records the design system; it does not expand the finish review's four resolved findings into a whole-application certification.
+Rendered evidence comprises the eight `v05-*.png` captures in [.impeccable/review](.impeccable/review): Overview in English and Finnish, Curves, Alarms, History, Devices, Settings and About & updates. The refreshed Overview captures show both plots in the initial content viewport at requested window sizes (1120 × 720 and 1440 × 920 DIPs). The refreshed About capture shows the demo-mode explanation. PNGs contain content without Windows chrome and use synthetic data. Source/image hashes, dimensions and preview limitations are in [.impeccable/design.json](.impeccable/design.json). Earlier light-theme PNGs remain historical evidence and do not define the current system.
 
 ## Colors
 
-A cool neutral field keeps dense controls readable; green belongs to deliberate actions and plotted response. Warm annotations carry a different meaning from the response line.
+The palette has a dark graphite foundation, readable pale text and a small set of functional signal colors.
 
 ### Primary
 
-- **Forest green** (`forest`) fills primary actions and draws response/history traces. Connection text also uses this brush, with the connection mode written out.
-- **Focus green** (`focus-green`) identifies keyboard focus on custom buttons.
-- **Mint channel** (`mint-mark`) is the lower channel of the original L mark, paired with porcelain.
+- **Instrument mint** (`accent`) fills primary actions, checked controls and output bars; it also marks keyboard focus and curve/history traces.
+- Primary action text uses **deep graphite** (`workspace`), keeping mint buttons legible against dark panels.
 
 ### Secondary
 
-- **Live cursor amber** (`live-amber`) marks the live temperature cursor and its baseline dot.
-- **Amber annotation** (`amber-ink`) labels live temperature and pending numeric coordinate edits.
-- **Device caution** (`device-caution`) is reserved for a device limitation message.
+- **Coolant cyan** (`water`) identifies the coolant instrument.
+- **Measurement amber** (`amber`) identifies other temperature instruments and the live curve cursor; the same native value also supplies warning text.
+- **Flow violet** (`violet`) identifies the flow instrument.
+- Monitoring traces cycle through cyan, amber, violet and mint by series index. Temperature and RPM charts have their own labeled legends; a color is not a universal hardware-channel identifier.
 
 ### Tertiary
 
-- **Alarm red** (`alarm-red`) identifies active alarm or sensor-unavailable alarm text. The label supplies the specific condition.
+- **Alarm coral** (`danger`) highlights alarm and validation feedback.
 
 ### Neutral
 
-- **Graphite ink** and **quiet gray-green** (`ink`, `muted`) separate primary text from field labels, supporting copy and axes.
-- **Porcelain** and **cool workspace** (`porcelain`, `workspace`) distinguish work panels from the surrounding window.
-- **Graphite rail** and **rail selection** (`graphite`, `rail-selected`) establish navigation and the current page; `rail-meta` and `rail-subtle` form the footer hierarchy.
-- **Ruled edge** (`line`) supplies panel boundaries, secondary-button strokes and table rules.
-- **Selected surface** and **text selection** (`selection`, `text-selection`) are separate treatments for a chosen rule/data row and selected input text.
-- **Table heading**, **alternate row** and **chart ruling** (`table-header`, `table-alternate`, `chart-grid`) structure dense information without shadows.
+- **Deep graphite**, **instrument surface** and **raised graphite** (`workspace`, `surface`, `raised`) form the background, panel and control/popup layers.
+- **Navigation graphite** (`rail`) separates persistent navigation without a bright edge.
+- **Soft white** and **sage gray** (`ink`, `muted`) distinguish primary readings from labels, units, axes and supporting text.
+- **Instrument rule** (`line`) supplies borders, plot guides, dial tracks and output-bar tracks.
+- **Selected graphite** (`selection`) marks the chosen page, rule, dropdown option or data row.
+- **Scroll grip** (`thumb`) makes the dark scrollbar visible at rest; hover uses muted and dragging uses mint.
+- **Rail metadata** and **navigation white** (`rail-meta`, `nav-text`) preserve the explicitly implemented footer and navigation foregrounds.
 
-**The Meaning Before Color Rule.** Green identifies actions and plotted response. State must also be named in text; green alone never asserts verified hardware safety.
+**The Meaning Before Color Rule.** Name each signal and state in text. Mint identifies actions and plotted response; it does not assert verified hardware safety. A trace's legend is its identity.
 
-The sidecar's eight-step tonal ramps are synthesized palette previews. They are labeled as derived and are not additional application brushes.
+The sidecar's eight-step tonal ramps are derived previews, not additional application brushes.
 
 ## Typography
 
-**Interface font:** Segoe UI throughout, including the wordmark text, controls and chart annotations. No custom fallback stack, fixed line-height, tracking override, font-feature token or alternate font is declared by the application. WPF supplies the native defaults.
+**Interface font:** Segoe UI throughout. The implementation uses normal and semibold weights, native wrapping and default line metrics. It declares no alternate font, custom tracking or fixed line-height system. Main sensor and RPM readings explicitly use WPF `FontNumeralAlignment.Tabular`.
 
 ### Hierarchy
 
-| Role | Frontmatter token | Implemented use |
+| Role | Normal / compact size | Use |
 | --- | --- | --- |
-| Page headline | `headline` | Main page title; semibold (30 DIPs). |
-| Wordmark | `brand` | Lutra beside the vector mark; semibold (25 DIPs). |
-| Section heading | `section` / `section-compact` | Device/settings headings (19 DIPs) and overview headings (18 DIPs), semibold. |
-| Plot title | `plot-title` | Curve response heading; semibold (17 DIPs). |
-| Item title | `item-title` | Curve names, active-control names and protection subheading; semibold (14 DIPs). |
-| Body | `body` | Default controls, page subtitles and explanatory text; regular (13 DIPs). |
-| Action | `action` | Primary button and table headings; semibold (13 DIPs). |
-| Label / status | `label` / `status` | Field captions and supporting copy (12 DIPs); connection status is semibold. |
-| Annotation | `annotation` | Axis labels, draft status, rule state and secondary rail footer; regular (11 DIPs). |
+| Sensor reading | 38 / 32 DIPs, regular | Temperature and flow values; tabular numerals. |
+| RPM reading | 34 / 28 DIPs, regular | Actual rotational speed; tabular numerals. |
+| Page title | 30 DIPs, semibold | Current page. |
+| Rail wordmark | 25 DIPs, semibold | Lutra beside the original mark. |
+| Large section | 22 DIPs, semibold | Update heading and empty-instrument prompt. |
+| Section | 19 / 18 DIPs, semibold | Device/settings sections and Overview group headings. |
+| Instrument title | 17 / 16 DIPs, semibold | Sensor names; the 17-DIP role also titles the curve plot. |
+| Output name | 16 / 14 DIPs, semibold | Rule/output identity. |
+| Duty percentage | 17 / 15 DIPs, semibold | Actual PWM measurement. |
+| Explanatory prose | 14 DIPs, regular | About/update descriptions and empty states. |
+| Body / action | 13 DIPs, regular / semibold | Default controls, body copy and primary actions. |
+| Label / status | 12 DIPs, regular / semibold | Captions, legends, units and connection state. |
+| Annotation | 11 DIPs, regular | Draft state, curve/history axes and rail description. |
+| Small plot annotation | 10 DIPs, regular | Dial scale and simultaneous-trend axes. |
 
-This is an observed set of sizes, not a geometric type scale. Measurements align through stable table columns; the code does not declare a tabular-numeral OpenType override. The empty-curve prompt uses a local semibold heading (22 DIPs), not another shared type role.
+This is the observed role set, not a geometric type scale. About uses a local larger identity lockup (34-DIP semibold wordmark, 48-DIP mark), a mint version number (20 DIPs) and a regular tagline (17 DIPs); these are local identity treatments, not new defaults for other screens.
 
-**The Native Type Rule.** Use the implemented Segoe UI hierarchy and normal Windows text behavior. Do not introduce a separate display or monospace face for future screens.
+**The Native Reading Rule.** Use Segoe UI and the implemented regular/semibold hierarchy. Main instrument and RPM values use tabular numeral alignment; labels retain native text behavior.
 
 ## Layout
 
-The shell is a native resizable desktop window: initial size (1440 × 920 DIPs), minimum size (1120 × 720 DIPs). A fixed navigation rail (176 DIPs) sits beside the main body. Body margins are left/right (30 DIPs), top (24 DIPs) and bottom (16 DIPs). The header separates from content by (23 DIPs); the bottom action strip separates from content by (16 DIPs).
+The native window starts at (1440 × 920 DIPs) and has a minimum size of (1120 × 720 DIPs). The rail remains (176 DIPs) wide. Main body margins are left/right (30 DIPs), top (24 DIPs) and bottom (16 DIPs). The header has (23 DIPs) below it; the footer has (16 DIPs) above it.
 
-The title and connection/draft status sit above a vertically scrolling page body. Revert and Apply sit below it, aligned right. The page body uses an automatic vertical scrollbar with horizontal scrolling disabled. There is no breakpoint-driven alternate shell. At narrower supported widths the flexible graph area shrinks while the rail and inspector keep their widths; content beyond the viewport remains available by vertical scrolling.
+A page body scrolls vertically below the title and connection/draft status. Horizontal page scrolling is disabled. Revert/Apply stay outside this scroller and are hidden on clean Overview, About, History and Devices pages; editing pages retain their actions. This is a desktop layout, not a web/mobile shell.
 
-The current curve surface uses a rule-list column (180 DIPs, including its right margin of 20 DIPs), a flexible white editing panel, and an inspector column (230 DIPs, including its left margin of 22 DIPs). The graph has a minimum height (240 DIPs). Input and output selectors precede the graph/inspector split. Overview uses a fixed active-controls column (310 DIPs) beside the readings; Settings uses two equal columns separated by (22 DIPs). These are implemented surface arrangements, not requirements that every future page must copy.
+### Overview density
 
-Reusable spacing is recorded in the frontmatter. Most panels use padding (20 DIPs), paired form fields use gaps (10–18 DIPs), field labels sit above controls with a gap (6 DIPs), and field groups leave (13 DIPs) below them. Text wraps through the shared TextBlock style. English and Finnish are evidenced; no untested text-scale or device-class behavior is inferred.
+Overview has a native **window-height threshold (900 DIPs)**. Below it, the same instruments become compact in place; resizing does not rebuild live history. The rail and side-by-side plot structure remain.
+
+| Element | Window height below 900 DIPs | Window height at least 900 DIPs |
+| --- | --- | --- |
+| Sensor/output inset | 12 DIPs | 16 DIPs |
+| Dial | 72 × 76 DIPs | 110 × 114 DIPs |
+| Dial column, including its right gap | 84 DIPs | 122 DIPs |
+| Sensor note minimum height | 0 DIPs | 32 DIPs |
+| Section header top/bottom margins | 10 / 8 DIPs | 22 / 12 DIPs |
+| Overview toolbar button padding | 10 horizontal / 5 vertical DIPs | 13 horizontal / 8 vertical DIPs |
+| Overview toolbar button minimum height | 28 DIPs | 34 DIPs |
+| Trend panel inset | 10 DIPs | 14 DIPs |
+| Each trend plot height | 120 DIPs | `clamp(windowHeight − 750, 150, 190)` DIPs |
+
+At the default height, each trend plot is (170 DIPs). Up to three temperature/flow instruments share a UniformGrid. Enabled outputs use one column for one rule, three for three rules, otherwise two. Adjacent instrument edges are separated by (12 DIPs). Temperature and RPM panels are equal-width columns with a gap (12 DIPs); full sensor readings sit in an expander below the trends. These arrangements describe Overview, not every future page.
+
+### Editing and information pages
+
+Curves retain a fixed rule column (180 DIPs, including its right margin of 20 DIPs), a flexible working panel and an inspector column (230 DIPs, including a left margin of 22 DIPs). The curve plot minimum height is (240 DIPs). Input and output selectors sit above the graph/inspector pair.
+
+Most working panels use an inset (20 DIPs). About uses two equal, top-aligned panels with insets (24 DIPs) and a gap (22 DIPs); project links and update buttons use wrapping rows. Settings also uses two equal columns with a gap (22 DIPs). History retains its larger plot (380 DIPs). Labels leave (6 DIPs) above the control and field groups leave (13 DIPs) below.
+
+English and Finnish are present in the rendered evidence. Values use the selected locale, including Finnish decimal commas. This document does not infer untested large-text or other-device behavior from these captures.
 
 ## Elevation & Depth
 
-The application is flat. White work panels, the cool workspace and the dark rail create tonal depth; thin borders and horizontal rules define boundaries. No application drop-shadow token, blur, glass layer or elevation animation is implemented. Windows owns native window chrome, dropdowns and other platform affordances; their appearance is not a custom Lutra elevation system.
+Graphite tones, spacing and thin rules establish depth. General work panels and chart panels have ruled edges; the monitoring instrument surfaces are borderless. There are no application shadow, blur or glass tokens. The native window requests dark title-bar treatment; the content captures do not include Windows chrome.
 
-**The Ruled Surface Rule.** Separate working areas with tone, whitespace and thin rules. Application panels do not use drop shadows.
+**The Ruled Surface Rule.** Use graphite tone, whitespace and thin rules for depth. Do not add application drop shadows, glass effects or decorative entrance animation.
 
-State changes are immediate. The button template changes opacity on hover and when disabled; there are no custom easing or duration tokens. Telemetry refresh is data behavior, not decorative motion.
+Control state changes are immediate. Buttons use a border change on hover, reduced opacity while pressed or disabled, and an overlaid focus outline. Dropdown popup animation is explicitly disabled. Readings and plots update in place; no custom easing or animation-duration tokens are declared.
 
 ## Shapes
 
-Working panels and ruled data are square. The custom button border has a small corner radius (3 DIPs); the primary, secondary, navigation and rule-list buttons all inherit this template. Panel and ordinary button borders use a thin stroke (1 DIP). Keyboard-focused button borders become (2 DIPs). TextBox and ComboBox retain their native templates; no custom radius for them is asserted.
+Working surfaces and charts are square. Button, TextBox, ComboBox and scroll-thumb templates use a small radius (3 DIPs). Checkbox boxes use a radius (2 DIPs). Ordinary control/panel borders use (1 DIP); button focus is an overlay (2 DIPs), so focusing does not change its padding.
 
-The twin-channel L is vector geometry on a (32 × 32 DIP) design canvas. Both strokes have round caps and a stroke width (4 DIPs). The lower mint path is `M7,5 L7,20 Q7,25 12,25 L27,25`; the upper porcelain path is `M16,5 L16,15 Q16,17 18,17 L27,17`. The rail uses the mark at (32 DIPs). Preserve these paths rather than substituting a letter glyph or unrelated icon.
+The twin-channel L retains its original (32 × 32 DIP) design canvas and round-capped strokes (4 DIPs). Its lower mint path is `M7,5 L7,20 Q7,25 12,25 L27,25`; the upper soft-white path is `M16,5 L16,15 Q16,17 18,17 L27,17`. It renders at (32 DIPs) in the rail and (48 DIPs) on About.
+
+Dials are circular instruments with a (270-degree) sweep beginning at 135 degrees. Their visual role is measurement; the rest of the interface keeps rectangular working surfaces.
 
 ## Components
 
-### Buttons
+### Buttons and range selection
 
-Compact, restrained actions with readable text.
+Compact text actions with restrained shape.
 
-- **Primary:** forest fill and border, porcelain text, semibold type; use the `button-primary` token.
-- **Secondary:** porcelain fill, ink text and ruled edge; use `button-secondary`.
-- **Sizing:** horizontal/vertical padding (13/8 DIPs), minimum height (34 DIPs); the minimum is not a fixed height.
-- **States:** mouse-over sets the template border opacity to (0.8); disabled sets it to (0.45). Keyboard focus uses the focus-green border (2 DIPs). There is no additional custom pressed animation.
-- **Meaning:** Apply is gated by draft/service state and pending coordinates. Disabled appearance is a state treatment, not another palette color.
+- **Primary:** mint fill/border, workspace text, semibold type.
+- **Secondary:** raised graphite fill, ink text and line border.
+- **Default sizing:** padding (13 horizontal / 8 vertical DIPs), minimum height (34 DIPs). Compact Overview toolbars use the values in Layout; minimum height is not a fixed height.
+- **States:** hover changes the border to muted; pressed body opacity is (0.72); disabled body opacity is (0.45). Keyboard focus overlays a mint border (2 DIPs).
+- **Selected range:** selected graphite fill plus mint border. Options are 5 minutes, 15 minutes and 1 hour, followed by All history. Selection loads local history; it is not a decorative pill system.
 
-### Inputs and selectors
+### Fields, selectors and checks
 
-Native fields inside a quiet labeled form.
+The application now owns dark WPF templates for these controls.
 
-- **TextBox:** porcelain background, ink text, ruled edge, text-selection brush; padding (9/7 DIPs), minimum height (34 DIPs), helper-created minimum width (60 DIPs). Keyboard focus changes its border to forest.
-- **ComboBox:** the theme sets porcelain, ink and ruled-edge brushes, padding (8/6 DIPs), minimum height (34 DIPs) and a maximum dropdown height (340 DIPs). The native WPF template supplies the rendered bevel, arrow, popup and platform states.
-- **Labels:** muted text above the field; a WPF Label targets the control, and the helper sets its automation name.
-- **Checkbox:** native Windows checkbox with vertical margins (5 DIPs). Its checked state is not replaced by a decorative toggle.
-- **Unavailable option:** a missing selected device/sensor remains visible as an explicitly unavailable entry; it is not silently displayed as a different choice.
+- **TextBox:** workspace well, ink text/caret, line border and control radius; padding (9 horizontal / 7 vertical DIPs), minimum height (34 DIPs), helper minimum width (60 DIPs). Text selection uses mint at opacity (0.35). Hover changes the edge to muted; focus changes it to mint; disabled opacity is (0.45).
+- **ComboBox:** workspace well and the same radius/edge. Padding is left/top/right/bottom (9/7/32/7 DIPs), leaving room for an inline vector chevron. Its raised-graphite popup has a line border, a top gap (3 DIPs), no popup animation and maximum height (340 DIPs). Highlighted/selected options use selected graphite.
+- **Checkbox:** a (17 × 17 DIP) box, workspace at rest and mint when checked, with a dark vector check. The label follows a (19-DIP) box column and (8-DIP) content margin. Hover/focus use the ink border; focus thickens it to (2 DIPs).
+- **Labels:** a WPF Label targets its field and the helper supplies an automation name. Unavailable selections remain explicitly labeled rather than silently choosing a different device.
 
-### Navigation and rule selection
+### Navigation, work panels and tables
 
-The rail uses text buttons with left-aligned content, porcelain text and a transparent default fill. The current page uses rail-selection fill. Button padding is left/top/right/bottom (12/11/8/11 DIPs), with (5 DIPs) between items. Navigation inherits the shared hover, focus and disabled treatments.
+The persistent rail has left-aligned text buttons with transparent default fill and selected-graphite current-page fill. Navigation padding is left/top/right/bottom (12/11/8/11 DIPs), with (5 DIPs) between items. Seven pages include About & updates. Selected curve rules reuse the light-text/selected-graphite treatment on an instrument surface.
 
-The curve list uses the same button template on a light surface. A selected rule receives selected-surface fill; its semibold name and smaller enabled/disabled label remain separate. Selection is both tonal and contextual, not a floating card effect.
+Working panels use surface fill, square corners and a line border. Tables use surface rows, raised headers/alternating rows, horizontal rules and full-row single selection. Row height is (37 DIPs), header height (36 DIPs), and horizontal cell padding (12 DIPs). Overview's expanded table reserves (95 DIPs) for value and (65 DIPs) for unit. No chip/tag component family is implemented.
 
-### Working panels
+Dark scrollbars are (12 DIPs) wide, with a thumb inset (3 DIPs). Tooltips and WPF menus use raised graphite, ink and line borders. Windows/WinForms tray menus are separate platform UI and are not claimed to use the WPF template.
 
-Porcelain containers with a square ruled edge and standard surface padding. They group a meaningful task, form or chart. The helper creates no shadow, clipping effect or radius. Adjacent data may remain directly on the workspace, as in Overview.
+### Live temperature and flow instrument
 
-### Measurement and device tables
+A borderless surface combines a named dial, large tabular value, unit and state note. The coolant instrument uses cyan, other temperature instruments amber, and flow violet. Default dial maxima are coolant (60 °C), other temperature (100 °C) and flow (200 l/h); these are display ranges, not universal safety limits.
 
-The read-only DataGrid uses horizontal rules, full-row single selection and separate columns for stable scanning. Rows are (37 DIPs), column headers (36 DIPs), and cell/header horizontal padding is (12 DIPs). Alternating rows use the alternate-row fill; selected cells use selected-surface fill and ink. The value column in Overview is fixed (88 DIPs) with a separate unit column (65 DIPs).
+The dial track and value arc have round caps and a width (7 DIPs). A startup threshold uses an ink tick (2 DIPs); smaller scale ticks use the line brush (1 DIP). Missing data removes the value arc and shows an em dash with an unavailable label. Alarm/unavailable notes use amber. Values and automation names update without rebuilding the view.
 
-Missing readings are an em dash. Native scrolling remains visible when table content exceeds its available area. No chip/tag system is present.
+### Output RPM and PWM instrument
 
-### Curve editor and history plot
+A borderless surface presents the output/rule name, mint duty percentage, actual RPM, unit, a thin duty bar (5 DIPs) and a state sentence. Compact and regular type/insets follow Layout and Typography. The bar uses mint over a line-colored track.
 
-The response plot is a custom WPF FrameworkElement, not a chart-library skin. A white plot carries horizontal guides, muted axes, a forest response line and sixteen editable nodes. The response stroke is (2.5 DIPs); unselected nodes are white with a forest edge (1.5 DIPs) and radius (3.5 DIPs). The selected node is filled forest with radius (5 DIPs). A dashed muted startup line differs from the amber live-temperature line and caption.
+Fresh zero is shown as zero with stopped/start-threshold text. Missing output shows an em dash and a dimmed empty bar (opacity 0.25). An unmapped RPM remains an em dash with “RPM not mapped”, even when PWM is available. The code only assigns an RPM-to-output relationship where its device mapping is explicit; it does not estimate RPM from duty.
 
-The plot is keyboard focusable. Focus draws a dashed forest rectangle (2 DIPs); left/right choose a point, and up/down change response. Dragging and the labeled numeric coordinate fields provide additional editing paths. Numeric point and endpoint edits show a pending notice and require their explicit update action before Apply. The plot's automation peer announces the selected point and its coordinates.
+### Simultaneous monitoring trends
 
-History uses the same axes with a forest trace (2 DIPs). Missing values break the line. Empty history uses in-plot text. Overview and History provide different chart heights (230 and 380 DIPs) for their different layouts; these are not responsive breakpoints.
+Two adjacent plots show temperature and RPM together. Each has named colored legends, local-time labels, a unit and horizontal guides. Traces use (2-DIP) strokes; guides use (0.6 DIP). A recent endpoint receives a dot with radius (3 DIPs).
 
-### State and feedback
+The monitor merges local history with live measurements for the chosen range. Null/nonfinite values and gaps longer than fifteen seconds break the line. Recent dots appear only for samples less than ten seconds old. Empty plots state that measurements are awaited. Static preview curves in the sidecar are illustrations; they do not assert live hardware behavior.
 
-Connection/demo mode and draft state are written at the top right. Feedback occupies the bottom strip near the application actions. Pending curve-coordinate edits use amber text beside the editor; active alarm and unavailable-sensor alarm labels use alarm red. These texts are part of the operational hierarchy, not promotional badges.
+### Curve editor and longer history
 
-The sidecar provides ten self-contained HTML/CSS component previews. They approximate the native appearance for the design panel; WPF code remains the authority for templates, input behavior, automation, DPI rendering and platform focus/selection details. The preview's curve data is illustrative and does not execute the native editor.
+The curve editor keeps sixteen nodes, a mint response line (2.5 DIPs), unselected surface-filled nodes with a mint edge (1.5 DIPs) and radius (3.5 DIPs), and a filled selected node with radius (5 DIPs). A dashed muted startup line differs from the amber live-temperature cursor. Keyboard focus draws a dashed mint rectangle (2 DIPs).
+
+Left/right select a point; up/down edit response. Dragging and labeled numeric fields remain available. Pending point/endpoint edits use amber notices and require their explicit update action before Apply. Longer history uses the shared dark axes and a mint trace (2 DIPs), preserving gaps.
+
+### About & updates
+
+The identity panel carries the current version and project, release and issue links. The adjacent update panel has a preview-release checkbox, an explicit status, check/install actions and conditional cancellation. Release notes appear when a release is available.
+
+Checking, available/latest, downloading/verifying, cancellation, failure and update-result text are distinct states. Check/install are disabled in demo mode with a specific explanation. Normal noninstalled builds may check releases; installation requires the packaged installed application. Dirty edits require apply/revert before installation. These are source-observed interface states; screenshot evidence covers the demo state, not a completed installation.
+
+Ten self-contained HTML/CSS previews accompany this document. They approximate the native components for the design panel. WPF remains authoritative for input, automation, popup behavior, rendering, DPI and update actions; preview buttons do not control hardware or install software.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** reuse the frontmatter tokens and the existing WPF theme before adding a visual variant.
-- **Do** keep labels associated with their controls and retain visible keyboard focus.
-- **Do** keep the selected sensor, output and response curve legible together.
-- **Do** preserve text for draft, unavailable, pending and alarm states; show missing measurements as an em dash and history gaps as gaps.
-- **Do** keep the page body scrollable while the page title, connection status and bottom actions remain outside that scroller.
-- **Do** preserve the original twin-channel L geometry and its mint/white treatment on graphite.
-- **Do** use the approved native Segoe UI family and regular/semibold weights.
+- **Do** reuse the implemented dark brushes and WPF templates before adding a visual variant.
+- **Do** preserve simultaneous temperature and RPM trends in the supported Overview layouts.
+- **Do** distinguish zero, unavailable and unmapped readings with explicit values and text; preserve history gaps.
+- **Do** keep numeric instrument and RPM values tabular, with their units and signal names visible.
+- **Do** keep selected sensor, output and editable response legible together on the curve workbench.
+- **Do** retain labels, keyboard focus, pending-coordinate feedback and separate draft/apply state.
+- **Do** keep the running version, available release and download/install status distinct, and check updates only on request.
+- **Do** preserve the original twin-channel L paths and their mint/soft-white treatment.
 
 ### Don't:
 
-- **Don't** use green as a claim of verified cooling safety or universal hardware compatibility.
-- **Don't** replace the workbench with the rejected oversized dark-blue metric-card wall.
-- **Don't** add RGB decoration, borrowed Aquasuite visual assets, glass effects or decorative entrance animation.
-- **Don't** convert native DIP values into assumed physical-pixel sizes or invent web/mobile breakpoints.
-- **Don't** promote demo measurements, synthesized tonal ramps or browser preview behavior into native product rules.
-- **Don't** imply that edited point coordinates have reached the curve or hardware before the explicit update and apply actions.
-
+- **Don't** restore the superseded porcelain work area or forest-green-on-white action theme.
+- **Don't** substitute estimated RPM for an unavailable or unmapped measurement.
+- **Don't** encode a signal or alarm solely through color.
+- **Don't** imitate Aquasuite visual assets or add RGB decoration.
+- **Don't** turn the Overview height threshold into a web/mobile architecture or a rule for every page.
+- **Don't** treat demo screenshots or illustrative preview data as evidence of physical hardware behavior.
+- **Don't** promote synthetic tonal ramps or HTML preview behavior into native implementation rules.
+- **Don't** imply that editing a coordinate, downloading a package or viewing a new version number has applied a curve or completed an update.

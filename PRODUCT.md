@@ -10,9 +10,10 @@ Native Windows 10/11 x64, WPF and a separate Windows service. This is a Windows 
 
 - Choose a temperature sensor and a supported fan or pump output for each independent curve.
 - Set a start temperature, minimum, maximum and fallback output, and edit or straighten the curve.
-- See current temperatures, rotational speeds, flow and output power, including longer measurement history.
+- Monitor temperatures and flow with live dials, read actual RPM and PWM output, and compare simultaneous temperature and RPM trends. Overview offers five-, fifteen- and sixty-minute local-history ranges; the History page covers longer periods.
 - Configure temperature alarms with delay and hysteresis.
 - Use QUADRO and supported motherboard fan headers in the first public version.
+- Find the project, releases and issue tracker from About & updates, and explicitly check for, download and install an available Windows update.
 
 ## Constraints
 
@@ -20,12 +21,14 @@ Hardware support must be reported accurately. Unsupported firmware or inaccessib
 
 Motherboard support uses LibreHardwareMonitor and its current PawnIO integration. Lutra does not disable Windows security features. Driver availability, board support and physical verification are separate facts.
 
-The existing installed controller continues operating while this replacement is developed. Public source excludes private captures, identifiers and local diagnostics from the parent workspace.
+The installed development baseline on 14 October 2026 is a healthy Lutra 0.4 installation; Vesi is disabled. The Lutra 0.5 redesign is developed against that running baseline. A development build, screenshot or package does not by itself change the installed version. Public source excludes private captures, identifiers and local diagnostics from the parent workspace.
 
 ## Confirmed design brief
 
-The owner delegated naming and visual identity: Lutra. Build directly in the functioning application and evaluate screenshots. Replace the old oversized dark-blue cards with a precise, approachable desktop instrument: clear device relationships, readable charts, compact monitoring, visible state and reversible editing. Do not imitate Aquasuite visual assets or add RGB features.
+The owner delegated naming and visual identity: Lutra, and explicitly corrected the visual direction on 14 October 2026 for use at a Windows desk in dim lighting. Dark graphite surfaces now extend throughout the application, with mint actions and restrained cyan, amber and violet measurement colors. The former light work area is superseded.
+
+Build directly in the functioning application and evaluate screenshots. Overview restores prominent temperature and flow dials, large actual RPM and PWM readings, and simultaneous trends. Keep native Segoe UI, the original twin-channel L mark, clear device relationships, compact monitoring, visible state and reversible curve editing. About & updates makes the project links and update state explicit. Do not imitate Aquasuite visual assets or add RGB features.
 
 ## Release truth
 
-Initially an experimental public project. Document software support and test coverage separately from hardware combinations verified on physical devices. No claims of universal motherboard support or certified cooling safety.
+Lutra remains an experimental public project. Document software support and test coverage separately from hardware combinations verified on physical devices. Keep the running version distinct from an available release; update checks happen only on request. No claims of universal motherboard support or certified cooling safety.
