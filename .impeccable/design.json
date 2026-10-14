@@ -1,0 +1,832 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T12:40:03.7416382Z",
+  "title": "Design System: Lutra",
+  "extensions": {
+    "colorMeta": {
+      "forest": {
+        "role": "primary",
+        "displayName": "Forest green",
+        "purpose": "Deliberate primary actions and response/history traces.",
+        "tonalRamp": [
+          "oklch(15% 0.0727 169.04)",
+          "oklch(26.43% 0.0727 169.04)",
+          "oklch(37.86% 0.0727 169.04)",
+          "oklch(49.29% 0.0727 169.04)",
+          "oklch(60.71% 0.0727 169.04)",
+          "oklch(72.14% 0.0727 169.04)",
+          "oklch(83.57% 0.0727 169.04)",
+          "oklch(95% 0.0727 169.04)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "focus-green": {
+        "role": "primary",
+        "displayName": "Focus green",
+        "purpose": "Keyboard focus border on custom button templates.",
+        "tonalRamp": [
+          "oklch(15% 0.0943 166.91)",
+          "oklch(26.43% 0.0943 166.91)",
+          "oklch(37.86% 0.0943 166.91)",
+          "oklch(49.29% 0.0943 166.91)",
+          "oklch(60.71% 0.0943 166.91)",
+          "oklch(72.14% 0.0943 166.91)",
+          "oklch(83.57% 0.0943 166.91)",
+          "oklch(95% 0.0943 166.91)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "mint-mark": {
+        "role": "primary",
+        "displayName": "Mint channel",
+        "purpose": "Lower channel of the original twin-channel L mark.",
+        "tonalRamp": [
+          "oklch(15% 0.0625 166.89)",
+          "oklch(26.43% 0.0625 166.89)",
+          "oklch(37.86% 0.0625 166.89)",
+          "oklch(49.29% 0.0625 166.89)",
+          "oklch(60.71% 0.0625 166.89)",
+          "oklch(72.14% 0.0625 166.89)",
+          "oklch(83.57% 0.0625 166.89)",
+          "oklch(95% 0.0625 166.89)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Graphite ink",
+        "purpose": "Default text on light working surfaces.",
+        "tonalRamp": [
+          "oklch(15% 0.0144 181.68)",
+          "oklch(26.43% 0.0144 181.68)",
+          "oklch(37.86% 0.0144 181.68)",
+          "oklch(49.29% 0.0144 181.68)",
+          "oklch(60.71% 0.0144 181.68)",
+          "oklch(72.14% 0.0144 181.68)",
+          "oklch(83.57% 0.0144 181.68)",
+          "oklch(95% 0.0144 181.68)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Quiet gray-green",
+        "purpose": "Labels, explanations, chart axes and inactive status text.",
+        "tonalRamp": [
+          "oklch(15% 0.0182 176.47)",
+          "oklch(26.43% 0.0182 176.47)",
+          "oklch(37.86% 0.0182 176.47)",
+          "oklch(49.29% 0.0182 176.47)",
+          "oklch(60.71% 0.0182 176.47)",
+          "oklch(72.14% 0.0182 176.47)",
+          "oklch(83.57% 0.0182 176.47)",
+          "oklch(95% 0.0182 176.47)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "porcelain": {
+        "role": "neutral",
+        "displayName": "Porcelain",
+        "purpose": "Work panels, field backgrounds, white marks and rail labels.",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26.43% 0.0000 89.88)",
+          "oklch(37.86% 0.0000 89.88)",
+          "oklch(49.29% 0.0000 89.88)",
+          "oklch(60.71% 0.0000 89.88)",
+          "oklch(72.14% 0.0000 89.88)",
+          "oklch(83.57% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "workspace": {
+        "role": "neutral",
+        "displayName": "Cool workspace",
+        "purpose": "Window content background surrounding the working panels.",
+        "tonalRamp": [
+          "oklch(15% 0.0034 145.55)",
+          "oklch(26.43% 0.0034 145.55)",
+          "oklch(37.86% 0.0034 145.55)",
+          "oklch(49.29% 0.0034 145.55)",
+          "oklch(60.71% 0.0034 145.55)",
+          "oklch(72.14% 0.0034 145.55)",
+          "oklch(83.57% 0.0034 145.55)",
+          "oklch(95% 0.0034 145.55)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite rail",
+        "purpose": "Persistent navigation backdrop.",
+        "tonalRamp": [
+          "oklch(15% 0.0130 180.40)",
+          "oklch(26.43% 0.0130 180.40)",
+          "oklch(37.86% 0.0130 180.40)",
+          "oklch(49.29% 0.0130 180.40)",
+          "oklch(60.71% 0.0130 180.40)",
+          "oklch(72.14% 0.0130 180.40)",
+          "oklch(83.57% 0.0130 180.40)",
+          "oklch(95% 0.0130 180.40)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "rail-selected": {
+        "role": "neutral",
+        "displayName": "Rail selection",
+        "purpose": "Selected page button on the graphite rail.",
+        "tonalRamp": [
+          "oklch(15% 0.0262 170.59)",
+          "oklch(26.43% 0.0262 170.59)",
+          "oklch(37.86% 0.0262 170.59)",
+          "oklch(49.29% 0.0262 170.59)",
+          "oklch(60.71% 0.0262 170.59)",
+          "oklch(72.14% 0.0262 170.59)",
+          "oklch(83.57% 0.0262 170.59)",
+          "oklch(95% 0.0262 170.59)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "rail-meta": {
+        "role": "neutral",
+        "displayName": "Rail metadata",
+        "purpose": "Version text in the rail footer.",
+        "tonalRamp": [
+          "oklch(15% 0.0162 166.68)",
+          "oklch(26.43% 0.0162 166.68)",
+          "oklch(37.86% 0.0162 166.68)",
+          "oklch(49.29% 0.0162 166.68)",
+          "oklch(60.71% 0.0162 166.68)",
+          "oklch(72.14% 0.0162 166.68)",
+          "oklch(83.57% 0.0162 166.68)",
+          "oklch(95% 0.0162 166.68)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "rail-subtle": {
+        "role": "neutral",
+        "displayName": "Rail description",
+        "purpose": "Secondary rail footer text.",
+        "tonalRamp": [
+          "oklch(15% 0.0226 167.32)",
+          "oklch(26.43% 0.0226 167.32)",
+          "oklch(37.86% 0.0226 167.32)",
+          "oklch(49.29% 0.0226 167.32)",
+          "oklch(60.71% 0.0226 167.32)",
+          "oklch(72.14% 0.0226 167.32)",
+          "oklch(83.57% 0.0226 167.32)",
+          "oklch(95% 0.0226 167.32)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Ruled edge",
+        "purpose": "Panel borders, button borders and horizontal table rules.",
+        "tonalRamp": [
+          "oklch(15% 0.0076 164.92)",
+          "oklch(26.43% 0.0076 164.92)",
+          "oklch(37.86% 0.0076 164.92)",
+          "oklch(49.29% 0.0076 164.92)",
+          "oklch(60.71% 0.0076 164.92)",
+          "oklch(72.14% 0.0076 164.92)",
+          "oklch(83.57% 0.0076 164.92)",
+          "oklch(95% 0.0076 164.92)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "selection": {
+        "role": "neutral",
+        "displayName": "Selected surface",
+        "purpose": "Selected curve rule and selected data cells.",
+        "tonalRamp": [
+          "oklch(15% 0.0158 160.61)",
+          "oklch(26.43% 0.0158 160.61)",
+          "oklch(37.86% 0.0158 160.61)",
+          "oklch(49.29% 0.0158 160.61)",
+          "oklch(60.71% 0.0158 160.61)",
+          "oklch(72.14% 0.0158 160.61)",
+          "oklch(83.57% 0.0158 160.61)",
+          "oklch(95% 0.0158 160.61)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "text-selection": {
+        "role": "neutral",
+        "displayName": "Text selection",
+        "purpose": "TextBox selection brush.",
+        "tonalRamp": [
+          "oklch(15% 0.0299 169.62)",
+          "oklch(26.43% 0.0299 169.62)",
+          "oklch(37.86% 0.0299 169.62)",
+          "oklch(49.29% 0.0299 169.62)",
+          "oklch(60.71% 0.0299 169.62)",
+          "oklch(72.14% 0.0299 169.62)",
+          "oklch(83.57% 0.0299 169.62)",
+          "oklch(95% 0.0299 169.62)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "table-header": {
+        "role": "neutral",
+        "displayName": "Table heading",
+        "purpose": "DataGrid column header fill.",
+        "tonalRamp": [
+          "oklch(15% 0.0058 153.77)",
+          "oklch(26.43% 0.0058 153.77)",
+          "oklch(37.86% 0.0058 153.77)",
+          "oklch(49.29% 0.0058 153.77)",
+          "oklch(60.71% 0.0058 153.77)",
+          "oklch(72.14% 0.0058 153.77)",
+          "oklch(83.57% 0.0058 153.77)",
+          "oklch(95% 0.0058 153.77)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "table-alternate": {
+        "role": "neutral",
+        "displayName": "Alternate row",
+        "purpose": "Alternating DataGrid row fill.",
+        "tonalRamp": [
+          "oklch(15% 0.0034 145.55)",
+          "oklch(26.43% 0.0034 145.55)",
+          "oklch(37.86% 0.0034 145.55)",
+          "oklch(49.29% 0.0034 145.55)",
+          "oklch(60.71% 0.0034 145.55)",
+          "oklch(72.14% 0.0034 145.55)",
+          "oklch(83.57% 0.0034 145.55)",
+          "oklch(95% 0.0034 145.55)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "chart-grid": {
+        "role": "neutral",
+        "displayName": "Chart ruling",
+        "purpose": "Horizontal chart guides.",
+        "tonalRamp": [
+          "oklch(15% 0.0084 157.08)",
+          "oklch(26.43% 0.0084 157.08)",
+          "oklch(37.86% 0.0084 157.08)",
+          "oklch(49.29% 0.0084 157.08)",
+          "oklch(60.71% 0.0084 157.08)",
+          "oklch(72.14% 0.0084 157.08)",
+          "oklch(83.57% 0.0084 157.08)",
+          "oklch(95% 0.0084 157.08)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "live-amber": {
+        "role": "secondary",
+        "displayName": "Live cursor amber",
+        "purpose": "Live temperature cursor and its baseline dot.",
+        "tonalRamp": [
+          "oklch(15% 0.1161 62.34)",
+          "oklch(26.43% 0.1161 62.34)",
+          "oklch(37.86% 0.1161 62.34)",
+          "oklch(49.29% 0.1161 62.34)",
+          "oklch(60.71% 0.1161 62.34)",
+          "oklch(72.14% 0.1161 62.34)",
+          "oklch(83.57% 0.1161 62.34)",
+          "oklch(95% 0.1161 62.34)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "amber-ink": {
+        "role": "secondary",
+        "displayName": "Amber annotation",
+        "purpose": "Live temperature caption and pending-coordinate notice.",
+        "tonalRamp": [
+          "oklch(15% 0.1020 60.98)",
+          "oklch(26.43% 0.1020 60.98)",
+          "oklch(37.86% 0.1020 60.98)",
+          "oklch(49.29% 0.1020 60.98)",
+          "oklch(60.71% 0.1020 60.98)",
+          "oklch(72.14% 0.1020 60.98)",
+          "oklch(83.57% 0.1020 60.98)",
+          "oklch(95% 0.1020 60.98)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "device-caution": {
+        "role": "secondary",
+        "displayName": "Device caution",
+        "purpose": "Device limitation text.",
+        "tonalRamp": [
+          "oklch(15% 0.1049 55.92)",
+          "oklch(26.43% 0.1049 55.92)",
+          "oklch(37.86% 0.1049 55.92)",
+          "oklch(49.29% 0.1049 55.92)",
+          "oklch(60.71% 0.1049 55.92)",
+          "oklch(72.14% 0.1049 55.92)",
+          "oklch(83.57% 0.1049 55.92)",
+          "oklch(95% 0.1049 55.92)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      },
+      "alarm-red": {
+        "role": "tertiary",
+        "displayName": "Alarm red",
+        "purpose": "Active or unavailable-sensor alarm text.",
+        "tonalRamp": [
+          "oklch(15% 0.1379 28.40)",
+          "oklch(26.43% 0.1379 28.40)",
+          "oklch(37.86% 0.1379 28.40)",
+          "oklch(49.29% 0.1379 28.40)",
+          "oklch(60.71% 0.1379 28.40)",
+          "oklch(72.14% 0.1379 28.40)",
+          "oklch(83.57% 0.1379 28.40)",
+          "oklch(95% 0.1379 28.40)"
+        ],
+        "tonalRampProvenance": "Synthesized from the source hex hue/chroma for preview only; fixed OKLCH chroma may gamut-map at extreme lightness. Not application tokens."
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page title."
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "Lutra wordmark text beside the vector mark."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Settings and device section titles."
+      },
+      "section-compact": {
+        "displayName": "Section Compact",
+        "purpose": "Overview section titles."
+      },
+      "plot-title": {
+        "displayName": "Plot Title",
+        "purpose": "Curve response heading."
+      },
+      "item-title": {
+        "displayName": "Item Title",
+        "purpose": "Rule/control names and protection subheading."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default controls and body text."
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "Primary actions and table headers."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field captions and supporting copy."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Connection status."
+      },
+      "annotation": {
+        "displayName": "Annotation",
+        "purpose": "Axes, draft/rule state and secondary metadata."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [],
+    "native": {
+      "platform": "Windows 10/11 x64",
+      "framework": "WPF",
+      "implementationRoot": "src/Lutra.App",
+      "unit": "DIP",
+      "portableLengthNotation": "DESIGN.md frontmatter uses px strings to encode WPF DIPs for schema interoperability. One DIP is one logical 1/96 inch, not one physical screen pixel.",
+      "previewUnitMapping": "HTML/CSS previews map one native DIP to one CSS px for logical-size illustration only.",
+      "window": {
+        "initial": {
+          "widthDip": 1440,
+          "heightDip": 920
+        },
+        "minimum": {
+          "widthDip": 1120,
+          "heightDip": 720
+        }
+      },
+      "layout": {
+        "navigationRailWidthDip": 176,
+        "bodyMarginsDip": {
+          "left": 30,
+          "top": 24,
+          "right": 30,
+          "bottom": 16
+        },
+        "pageHeaderBottomMarginDip": 23,
+        "footerTopMarginDip": 16,
+        "curveRuleColumnWidthDip": 180,
+        "curveInspectorColumnWidthDip": 230,
+        "curvePlotMinimumHeightDip": 240,
+        "verticalPageScroll": "Auto",
+        "horizontalPageScroll": "Disabled"
+      },
+      "controls": {
+        "buttonMinimumHeightDip": 34,
+        "buttonBorderDip": 1,
+        "buttonKeyboardFocusBorderDip": 2,
+        "buttonHoverOpacity": 0.8,
+        "buttonDisabledOpacity": 0.45,
+        "textBoxMinimumHeightDip": 34,
+        "helperInputMinimumWidthDip": 60,
+        "comboBoxMinimumHeightDip": 34,
+        "comboBoxMaximumDropDownHeightDip": 340,
+        "checkBoxVerticalMarginDip": 5
+      },
+      "plots": {
+        "plotAreaInsetDip": {
+          "left": 43,
+          "top": 20,
+          "right": 19,
+          "bottom": 33
+        },
+        "axisFontSizeDip": 11,
+        "curveStrokeDip": 2.5,
+        "historyStrokeDip": 2,
+        "gridStrokeDip": 1,
+        "nodeStrokeDip": 1.5,
+        "nodeRadiusDip": 3.5,
+        "selectedNodeRadiusDip": 5,
+        "keyboardFocusStrokeDip": 2,
+        "startupStrokeDip": 1,
+        "liveCursorStrokeDip": 1,
+        "liveCursorDotRadiusDip": 3
+      },
+      "mark": {
+        "canvasSizeDip": 32,
+        "railSizeDip": 32,
+        "strokeDip": 4,
+        "sourceMember": "Ui.Mark",
+        "origin": "Original vector paths implemented for Lutra; no external icon/font/image dependency."
+      },
+      "motionPolicy": "Immediate native state changes. No custom animation duration, easing or shadow tokens were found.",
+      "previewLimitations": [
+        "HTML/CSS examples are design-panel approximations, not a web application implementation.",
+        "Native WPF templates own ComboBox/TextBox/CheckBox styling, selection, input, popups and platform focus behavior.",
+        "Preview CSS focus on the select uses a visible browser analogue and does not claim an exact native template match.",
+        "Browser font metrics, line layout and device scaling differ from WPF.",
+        "Static table, navigation and plot examples do not implement the native behaviors.",
+        "Representative curve and measurement values are illustrative demo data."
+      ]
+    },
+    "provenance": {
+      "extractionMode": "Post-implementation scan; code plus all seven rendered review screenshots.",
+      "authorityOrder": [
+        "Implemented WPF source for values and behavior",
+        "Rendered PNGs for visible composition and native template appearance",
+        "Approved direction and PRODUCT.md for identity and durable constraints"
+      ],
+      "sources": [
+        {
+          "path": "src/Lutra.App/Theme.xaml",
+          "sha256": "d5f2ced960b782a00f0be61b443115bcbed251b3ef0dd67e563ad34e9ae922dc",
+          "evidence": "Global brushes, control templates, field styles, table rows, scroll policy."
+        },
+        {
+          "path": "src/Lutra.App/Ui.cs",
+          "sha256": "b6da2221bffaead39f377f2880d50b36fa1f37092f3bcaacb0975e1dbaa3f304",
+          "evidence": "Text, button, panel and field helpers; exact twin-channel L paths."
+        },
+        {
+          "path": "src/Lutra.App/MainWindow.cs",
+          "sha256": "ab88244e526727aa48b91f7dcc52925bb12edddd3649fb94120366b1879b25ae",
+          "evidence": "Native window dimensions, rail, shell, page header, actions, draft/connection/alarm states and content capture."
+        },
+        {
+          "path": "src/Lutra.App/Views.cs",
+          "sha256": "c63c9b15cbb1d3be61cad69e15fa9713f19eceab65b6789d1bbab7aa248515a5",
+          "evidence": "Overview, curves, alarms, history, devices and settings compositions."
+        },
+        {
+          "path": "src/Lutra.App/CurveForm.cs",
+          "sha256": "e4b040c04c499ca95f6775648cb61d903cc6357d989b2ccb8393fb6d782a7294",
+          "evidence": "Field layout, plot/inspector sizing, pending-coordinate state, unavailable selectors."
+        },
+        {
+          "path": "src/Lutra.App/Plot.cs",
+          "sha256": "33d23c355eaee3533d5e8435ce89c1e33bd60c91bb26793885e3c26eeaff93bb",
+          "evidence": "Plot, CurvePlot and HistoryPlot geometry, colors, strokes, focus and input paths."
+        },
+        {
+          "path": "PRODUCT.md",
+          "sha256": "40a6367c467c97726b580d1aafc6023ae061f4e7faf764a2de4f254431bd118b",
+          "evidence": "Native platform, approved identity delegation and durable visual constraints."
+        },
+        {
+          "path": ".impeccable/direction.md",
+          "sha256": "a0146e0115a43f302021423fc5e058db83caf443f043494855372418d9bddf32",
+          "evidence": "Approved world name; provisional values reconciled against the build."
+        },
+        {
+          "path": ".impeccable/surfaces/src-lutra-app-mainwindow-cs.md",
+          "sha256": "04bff639e6b55ac8e9d87c7a939a56a538d1b3b7517371c574dc634197688797",
+          "evidence": "Surface-specific Operate direction; not promoted to global architecture."
+        }
+      ],
+      "screenshots": [
+        {
+          "path": ".impeccable/review/alarms-1280-fi.png",
+          "sha256": "844c1eef751d109d16fcd2d6e50408b1dc0330c46484cdaac96ff6094d022f0f",
+          "widthPx": 1265,
+          "heightPx": 802,
+          "inspected": true,
+          "evidence": "Finnish alarm form, native fields, explicit state, global actions."
+        },
+        {
+          "path": ".impeccable/review/curves-1120-fi.png",
+          "sha256": "67d22cd21567640cdca6ed1e3a8ceaeb44b96224bbc448e4ed45de23ada5e086",
+          "widthPx": 1105,
+          "heightPx": 802,
+          "inspected": true,
+          "evidence": "Finnish curve editor at the minimum named outer-window width; fixed rail and inspector, flexible plot, scrolling."
+        },
+        {
+          "path": ".impeccable/review/curves-1440-en.png",
+          "sha256": "aab4a386916d13463fca499142424c99b9472f2cd10b153c0341dc1d56b562b7",
+          "widthPx": 1425,
+          "heightPx": 882,
+          "inspected": true,
+          "evidence": "English curve editor; native controls, original mark, rule selection, plot and live/startup annotations."
+        },
+        {
+          "path": ".impeccable/review/devices-1280-en.png",
+          "sha256": "a19cf6a6ce2b5fb6b1027326f80b7f022fb075d2c0a174624ddd028ae380e32e",
+          "widthPx": 1265,
+          "heightPx": 802,
+          "inspected": true,
+          "evidence": "Device panels and ruled tables."
+        },
+        {
+          "path": ".impeccable/review/history-1280-en.png",
+          "sha256": "00e80c4fed0488d9c044c94b7d4011345cc06d54706b6b9d8b304089a896bc94",
+          "widthPx": 1265,
+          "heightPx": 802,
+          "inspected": true,
+          "evidence": "Large history plot, selectors and measurement summary."
+        },
+        {
+          "path": ".impeccable/review/overview-1280-en.png",
+          "sha256": "2613325a33c25ab97cd97a8634df62af9f41ee52d6207a3884aad863ff8b4abb",
+          "widthPx": 1265,
+          "heightPx": 802,
+          "inspected": true,
+          "evidence": "History preview, sensor table and ruled active-control list."
+        },
+        {
+          "path": ".impeccable/review/settings-1280-en.png",
+          "sha256": "b00b470b1ef38d65f13a42bb2837a17ffaa88e1c4adf8bcfbbdee285487f4a7a",
+          "widthPx": 1265,
+          "heightPx": 802,
+          "inspected": true,
+          "evidence": "Two-column working panels and native preferences/actions."
+        }
+      ],
+      "screenshotMethod": "MainWindow.Capture uses WPF RenderTargetBitmap at 96 DPI on Content. Images exclude Windows chrome. All seven supplied images are demo/synthetic captures, not physical hardware verification.",
+      "componentSources": {
+        "button-primary": [
+          "Theme.xaml: Button style and Primary style",
+          "Ui.cs: Ui.Button"
+        ],
+        "button-secondary": [
+          "Theme.xaml: Button style",
+          "Ui.cs: Ui.Button"
+        ],
+        "text-field": [
+          "Theme.xaml: TextBox style",
+          "Ui.cs: Ui.Field, Ui.Input"
+        ],
+        "select-field": [
+          "Theme.xaml: ComboBox style",
+          "Ui.cs: Ui.Field",
+          "CurveForm.cs: Select"
+        ],
+        "navigation-item-selected": [
+          "MainWindow.cs: Render rail/nav",
+          "Theme.xaml: Button style"
+        ],
+        "surface-panel": [
+          "Ui.cs: Ui.Panel",
+          "Views.cs: SettingsView"
+        ],
+        "data-row": [
+          "Theme.xaml: DataGrid, DataGridColumnHeader, DataGridCell styles",
+          "Ui.cs: Ui.Table",
+          "Views.cs: OverviewView, DevicesView"
+        ],
+        "rule-selector-selected": [
+          "Views.cs: CurvesView rule-list buttons",
+          "Theme.xaml: Button style"
+        ],
+        "curve-plot": [
+          "Plot.cs: Plot, CurvePlot",
+          "CurveForm.cs: plot and coordinate-editor composition"
+        ],
+        "brand-mark": [
+          "Ui.cs: Ui.Mark",
+          "MainWindow.cs: Render brand row"
+        ]
+      },
+      "sourcePathBaseForComponentSources": "src/Lutra.App/",
+      "tokenSources": {
+        "Theme.xaml": [
+          "colors.ink",
+          "colors.muted",
+          "colors.forest",
+          "colors.focus-green",
+          "colors.line",
+          "colors.porcelain",
+          "colors.workspace",
+          "colors.selection",
+          "colors.text-selection",
+          "colors.table-header",
+          "colors.table-alternate",
+          "rounded.control",
+          "typography.body"
+        ],
+        "Ui.cs": [
+          "colors.mint-mark",
+          "typography.label",
+          "spacing.surface-inset",
+          "spacing.label-gap",
+          "spacing.field-gap",
+          "rounded.square"
+        ],
+        "MainWindow.cs": [
+          "colors.graphite",
+          "colors.rail-selected",
+          "colors.rail-meta",
+          "colors.rail-subtle",
+          "colors.alarm-red",
+          "typography.headline",
+          "typography.brand",
+          "typography.status",
+          "typography.annotation",
+          "spacing.shell-top",
+          "spacing.shell-inline"
+        ],
+        "Views.cs": [
+          "colors.device-caution",
+          "typography.section",
+          "typography.section-compact",
+          "typography.item-title",
+          "spacing.form-gap",
+          "spacing.section-gap",
+          "spacing.pane-gap"
+        ],
+        "CurveForm.cs": [
+          "colors.amber-ink",
+          "typography.plot-title",
+          "spacing.compact-gap",
+          "spacing.cell-inset"
+        ],
+        "Plot.cs": [
+          "colors.chart-grid",
+          "colors.live-amber",
+          "colors.amber-ink",
+          "typography.annotation"
+        ]
+      },
+      "finishReview": {
+        "disposition": "ship",
+        "authority": "Parent's completed finish-review handoff",
+        "scope": "The four listed review corrections were resolved. This records that bounded disposition only, not a blanket whole-app, accessibility or hardware certification."
+      },
+      "notCanonized": [
+        "Synthetic demo measurements are examples, not real hardware readings.",
+        "Generated OKLCH tonal ramps are preview metadata, not application brushes.",
+        "HTML/CSS preview approximations are not native behavior specifications.",
+        "No additional design audit, defect repair or implementation change was performed by this documentation pass."
+      ]
+    }
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Forest action button. Shows enabled, hover, keyboard focus and disabled treatments from the WPF template.",
+      "html": "<button class=\"ds-button ds-primary\">Apply changes</button>",
+      "css": ".ds-button{font:400 13px 'Segoe UI',sans-serif;color:#202A28;background:#FFFFFF;border:1px solid #D9DFDC;border-radius:3px;padding:8px 13px;min-height:34px;cursor:pointer}.ds-button:hover{opacity:.8}.ds-button:focus-visible{outline:none;border:2px solid #287F62}.ds-button:disabled{opacity:.45;cursor:default}.ds-primary{background:#256450;color:#FFFFFF;border-color:#256450;font-weight:600}"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Porcelain action with a ruled edge, used for revert and local editing actions.",
+      "html": "<button class=\"ds-button\">Revert draft</button>",
+      "css": ".ds-button{font:400 13px 'Segoe UI',sans-serif;color:#202A28;background:#FFFFFF;border:1px solid #D9DFDC;border-radius:3px;padding:8px 13px;min-height:34px;cursor:pointer}.ds-button:hover{opacity:.8}.ds-button:focus-visible{outline:none;border:2px solid #287F62}.ds-button:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Labeled numeric field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Native TextBox geometry and label hierarchy. HTML input selection and focus only approximate the WPF template.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-caption\">Start temperature · °C</span><input class=\"ds-input\" value=\"40\" inputmode=\"decimal\" aria-label=\"Start temperature in degrees Celsius\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;font:400 13px 'Segoe UI',sans-serif}.ds-caption{color:#596763;font-size:12px}.ds-input{font:400 13px 'Segoe UI',sans-serif;color:#202A28;background:#FFFFFF;border:1px solid #D9DFDC;padding:7px 9px;min-width:60px;min-height:18px}.ds-input:focus-visible{outline:none;border-color:#256450}.ds-input::selection{background:#C5DED4}"
+    },
+    {
+      "name": "Labeled selector",
+      "kind": "input",
+      "refersTo": "select-field",
+      "description": "Native ComboBox role and declared brushes. The browser arrow, popup, bevel and keyboard rendering are approximations; WPF remains authoritative.",
+      "html": "<label class=\"ds-select-field\"><span class=\"ds-select-caption\">Input temperature</span><select class=\"ds-select\" aria-label=\"Input temperature\"><option>Graphics card · GPU core</option><option>Aqua Computer QUADRO · Coolant</option></select></label>",
+      "css": ".ds-select-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px;font:400 13px 'Segoe UI',sans-serif}.ds-select-caption{font-size:12px;color:#596763}.ds-select{font:400 13px 'Segoe UI',sans-serif;color:#202A28;background:#FFFFFF;border:1px solid #D9DFDC;padding:6px 8px;min-height:34px}.ds-select:focus-visible{outline:2px solid #287F62;outline-offset:1px}"
+    },
+    {
+      "name": "Graphite navigation",
+      "kind": "nav",
+      "refersTo": "navigation-item-selected",
+      "description": "A sample of the persistent rail and selected page. The HTML buttons do not navigate the native application.",
+      "html": "<nav class=\"ds-rail\" aria-label=\"Lutra pages\"><button class=\"ds-nav-item\">Overview</button><button class=\"ds-nav-item ds-nav-selected\" aria-current=\"page\">Control curves</button><button class=\"ds-nav-item\">Alarms</button><button class=\"ds-nav-item\">History</button></nav>",
+      "css": ".ds-rail{background:#252E2C;width:152px;padding:12px;font:400 13px 'Segoe UI',sans-serif}.ds-nav-item{display:block;width:100%;text-align:left;font:400 13px 'Segoe UI',sans-serif;color:#FFFFFF;background:transparent;border:1px solid transparent;border-radius:3px;padding:11px 8px 11px 12px;margin:0 0 5px;cursor:pointer}.ds-nav-selected{background:#43564F}.ds-nav-item:hover{opacity:.8}.ds-nav-item:focus-visible{outline:none;border:2px solid #287F62}"
+    },
+    {
+      "name": "Porcelain working panel",
+      "kind": "card",
+      "refersTo": "surface-panel",
+      "description": "A square bordered task container with the helper's standard inset and no shadow.",
+      "html": "<section class=\"ds-panel\"><h2 class=\"ds-panel-title\">Preferences</h2><p class=\"ds-panel-copy\">Language, service and local storage.</p></section>",
+      "css": ".ds-panel{background:#FFFFFF;border:1px solid #D9DFDC;border-radius:0;padding:20px;color:#202A28;font:400 13px 'Segoe UI',sans-serif}.ds-panel-title{font:600 19px 'Segoe UI',sans-serif;margin:0}.ds-panel-copy{color:#596763;font:400 13px 'Segoe UI',sans-serif;margin:0}"
+    },
+    {
+      "name": "Ruled measurement table",
+      "kind": "custom",
+      "refersTo": "data-row",
+      "description": "Representative DataGrid appearance with header, alternating rows and a selected row. The HTML table does not emulate DataGrid selection, virtualization or scrolling.",
+      "html": "<table class=\"ds-table\"><thead><tr><th>Sensor</th><th>Value</th><th></th></tr></thead><tbody><tr><td>Coolant</td><td>38.2</td><td>°C</td></tr><tr class=\"ds-table-selected\" aria-selected=\"true\"><td>GPU core</td><td>46.0</td><td>°C</td></tr><tr><td>CPU package</td><td>52.0</td><td>°C</td></tr><tr><td>Water pump</td><td>2380</td><td>rpm</td></tr></tbody></table>",
+      "css": ".ds-table{border-collapse:collapse;background:#FFFFFF;color:#202A28;font:400 13px 'Segoe UI',sans-serif;width:100%}.ds-table th{height:36px;background:#EFF3F0;color:#596763;text-align:left;font-weight:600;padding:0 12px;border-bottom:1px solid #D9DFDC}.ds-table td{height:37px;padding:0 12px;border-bottom:1px solid #D9DFDC}.ds-table tbody tr:nth-child(even){background:#F7F9F7}.ds-table tbody tr.ds-table-selected{background:#DFEBE4}.ds-table th:nth-child(2),.ds-table td:nth-child(2){width:88px}.ds-table th:nth-child(3),.ds-table td:nth-child(3){width:65px}"
+    },
+    {
+      "name": "Selected curve rule",
+      "kind": "button",
+      "refersTo": "rule-selector-selected",
+      "description": "Selected rule button with a semibold name and a smaller explicit enabled state.",
+      "html": "<button class=\"ds-rule\" aria-pressed=\"true\"><span class=\"ds-rule-name\">Water pump</span><span class=\"ds-rule-state\">Enabled</span></button>",
+      "css": ".ds-rule{font:400 13px 'Segoe UI',sans-serif;color:#202A28;background:#DFEBE4;border:1px solid #D9DFDC;border-radius:3px;padding:8px 13px;min-height:34px;text-align:left;cursor:pointer}.ds-rule-name{display:block;font-size:14px;font-weight:600}.ds-rule-state{display:block;font-size:11px;color:#596763}.ds-rule:hover{opacity:.8}.ds-rule:focus-visible{outline:none;border:2px solid #287F62}"
+    },
+    {
+      "name": "Response plot",
+      "kind": "custom",
+      "refersTo": "curve-plot",
+      "description": "Illustrative SVG translation of native chart geometry, colors and focus. Sixteen sample nodes show the visual grammar; this preview does not drag points, validate coordinates or read live sensors.",
+      "html": "<svg class=\"ds-plot\" viewBox=\"0 0 500 240\" tabindex=\"0\" role=\"img\" aria-label=\"Illustrative response plot with selected point, startup and live temperature markers\"><rect width=\"500\" height=\"240\" fill=\"#FFFFFF\"/><line x1=\"43\" y1=\"200\" x2=\"481\" y2=\"200\" stroke=\"#DFE5E1\" stroke-width=\"1\"/><text x=\"3\" y=\"203\">0</text><line x1=\"43\" y1=\"155\" x2=\"481\" y2=\"155\" stroke=\"#DFE5E1\" stroke-width=\"1\"/><text x=\"3\" y=\"158\">25</text><line x1=\"43\" y1=\"110\" x2=\"481\" y2=\"110\" stroke=\"#DFE5E1\" stroke-width=\"1\"/><text x=\"3\" y=\"113\">50</text><line x1=\"43\" y1=\"65\" x2=\"481\" y2=\"65\" stroke=\"#DFE5E1\" stroke-width=\"1\"/><text x=\"3\" y=\"68\">75</text><line x1=\"43\" y1=\"20\" x2=\"481\" y2=\"20\" stroke=\"#DFE5E1\" stroke-width=\"1\"/><text x=\"3\" y=\"23\">100</text><text x=\"3\" y=\"11\">%</text><line x1=\"115\" y1=\"20\" x2=\"115\" y2=\"200\" stroke=\"#596763\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"120\" y=\"34\">Start 40°</text><line x1=\"202\" y1=\"48\" x2=\"202\" y2=\"200\" stroke=\"#A4631D\"/><text class=\"ds-live-caption\" x=\"208\" y=\"55\">Live 46°</text><circle cx=\"202\" cy=\"200\" r=\"3\" fill=\"#A4631D\"/><polyline points=\"115.00,200.00 134.33,188.00 153.67,176.00 173.00,164.00 192.33,152.00 211.67,140.00 231.00,128.00 250.33,116.00 269.67,104.00 289.00,92.00 308.33,80.00 327.67,68.00 347.00,56.00 366.33,44.00 385.67,32.00 405.00,20.00\" fill=\"none\" stroke=\"#256450\" stroke-width=\"2.5\"/><circle cx=\"115.00\" cy=\"200.00\" r=\"5\" fill=\"#256450\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"134.33\" cy=\"188.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"153.67\" cy=\"176.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"173.00\" cy=\"164.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"192.33\" cy=\"152.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"211.67\" cy=\"140.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"231.00\" cy=\"128.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"250.33\" cy=\"116.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"269.67\" cy=\"104.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"289.00\" cy=\"92.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"308.33\" cy=\"80.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"327.67\" cy=\"68.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"347.00\" cy=\"56.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"366.33\" cy=\"44.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"385.67\" cy=\"32.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><circle cx=\"405.00\" cy=\"20.00\" r=\"3.5\" fill=\"#FFFFFF\" stroke=\"#256450\" stroke-width=\"1.5\"/><text x=\"37\" y=\"221\">35°</text><text x=\"124.6\" y=\"221\">41°</text><text x=\"212.2\" y=\"221\">47°</text><text x=\"299.8\" y=\"221\">53°</text><text x=\"387.4\" y=\"221\">59°</text><text x=\"475\" y=\"221\">65°</text></svg>",
+      "css": ".ds-plot{display:block;width:100%;min-width:280px;background:#FFFFFF}.ds-plot:focus-visible{outline:2px dashed #256450;outline-offset:-2px}.ds-plot text{font:400 11px 'Segoe UI',sans-serif;fill:#596763}.ds-plot .ds-live-caption{fill:#854D12}"
+    },
+    {
+      "name": "Twin-channel L mark",
+      "kind": "custom",
+      "refersTo": "brand-mark",
+      "description": "Exact path data from Ui.Mark; preview pairs the 32-DIP design canvas with the native wordmark role on graphite.",
+      "html": "<div class=\"ds-brand\"><svg class=\"ds-mark\" viewBox=\"0 0 32 32\" width=\"32\" height=\"32\" role=\"img\" aria-label=\"Lutra twin-channel L\"><path d=\"M7,5 L7,20 Q7,25 12,25 L27,25\" fill=\"none\" stroke=\"#99CDB7\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M16,5 L16,15 Q16,17 18,17 L27,17\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4\" stroke-linecap=\"round\"/></svg><span class=\"ds-wordmark\">Lutra</span></div>",
+      "css": ".ds-brand{display:flex;align-items:center;background:#252E2C;padding:22px;color:#FFFFFF}.ds-mark{display:block;flex:none}.ds-wordmark{font:600 25px 'Segoe UI',sans-serif}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Graphite-and-porcelain control desk",
+    "overview": "Lutra is a precise, approachable native Windows instrument. Porcelain working surfaces sit on a cool gray workspace, with a graphite navigation rail and restrained forest-green actions. The original twin-channel L mark gives the application its own identity; the interface relies on readable controls and plotted evidence rather than decorative imagery.\n\nThe visual system is compact and flat. Segoe UI, ruled rows, aligned fields and generous chart space make device relationships and editable values easy to scan. Native controls retain their Windows behavior, and state is stated in text alongside color. The owner approved this direction and delegated its name and visual identity.",
+    "keyCharacteristics": [
+      "Graphite navigation, porcelain working panels and forest-green action emphasis.",
+      "Native Segoe UI with a compact regular/semibold hierarchy.",
+      "Square ruled surfaces, small button corners and visible keyboard focus.",
+      "Prominent plots with distinct response, startup and live-temperature marks.",
+      "Explicit draft, unavailable-reading and pending-coordinate states."
+    ],
+    "rules": [
+      {
+        "name": "The Meaning Before Color Rule",
+        "body": "Green identifies actions and plotted response. State must also be named in text; green alone never asserts verified hardware safety.",
+        "section": "colors"
+      },
+      {
+        "name": "The Native Type Rule",
+        "body": "Use the implemented Segoe UI hierarchy and normal Windows text behavior. Do not introduce a separate display or monospace face for future screens.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled Surface Rule",
+        "body": "Separate working areas with tone, whitespace and thin rules. Application panels do not use drop shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do reuse the frontmatter tokens and the existing WPF theme before adding a visual variant.",
+      "Do keep labels associated with their controls and retain visible keyboard focus.",
+      "Do keep the selected sensor, output and response curve legible together.",
+      "Do preserve text for draft, unavailable, pending and alarm states; show missing measurements as an em dash and history gaps as gaps.",
+      "Do keep the page body scrollable while the page title, connection status and bottom actions remain outside that scroller.",
+      "Do preserve the original twin-channel L geometry and its mint/white treatment on graphite.",
+      "Do use the approved native Segoe UI family and regular/semibold weights."
+    ],
+    "donts": [
+      "Don't use green as a claim of verified cooling safety or universal hardware compatibility.",
+      "Don't replace the workbench with the rejected oversized dark-blue metric-card wall.",
+      "Don't add RGB decoration, borrowed Aquasuite visual assets, glass effects or decorative entrance animation.",
+      "Don't convert native DIP values into assumed physical-pixel sizes or invent web/mobile breakpoints.",
+      "Don't promote demo measurements, synthesized tonal ramps or browser preview behavior into native product rules.",
+      "Don't imply that edited point coordinates have reached the curve or hardware before the explicit update and apply actions."
+    ]
+  }
+}
+
