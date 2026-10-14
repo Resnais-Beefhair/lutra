@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net8.0-windows</TargetFramework><UseWPF>true</UseWPF><UseWindowsForms>true</UseWindowsForms><ImplicitUsings>disable</ImplicitUsings><AssemblyName>Lutra</AssemblyName><ApplicationIcon>../../assets/lutra.ico</ApplicationIcon></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Lutra.Hardware/Lutra.Hardware.csproj" /></ItemGroup>
+  <ItemGroup><Resource Include="../../assets/lutra.ico" Link="lutra.ico" /></ItemGroup>
+</Project>
