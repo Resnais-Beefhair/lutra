@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+.dotnet/
+artifacts/
+data/
+.vs/
+*.user
+*.log
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/config.local.json

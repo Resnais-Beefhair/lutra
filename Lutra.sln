@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4A7E5445-9543-4D4C-8424-C75191501969}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lutra.Core", "src\Lutra.Core\Lutra.Core.csproj", "{DA02A571-19B5-4EB0-ADE9-8B0D951E7200}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lutra.Hardware", "src\Lutra.Hardware\Lutra.Hardware.csproj", "{066BE794-0349-4504-9AC5-0977504413EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lutra.Service", "src\Lutra.Service\Lutra.Service.csproj", "{1F2738FF-1C33-403B-8C1E-EADB61A7260C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lutra.App", "src\Lutra.App\Lutra.App.csproj", "{8C2FF94F-F0C4-4E98-9CB4-D2F372792A89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2E108E91-8F89-4C16-94EE-BF4D59A72FDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lutra.Tests", "tests\Lutra.Tests\Lutra.Tests.csproj", "{548C9810-23FB-4BF3-A64D-0DCA06143294}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lutra.App.Tests", "tests\Lutra.App.Tests\Lutra.App.Tests.csproj", "{B1A7DE61-7844-4121-B1B1-5F8BE92154BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA02A571-19B5-4EB0-ADE9-8B0D951E7200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA02A571-19B5-4EB0-ADE9-8B0D951E7200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA02A571-19B5-4EB0-ADE9-8B0D951E7200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA02A571-19B5-4EB0-ADE9-8B0D951E7200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{066BE794-0349-4504-9AC5-0977504413EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066BE794-0349-4504-9AC5-0977504413EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066BE794-0349-4504-9AC5-0977504413EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066BE794-0349-4504-9AC5-0977504413EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2738FF-1C33-403B-8C1E-EADB61A7260C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2738FF-1C33-403B-8C1E-EADB61A7260C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2738FF-1C33-403B-8C1E-EADB61A7260C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2738FF-1C33-403B-8C1E-EADB61A7260C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2FF94F-F0C4-4E98-9CB4-D2F372792A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2FF94F-F0C4-4E98-9CB4-D2F372792A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2FF94F-F0C4-4E98-9CB4-D2F372792A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2FF94F-F0C4-4E98-9CB4-D2F372792A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548C9810-23FB-4BF3-A64D-0DCA06143294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548C9810-23FB-4BF3-A64D-0DCA06143294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548C9810-23FB-4BF3-A64D-0DCA06143294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548C9810-23FB-4BF3-A64D-0DCA06143294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A7DE61-7844-4121-B1B1-5F8BE92154BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A7DE61-7844-4121-B1B1-5F8BE92154BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A7DE61-7844-4121-B1B1-5F8BE92154BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A7DE61-7844-4121-B1B1-5F8BE92154BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA02A571-19B5-4EB0-ADE9-8B0D951E7200} = {4A7E5445-9543-4D4C-8424-C75191501969}
+		{066BE794-0349-4504-9AC5-0977504413EC} = {4A7E5445-9543-4D4C-8424-C75191501969}
+		{1F2738FF-1C33-403B-8C1E-EADB61A7260C} = {4A7E5445-9543-4D4C-8424-C75191501969}
+		{8C2FF94F-F0C4-4E98-9CB4-D2F372792A89} = {4A7E5445-9543-4D4C-8424-C75191501969}
+		{548C9810-23FB-4BF3-A64D-0DCA06143294} = {2E108E91-8F89-4C16-94EE-BF4D59A72FDB}
+		{B1A7DE61-7844-4121-B1B1-5F8BE92154BB} = {2E108E91-8F89-4C16-94EE-BF4D59A72FDB}
+	EndGlobalSection
+EndGlobal
