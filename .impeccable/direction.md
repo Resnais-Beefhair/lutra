@@ -4,18 +4,18 @@ Scope: replace the complete native Windows shell. Mode: Operate. User chose code
 
 Grounded shortlist: laboratory console; dim-room scope; compact mixer; CAD properties desk; logic programmer; automation timeline; graphite-and-porcelain control desk. Assignment 7, seed 889d05a4. The selected desk best separates live evidence from editable intent. The ticket wallet and streaming wall lose both task clarity and audience identification; borrow neither appearance. The grid specimen and monochrome marketing surface lose both; raise alignment discipline and evidence density. Transit mapping is competitive in relationship clarity but weak for editing: retain explicit input-to-output relationships. The split-flap board is competitive for monitoring; raise column stability without flap animation.
 
-Physical scene: a person configures cooling at their Windows desk in normal room light, then leaves the service operating during games. A light instrument surface makes dense settings readable; a graphite rail keeps navigation quiet. Green marks deliberate actions, never an unverified safety claim.
+Physical scene (owner correction, 14 October 2026): monitoring at a Windows desk in dim lighting. The owner explicitly requests dark surfaces throughout, prominent temperature/flow instruments and RPM displays restored to Overview. Retain Segoe UI, the original L mark and native editing controls. The former light work area is superseded by graphite surfaces; mint actions, cyan coolant and amber GPU traces organize actual readings.
 
 ## Direction contract
 
-THESIS: A cooling control desk that makes the selected sensor-to-output relationship visible beside its actual response curve; no wall of metric cards.
+THESIS: A cooling instrument panel with live temperatures, flow, output RPM and simultaneous trends visible at a glance. Curve editing remains a separate precise workbench.
 
-OWN-WORLD: Porcelain white work area, cool gray workspace, graphite navigation, restrained forest-green actions. Square ruled data rows, native Segoe UI text, tabular measurements and generous chart space. Original twin-channel L mark.
+OWN-WORLD: Dim-room graphite work area and navigation, mint actions, restrained cyan/amber/purple measurement colors. Square ruled surfaces, native Segoe UI text, tabular measurements and generous chart space. Original twin-channel L mark.
 
 STORY: Find a device, inspect its readings, select a temperature and output, shape and apply a curve. Draft state remains distinct from active hardware state.
 
-FIRST VIEWPORT: A 176px navigation rail; page title and connection status above one large working surface. Curves use a narrow rule list, a broad graph and an adjacent parameter inspector. Apply sits at the bottom right. Signature interaction: drag or select a curve node, update its numeric coordinates, or straighten all 16 nodes between endpoints; the live temperature cursor gives the edit context. No decorative entrance animation.
+FIRST VIEWPORT: A 176px navigation rail; Overview restores temperature and flow dials, large actual RPM and PWM displays, and simultaneous temperature/RPM trends. Zero and missing measurements remain distinct. Five/fifteen/sixty-minute selections load local history; readings update in place. Curves retain their broad editor and inspector. About & updates exposes repository links and explicit check/download/install states. No decorative entrance animation.
 
-FORM: Graphite-and-porcelain control desk, seventh grounded direction, seed 889d05a4. Native WPF, keyboard-operable at 1120px and above; page scrolling preserves large-text usability.
+FORM: Dark graphite cooling instrument desk, superseding the seventh direction's porcelain surfaces by owner request; original selection seed 889d05a4 retained as history. Native WPF, keyboard-operable at 1120px and above; compact monitoring density at shorter window heights and page scrolling preserve usability.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
