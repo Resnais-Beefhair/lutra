@@ -32,13 +32,13 @@ internal sealed class CurveForm
         firstT = Ui.Number(rule.Points[0].Temperature); firstP = Ui.Number(rule.Points[0].Power);
         lastT = Ui.Number(rule.Points[^1].Temperature); lastP = Ui.Number(rule.Points[^1].Power);
         pointT = Ui.Number(rule.Points[0].Temperature); pointP = Ui.Number(rule.Points[0].Power);
-        coordinateNotice = Ui.Text("", 12, "#854D12");
+        coordinateNotice = Ui.Text("", 12, Ui.WarningHex);
         pointSelection = Select(Enumerable.Range(0, 16).Select(i => (i.ToString(), Ui.T("Point ", "Piste ") + (i + 1) + " / 16")), "0");
         Plot.SelectionChanged += () => { syncing = true; pointSelection.SelectedValue = Plot.Selected.ToString(); pointT.Text = Plot.Points[Plot.Selected].Temperature.ToString("0.##"); pointP.Text = Plot.Points[Plot.Selected].Power.ToString("0.##"); syncing = false; pointPending = false; CoordinateState(); };
         pointSelection.SelectionChanged += (_, _) => { if (!syncing) { Plot.Selected = int.Parse(Id(pointSelection), CultureInfo.InvariantCulture); syncing = true; pointT.Text = Plot.Points[Plot.Selected].Temperature.ToString("0.##"); pointP.Text = Plot.Points[Plot.Selected].Power.ToString("0.##"); syncing = false; pointPending = false; CoordinateState(); Plot.InvalidateVisual(); } };
         Plot.Edited += () => { SyncEndpoints(); Changed?.Invoke(); };
         var graph = Ui.Stack(Ui.Text(Ui.T("Curve response", "Käyrän vaste"), 17, bold: true),
-            Ui.Text(Ui.T("Drag a point or enter its coordinates. Response is scaled to the output limits.", "Vedä pistettä tai anna sen koordinaatit. Vaste skaalataan lähtörajoihin."), 12, "#596763"), Plot);
+            Ui.Text(Ui.T("Drag a point or enter its coordinates. Response is scaled to the output limits.", "Vedä pistettä tai anna sen koordinaatit. Vaste skaalataan lähtörajoihin."), 12, Ui.MutedHex), Plot);
         var selected = Ui.Columns((0, Ui.Field(Ui.T("Point temperature · °C", "Pisteen lämpötila · °C"), pointT)),
             (12, new Border()), (0, Ui.Field(Ui.T("Response · %", "Vaste · %"), pointP)),
             (12, new Border()), (138, updatePoint = Ui.Button(Ui.T("Update point", "Muuta pistettä"), () => guard(() => {
@@ -59,7 +59,7 @@ internal sealed class CurveForm
         })));
         graph.Children.Add(coordinateNotice);
         graph.Children.Add(Ui.Text(Ui.T("Below the start temperature, output stays off or at its minimum. A running fan stops at the curve’s last zero point.",
-            "Käynnistysrajan alla lähtö on pois päältä tai minimissä. Käynnistynyt tuuletin pysähtyy käyrän viimeisessä nollapisteessä."), 12, "#596763"));
+            "Käynnistysrajan alla lähtö on pois päältä tai minimissä. Käynnistynyt tuuletin pysähtyy käyrän viimeisessä nollapisteessä."), 12, Ui.MutedHex));
         var parameters = Ui.Stack(Ui.Field(Ui.T("Curve name", "Käyrän nimi"), name), Ui.Field(Ui.T("Start temperature · °C", "Käynnistysraja · °C"), startup),
             Ui.Columns((0, Ui.Field(Ui.T("Minimum · %", "Minimi · %"), minimum)), (10, new Border()), (0, Ui.Field(Ui.T("Maximum · %", "Maksimi · %"), maximum))),
             Ui.Field(Ui.T("Fallback output · %", "Varateho · %"), fallback), enabled, pump, hold, boost,

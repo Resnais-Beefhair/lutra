@@ -45,9 +45,11 @@ internal static class Demo
     }
     public static HistoryPoint[] History(string sensor, TimeSpan range)
     {
-        var end = DateTimeOffset.UtcNow; double baseValue = sensor == Water ? 38.2 : sensor == Gpu ? 46 : sensor == Cpu ? 52 : sensor.Contains("rpm") ? 2380 : sensor.Contains("flow") ? 88.6 : 44;
+        var end = DateTimeOffset.UtcNow; double baseValue = State(Configuration()).Values.FirstOrDefault(v => v.Id == sensor)?.Value ?? 0;
+        double Shape(int i) => Math.Sin(i / 37.0) * .035 + Math.Exp(-Math.Pow((i - 170) / 38.0, 2)) * .08;
+        double tail = Shape(299);
         return Enumerable.Range(0, 300).Select(i => new HistoryPoint(end - range + TimeSpan.FromTicks(range.Ticks * i / 299),
-            baseValue + Math.Sin(i / 37.0) * baseValue * .035 + Math.Exp(-Math.Pow((i - 170) / 38.0, 2)) * baseValue * .08)).ToArray();
+            baseValue + (Shape(i) - tail) * baseValue)).ToArray();
     }
 }
 

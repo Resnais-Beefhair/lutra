@@ -7,15 +7,15 @@ namespace Lutra.App;
 
 internal class Plot : FrameworkElement
 {
-    public static readonly Brush Green = new SolidColorBrush(Color.FromRgb(37, 100, 80));
-    protected static readonly Brush Muted = new SolidColorBrush(Color.FromRgb(89, 103, 99));
+    public static readonly Brush Green = Ui.Accent;
+    protected static readonly Brush Muted = Ui.Muted;
     protected Rect Area => new(43, 20, Math.Max(1, ActualWidth - 62), Math.Max(1, ActualHeight - 53));
     protected void Text(DrawingContext dc, string text, double x, double y, Brush? ink = null)
         => dc.DrawText(new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Segoe UI"), 11, ink ?? Muted, VisualTreeHelper.GetDpi(this).PixelsPerDip), new(x, y));
     protected void Axes(DrawingContext dc, double minimum, double maximum, string unit)
     {
-        dc.DrawRectangle(Brushes.White, null, new(0, 0, ActualWidth, ActualHeight));
-        var grid = new Pen(new SolidColorBrush(Color.FromRgb(223, 229, 225)), 1);
+        dc.DrawRectangle(Ui.Surface, null, new(0, 0, ActualWidth, ActualHeight));
+        var grid = new Pen(Ui.Line, 1);
         for (int i = 0; i <= 4; i++)
         {
             double y = Area.Bottom - Area.Height * i / 4;
@@ -67,13 +67,13 @@ internal sealed class CurvePlot : Plot
         var line = new Pen(Green, 2.5);
         for (int i = 1; i < Points.Length; i++) dc.DrawLine(line, Position(Points[i - 1]), Position(Points[i]));
         for (int i = 0; i < Points.Length; i++)
-            dc.DrawEllipse(i == Selected ? Green : Brushes.White, new(Green, 1.5), Position(Points[i]), i == Selected ? 5 : 3.5, i == Selected ? 5 : 3.5);
+            dc.DrawEllipse(i == Selected ? Green : Ui.Surface, new(Green, 1.5), Position(Points[i]), i == Selected ? 5 : 3.5, i == Selected ? 5 : 3.5);
         if (LiveTemperature is { } t && t >= low && t <= high)
         {
             double liveX = Area.Left + (t - low) / (high - low) * Area.Width;
-            dc.DrawLine(new Pen(new SolidColorBrush(Color.FromRgb(164, 99, 29)), 1), new(liveX, Area.Top + 28), new(liveX, Area.Bottom));
-            Text(dc, Ui.T("Live ", "Nyt ") + t.ToString("0.#") + "°", Math.Clamp(liveX + 6, Area.Left, Area.Right - 74), Area.Top + 22, new SolidColorBrush(Color.FromRgb(133, 77, 18)));
-            dc.DrawEllipse(new SolidColorBrush(Color.FromRgb(164, 99, 29)), null, new(liveX, Area.Bottom), 3, 3);
+            dc.DrawLine(new Pen(Ui.Gpu, 1), new(liveX, Area.Top + 28), new(liveX, Area.Bottom));
+            Text(dc, Ui.T("Live ", "Nyt ") + t.ToString("0.#") + "°", Math.Clamp(liveX + 6, Area.Left, Area.Right - 74), Area.Top + 22, Ui.Gpu);
+            dc.DrawEllipse(Ui.Gpu, null, new(liveX, Area.Bottom), 3, 3);
         }
     }
     protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

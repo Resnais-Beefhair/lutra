@@ -42,6 +42,7 @@ public sealed partial class MainWindow : Window
     {
         arguments = args; demo = args.Contains("--demo"); Title = "Lutra"; Width = 1440; Height = 920; MinWidth = 1120; MinHeight = 720;
         Style = (Style)Application.Current.FindResource(typeof(Window));
+        SourceInitialized += (_, _) => { int enabled = 1; _ = DwmSetWindowAttribute(new System.Windows.Interop.WindowInteropHelper(this).Handle, 20, ref enabled, sizeof(int)); };
         Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Lutra;component/lutra.ico"));
         try { Ui.Language = File.Exists(Path.Combine(local, "language.txt")) ? File.ReadAllText(Path.Combine(local, "language.txt")).Trim() : "en"; } catch (IOException) { }
         if (Ui.Language != "fi") Ui.Language = "en";
@@ -50,6 +51,7 @@ public sealed partial class MainWindow : Window
         if (Value("--width") is { } width) Width = double.Parse(width, CultureInfo.InvariantCulture);
         if (Value("--height") is { } height) Height = double.Parse(height, CultureInfo.InvariantCulture);
         if (Value("--page") is { } requestedPage) page = requestedPage;
+        if (Value("--update-result") is { } job) { updateMessage = AppUpdate.ReadUpdateResult(job) ?? Ui.T("Update result is unavailable. Check the installed version.", "Päivityksen tulos ei ole saatavilla. Tarkista asennettu versio."); page = "about"; }
         if (demo) { active = configuration = Demo.Configuration(); configured = true; state = Demo.State(configuration); }
         tray = new Forms.NotifyIcon { Icon = System.Drawing.Icon.ExtractAssociatedIcon(Environment.ProcessPath!), Text = "Lutra", Visible = !args.Contains("--capture") };
         tray.DoubleClick += (_, _) => Dispatcher.Invoke(() => { Show(); WindowState = WindowState.Normal; Activate(); });
@@ -59,7 +61,7 @@ public sealed partial class MainWindow : Window
         {
             if (args.Contains("--capture"))
             {
-                await Task.Delay(200); await LoadHistory(); await Task.Delay(100); Capture(Value("--capture")!); closing = true; Close(); return;
+                await Poll(); await LoadMonitorHistory(); await LoadHistory(); await Task.Delay(200); Capture(Value("--capture")!); closing = true; Close(); return;
             }
             timer.Start(); poll = Poll(); await poll;
         };
@@ -74,14 +76,15 @@ public sealed partial class MainWindow : Window
     {
         Ui.Language = Ui.Language == "fi" ? "fi" : "en";
         curveForm = null; captureForm = null; readingGrid = null; historyPlot = null; historySummary = null;
+        temperatureTraces = null; speedTraces = null;
         alarmLabels.Clear();
         var root = new Grid { Background = Ui.Color("#F0F2F0") }; root.ColumnDefinitions.Add(new() { Width = new(176) }); root.ColumnDefinitions.Add(new());
         var rail = new DockPanel { Background = Ui.Color("#252E2C") };
         var brand = Ui.Row(Ui.Mark(32), Ui.Text("Lutra", 25, "#FFFFFF", true)); brand.Margin = new(22, 25, 0, 28); DockPanel.SetDock(brand, Dock.Top); rail.Children.Add(brand);
-        var railFooter = Ui.Stack(Ui.Text("Lutra 0.4", 12, "#D0DDD7"), Ui.Text(Ui.T("Cooling control", "Jäähdytyksen ohjaus"), 11, "#B4C6BE"));
+        var railFooter = Ui.Stack(Ui.Text("Lutra 0.5", 12, "#D0DDD7"), Ui.Text(Ui.T("Cooling control", "Jäähdytyksen ohjaus"), 11, "#B4C6BE"));
         railFooter.Margin = new(23, 0, 10, 22); DockPanel.SetDock(railFooter, Dock.Bottom); rail.Children.Add(railFooter);
         var nav = new StackPanel { Margin = new(12, 0, 12, 0) };
-        foreach (var (key, english, finnish) in new[] { ("overview", "Overview", "Yleiskuva"), ("curves", "Control curves", "Säätökäyrät"), ("alarms", "Alarms", "Hälytykset"), ("history", "History", "Historia"), ("devices", "Devices", "Laitteet"), ("settings", "Settings", "Asetukset") })
+        foreach (var (key, english, finnish) in new[] { ("overview", "Overview", "Yleiskuva"), ("curves", "Control curves", "Säätökäyrät"), ("alarms", "Alarms", "Hälytykset"), ("history", "History", "Historia"), ("devices", "Devices", "Laitteet"), ("settings", "Settings", "Asetukset"), ("about", "About & updates", "Tietoja ja päivitykset") })
         {
             string target = key;
             var button = Ui.Button(Ui.T(english, finnish), () => Guard(() => { CaptureForm(); page = target; Render(); }));
@@ -96,19 +99,21 @@ public sealed partial class MainWindow : Window
         var indicator = Ui.Stack(status = Ui.Text("", 12, "#256450", true), draftLabel = Ui.Text("", 11, "#596763"));
         indicator.HorizontalAlignment = HorizontalAlignment.Right; indicator.MaxWidth = 300; DockPanel.SetDock(indicator, Dock.Right); top.Children.Add(indicator);
         var title = page switch { "curves" => Ui.T("Control curves", "Säätökäyrät"), "alarms" => Ui.T("Alarms", "Hälytykset"),
-            "history" => Ui.T("History", "Historia"), "devices" => Ui.T("Devices", "Laitteet"), "settings" => Ui.T("Settings", "Asetukset"), _ => Ui.T("Overview", "Yleiskuva") };
+            "history" => Ui.T("History", "Historia"), "devices" => Ui.T("Devices", "Laitteet"), "settings" => Ui.T("Settings", "Asetukset"), "about" => Ui.T("About & updates", "Tietoja ja päivitykset"), _ => Ui.T("Overview", "Yleiskuva") };
         var subtitle = page switch { "curves" => Ui.T("A temperature in. The right cooling out.", "Lämpötilasta sopivaan jäähdytystehoon."),
             "alarms" => Ui.T("Know when a temperature needs attention.", "Huomaa lämpötilat, jotka vaativat huomiota."),
             "history" => Ui.T("Read the pattern behind the current value.", "Tarkastele mittausten kehitystä."),
             "devices" => Ui.T("Connected hardware and available controls.", "Liitetyt laitteet ja käytettävissä olevat lähdöt."),
             "settings" => Ui.T("Language, service and local storage.", "Kieli, palvelu ja paikallinen tallennus."),
-            _ => Ui.T("Live readings and the controls behind them.", "Mittaukset ja niihin perustuvat ohjaukset.") };
+            "about" => Ui.T("Your version, the project and what is new.", "Sovelluksen versio, projekti ja uutuudet."),
+            _ => Ui.T("Your cooling loop, at a glance.", "Jäähdytyksen tilanne yhdellä silmäyksellä.") };
         top.Children.Add(Ui.Stack(Ui.Text(title, 30, bold: true), Ui.Text(subtitle, 13, "#596763"))); body.Children.Add(top);
-        FrameworkElement view = page switch { "curves" => CurvesView(), "alarms" => AlarmsView(), "history" => HistoryView(), "devices" => DevicesView(), "settings" => SettingsView(), _ => OverviewView() };
+        FrameworkElement view = page switch { "curves" => CurvesView(), "alarms" => AlarmsView(), "history" => HistoryView(), "devices" => DevicesView(), "settings" => SettingsView(), "about" => AboutView(), _ => OverviewView() };
         var scroll = new ScrollViewer { Content = view }; Grid.SetRow(scroll, 1); body.Children.Add(scroll);
         var bottom = new DockPanel { Margin = new(0, 16, 0, 0) };
         var actions = Ui.Row(Ui.Button(Ui.T("Revert draft", "Hylkää luonnos"), () => { configuration = active; dirty = false; Render(); }),
             apply = Ui.Button(Ui.T("Apply changes", "Ota muutokset käyttöön"), () => _ = Apply(), true));
+        if (!dirty && page is "overview" or "about" or "history" or "devices") actions.Visibility = Visibility.Collapsed;
         DockPanel.SetDock(actions, Dock.Right); bottom.Children.Add(actions);
         feedback = Ui.Text("", 12, "#596763"); feedback.Margin = new(0, 0, 12, 0); bottom.Children.Add(feedback);
         Grid.SetRow(bottom, 2); body.Children.Add(bottom);
@@ -118,7 +123,8 @@ public sealed partial class MainWindow : Window
         menu.Items.Add(Ui.T("Exit monitor", "Sulje seuranta"), null, (_, _) => Dispatcher.Invoke(() => { closing = true; Close(); }));
         tray.ContextMenuStrip?.Dispose(); tray.ContextMenuStrip = menu;
         Refresh();
-        if (page is "history" or "overview") _ = LoadHistory();
+        if (page == "history") _ = LoadHistory();
+        if (page == "overview") _ = LoadMonitorHistory();
     }
     private void CaptureForm()
     {
@@ -198,12 +204,15 @@ public sealed partial class MainWindow : Window
         status.Text = demo ? Ui.T("DEMO · synthetic readings", "ESITTELY · simuloidut mittaukset")
             : canApply ? state.Mode == "Running" ? Ui.T("Service connected", "Palvelu yhdistetty") : Ui.T("Service connected · control waiting", "Palvelu yhdistetty · ohjaus odottaa")
             : Ui.T("Read-only monitoring", "Vain seuranta");
+        if (!demo && state.Errors.Length > 0) status.Text = Ui.T("Service needs attention", "Palvelu vaatii huomiota");
+        status.Foreground = state.Errors.Length > 0 ? Ui.Warning : Ui.Accent;
         draftLabel.Text = dirty ? Ui.T("Unapplied changes", "Muutoksia odottaa käyttöönottoa") : Ui.T("No pending changes", "Ei odottavia muutoksia");
         if (apply != null) apply.IsEnabled = !busy && (demo || canApply) && dirty && curveForm?.HasPendingCoordinates != true;
     }
     private void Refresh()
     {
         RefreshStatus();
+        RefreshMonitor();
         var now = DateTimeOffset.UtcNow;
         if (readingGrid != null)
         {
@@ -248,5 +257,7 @@ public sealed partial class MainWindow : Window
         private string value = "—"; public string Value { get => value; set { this.value = value; PropertyChanged?.Invoke(this, new(nameof(Value))); } }
         public event PropertyChangedEventHandler? PropertyChanged;
     }
+    [System.Runtime.InteropServices.DllImport("dwmapi.dll")]
+    private static extern int DwmSetWindowAttribute(IntPtr handle, int attribute, ref int value, int size);
 }
 

@@ -7,40 +7,6 @@ namespace Lutra.App;
 
 public sealed partial class MainWindow
 {
-    private FrameworkElement OverviewView()
-    {
-        var layout = new StackPanel();
-        var chartHeader = new DockPanel { Margin = new(0, 0, 0, 14) };
-        var historyLink = Ui.Button(Ui.T("Explore history", "Avaa historia"), () => { page = "history"; Render(); });
-        DockPanel.SetDock(historyLink, Dock.Right); chartHeader.Children.Add(historyLink);
-        chartHeader.Children.Add(Ui.Text(Ui.T("Temperature over time", "Lämpötilan kehitys"), 18, bold: true));
-        historyPlot = new() { Height = 230, Empty = Ui.T("History appears as measurements arrive.", "Historia kertyy mittausten aikana.") };
-        var sensor = state.Catalog.Sensors.FirstOrDefault(s => s.Id == selectedHistory) ?? state.Catalog.Sensors.FirstOrDefault(s => s.Kind == SensorKind.Temperature);
-        selectedHistory ??= sensor?.Id;
-        historySummary = Ui.Text(sensor?.Name ?? Ui.T("Waiting for sensors", "Odotetaan antureita"), 13, "#596763");
-        var plotPanel = Ui.Panel(Ui.Stack(chartHeader, historySummary, historyPlot));
-        layout.Children.Add(plotPanel);
-        var bottom = new Grid { Margin = new(0, 22, 0, 0) }; bottom.ColumnDefinitions.Add(new()); bottom.ColumnDefinitions.Add(new() { Width = new(310) });
-        readingGrid = Ui.Table((Ui.T("Sensor", "Anturi"), "Name", 0), (Ui.T("Value", "Arvo"), "Value", 88), ("", "Unit", 65));
-        readingGrid.ItemsSource = rows; readingGrid.MaxHeight = 370;
-        readingGrid.SelectionChanged += (_, _) => { if (readingGrid?.SelectedItem is ReadingRow row) { selectedHistory = row.Id; _ = LoadHistory(); } };
-        var readings = Ui.Stack(Ui.Text(Ui.T("Sensor readings", "Anturilukemat"), 18, bold: true), readingGrid);
-        readings.Children[0].SetValue(MarginProperty, new Thickness(0, 0, 0, 12)); bottom.Children.Add(readings);
-        var controls = new StackPanel { Margin = new(24, 0, 0, 0) };
-        controls.Children.Add(Ui.Text(Ui.T("Active controls", "Aktiiviset ohjaukset"), 18, bold: true));
-        foreach (var rule in active.Curves.Where(c => c.Enabled))
-        {
-            var sensorName = state.Catalog.Sensors.FirstOrDefault(s => s.Id == rule.SensorId)?.Name ?? rule.SensorId;
-            var detail = Ui.Stack(Ui.Text(rule.Name, 14, bold: true), Ui.Text(sensorName, 12, "#596763"),
-                Ui.Text(Ui.T("Starts at ", "Käynnistys ") + rule.StartupTemperature.ToString("0.##") + " °C", 12, "#596763"));
-            var item = new Border { BorderThickness = new(0, 0, 0, 1), BorderBrush = Ui.Color("#D9DFDC"), Padding = new(0, 15, 0, 15), Child = detail };
-            controls.Children.Add(item);
-        }
-        if (!active.Curves.Any(c => c.Enabled)) controls.Children.Add(Ui.Text(Ui.T("No Lutra curves are active. Add a curve to choose its input and output.", "Lutra-käyriä ei ole käytössä. Lisää käyrä ja valitse sen lähde sekä lähtö."), 13, "#596763"));
-        var edit = Ui.Button(Ui.T("Edit control curves", "Muokkaa säätökäyriä"), () => { page = "curves"; Render(); }); edit.Margin = new(0, 18, 0, 0); controls.Children.Add(edit);
-        Grid.SetColumn(controls, 1); bottom.Children.Add(controls); layout.Children.Add(bottom);
-        return layout;
-    }
     private FrameworkElement CurvesView()
     {
         var list = new StackPanel { Margin = new(0, 0, 20, 0) };
@@ -62,7 +28,7 @@ public sealed partial class MainWindow
             var content = Ui.Stack(Ui.Text(rule.Name, 14, bold: true), Ui.Text(rule.Enabled ? Ui.T("Enabled", "Käytössä") : Ui.T("Disabled", "Pois käytöstä"), 11, "#596763"));
             var button = Ui.Button("", () => Guard(() => { CaptureForm(); selectedCurve = id; Render(); }));
             button.Content = content; button.HorizontalContentAlignment = HorizontalAlignment.Left; button.Margin = new(0, 9, 0, 0);
-            button.Background = rule.Id == selectedCurve ? Ui.Color("#DFEBE4") : Brushes.White;
+            button.Background = rule.Id == selectedCurve ? Ui.Color("#DFEBE4") : Ui.Surface;
             list.Children.Add(button);
         }
         var current = configuration.Curves.FirstOrDefault(r => r.Id == selectedCurve);
@@ -207,7 +173,7 @@ public sealed partial class MainWindow
             Ui.Text(Ui.T("Imports remain drafts until applied. Device identifiers must match this PC. Local history is not included in exported configurations.",
                 "Tuodut asetukset pysyvät luonnoksina käyttöönottoon asti. Laitetunnisteiden on vastattava tätä tietokonetta. Viety asetus ei sisällä mittaushistoriaa."), 12, "#596763")));
         files.Margin = new(0, 18, 0, 0);
-        var about = Ui.Panel(Ui.Stack(Ui.Text("Lutra 0.4 · Preview", 19, bold: true), Ui.Text(Ui.T("Independent cooling control for Windows. Built around explicit device support and local data. No Aquasuite installation is needed.",
+        var about = Ui.Panel(Ui.Stack(Ui.Text(Ui.T("Compatibility", "Yhteensopivuus"), 19, bold: true), Ui.Text(Ui.T("Independent cooling control for Windows. Built around explicit device support and local data. No Aquasuite installation is needed.",
                 "Itsenäinen jäähdytysohjain Windowsille. Selkeä laitetuki ja paikallinen mittaustieto. Aquasuite-asennusta ei tarvita."), 13, "#596763"),
             Ui.Text(Ui.T("QUADRO writes: firmware 1033 / structure 3. Motherboard headers: LibreHardwareMonitor 0.9.6. Physical compatibility must be checked per board.",
                 "QUADRO-kirjoitus: laiteohjelmisto 1033 / rakenne 3. Emolevyn lähdöt: LibreHardwareMonitor 0.9.6. Fyysinen yhteensopivuus tarkistetaan emolevykohtaisesti."), 12, "#596763")));
