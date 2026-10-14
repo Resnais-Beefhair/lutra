@@ -2,7 +2,7 @@
 
 | Hardware / source | Monitoring | Control | Verification |
 | --- | --- | --- | --- |
-| Aqua Computer QUADRO, firmware 1033, settings structure 3 | Four physical temperatures, four RPM/duty channels, flow | All four output channels; native or software temperature curves | Protocol and hardware behavior characterized on one physical QUADRO; Lutra 0.4 reads verified. The new generalized writer is covered by synthetic report tests, not yet commissioned on hardware. |
+| Aqua Computer QUADRO, firmware 1033, settings structure 3 | Four physical temperatures, four RPM/duty channels, flow | All four output channels; native or software temperature curves | One physical controller commissioned with Lutra 0.4: GPU-fed D5 pump, native water-temperature radiator fans, higher-output response, safety fallback, stopped-service fallback and service recovery verified. Remaining channels and configurations need physical testing. |
 | Other QUADRO firmware | Parsed when the known status layout is present | Read-only | Not claimed compatible for writes. |
 | Multiple QUADROs | Independent serial-based identities | Independent ownership and slot assignment | Implemented; multi-device physical testing outstanding. |
 | NVIDIA GPU | Temperatures exposed by LibreHardwareMonitor | Used as curve input | Current core/hotspot/memory readings verified on an RTX 4090. |
