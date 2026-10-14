@@ -12,15 +12,19 @@ try {
     if ($LASTEXITCODE) { throw 'Core tests failed.' }
     & dotnet run --project tests/Lutra.App.Tests -c Release --no-build
     if ($LASTEXITCODE) { throw 'UI tests failed.' }
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/Update-Installer.Tests.ps1
+    if ($LASTEXITCODE) { throw 'Updater checks failed.' }
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/Update-Transaction.Tests.ps1
+    if ($LASTEXITCODE) { throw 'Updater transaction checks failed.' }
     if ($Package) {
-        $out = Join-Path $root ('artifacts/Lutra-0.4.0-preview.1-win-x64-' + (Get-Date -Format 'yyyyMMddHHmmss'))
+        $out = Join-Path $root ('artifacts/Lutra-0.5.0-preview.1-win-x64-' + (Get-Date -Format 'yyyyMMddHHmmss'))
         $runtimeVersion = '8.0.32'
         & dotnet publish src/Lutra.App -c Release -r win-x64 --self-contained true -o $out "-p:RuntimeFrameworkVersion=$runtimeVersion" -p:DebugType=None -p:DebugSymbols=false
         if ($LASTEXITCODE) { throw 'App publish failed.' }
         & dotnet publish src/Lutra.Service -c Release -r win-x64 --self-contained true -o $out "-p:RuntimeFrameworkVersion=$runtimeVersion" -p:DebugType=None -p:DebugSymbols=false
         if ($LASTEXITCODE) { throw 'Service publish failed.' }
         New-Item -ItemType Directory -Path (Join-Path $out 'tools') -Force | Out-Null
-        Copy-Item -LiteralPath tools/Install-Lutra.ps1,tools/Uninstall-Lutra.ps1 -Destination (Join-Path $out 'tools')
+        Copy-Item -LiteralPath tools/Install-Lutra.ps1,tools/Uninstall-Lutra.ps1,tools/Update-Lutra.ps1,tools/Recover-LutraUpdate.ps1 -Destination (Join-Path $out 'tools')
         Copy-Item -LiteralPath README.md,DESIGN.md,CONTRIBUTING.md,SECURITY.md,LICENSE,THIRD-PARTY-NOTICES.md -Destination $out
         Copy-Item -LiteralPath docs,licenses,assets -Destination $out -Recurse
         $packageFolders = (Get-Content src/Lutra.App/obj/project.assets.json -Raw | ConvertFrom-Json).packageFolders.PSObject.Properties.Name

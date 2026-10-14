@@ -25,10 +25,10 @@ try {
         if ($config.Version -ne 1) { throw 'Unsupported Lutra configuration.' }
     }
     $service = Get-Service -Name LutraControl -ErrorAction SilentlyContinue
-    if ($service) { Stop-Service -Name LutraControl; $service.WaitForStatus('Stopped',[TimeSpan]::FromSeconds(20)) }
     foreach ($monitor in @(Get-Process -Name Lutra -ErrorAction SilentlyContinue)) {
         if (-not $monitor.WaitForExit(6000)) { throw 'Exit Lutra from its notification-area menu, then run this installer again.' }
     }
+    if ($service) { Stop-Service -Name LutraControl; $service.WaitForStatus('Stopped',[TimeSpan]::FromSeconds(20)) }
     New-Item -ItemType Directory -Path $target,$data -Force | Out-Null
     $acl = [Security.AccessControl.DirectorySecurity]::new()
     $acl.SetAccessRuleProtection($true,$false)
