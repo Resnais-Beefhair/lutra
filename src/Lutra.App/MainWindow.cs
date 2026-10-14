@@ -63,7 +63,7 @@ public sealed partial class MainWindow : Window
             {
                 await Poll(); await LoadMonitorHistory(); await LoadHistory(); await Task.Delay(200); Capture(Value("--capture")!); closing = true; Close(); return;
             }
-            timer.Start(); poll = Poll(); await poll;
+            StartMonitoring();
         };
         Closing += (_, e) =>
         {
@@ -205,7 +205,9 @@ public sealed partial class MainWindow : Window
             : canApply ? state.Mode == "Running" ? Ui.T("Service connected", "Palvelu yhdistetty") : Ui.T("Service connected · control waiting", "Palvelu yhdistetty · ohjaus odottaa")
             : Ui.T("Read-only monitoring", "Vain seuranta");
         if (!demo && state.Errors.Length > 0) status.Text = Ui.T("Service needs attention", "Palvelu vaatii huomiota");
-        status.Foreground = state.Errors.Length > 0 ? Ui.Warning : Ui.Accent;
+        if (state.Alarms.Length > 0) status.Text = state.Alarms.Length + Ui.T(" active alarm(s)", " aktiivista hälytystä");
+        status.ToolTip = state.Alarms.Length > 0 ? string.Join("\n", state.Alarms.Select(a => a.Name + (a.SensorUnavailable ? Ui.T(" · sensor unavailable", " · anturi ei saatavilla") : ""))) : null;
+        status.Foreground = state.Alarms.Length > 0 ? Ui.Danger : state.Errors.Length > 0 ? Ui.Warning : Ui.Accent;
         draftLabel.Text = dirty ? Ui.T("Unapplied changes", "Muutoksia odottaa käyttöönottoa") : Ui.T("No pending changes", "Ei odottavia muutoksia");
         if (apply != null) apply.IsEnabled = !busy && (demo || canApply) && dirty && curveForm?.HasPendingCoordinates != true;
     }

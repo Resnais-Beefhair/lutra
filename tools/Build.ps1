@@ -17,7 +17,7 @@ try {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/Update-Transaction.Tests.ps1
     if ($LASTEXITCODE) { throw 'Updater transaction checks failed.' }
     if ($Package) {
-        $out = Join-Path $root ('artifacts/Lutra-0.5.0-preview.1-win-x64-' + (Get-Date -Format 'yyyyMMddHHmmss'))
+        $out = Join-Path $root ('artifacts/Lutra-0.5.1-preview.1-win-x64-' + (Get-Date -Format 'yyyyMMddHHmmss'))
         $runtimeVersion = '8.0.32'
         & dotnet publish src/Lutra.App -c Release -r win-x64 --self-contained true -o $out "-p:RuntimeFrameworkVersion=$runtimeVersion" -p:DebugType=None -p:DebugSymbols=false
         if ($LASTEXITCODE) { throw 'App publish failed.' }

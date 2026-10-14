@@ -178,7 +178,7 @@ public sealed partial class MainWindow
             Ui.Text(Ui.T("QUADRO writes: firmware 1033 / structure 3. Motherboard headers: LibreHardwareMonitor 0.9.6. Physical compatibility must be checked per board.",
                 "QUADRO-kirjoitus: laiteohjelmisto 1033 / rakenne 3. Emolevyn lähdöt: LibreHardwareMonitor 0.9.6. Fyysinen yhteensopivuus tarkistetaan emolevykohtaisesti."), 12, "#596763")));
         about.Margin = new(0, 18, 0, 0);
-        return Ui.Columns((0, Ui.Stack(preferences, files)), (22, new Border()), (0, Ui.Stack(service, about)));
+        return Ui.Columns((0, Ui.Stack(preferences, FlowDisplaySettingsView(), files)), (22, new Border()), (0, Ui.Stack(service, about, StartupSettings())));
     }
     private static void Open(string target) => Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
     private void Export()

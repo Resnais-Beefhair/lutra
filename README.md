@@ -11,6 +11,7 @@ Cooling control for Windows. Connect a temperature sensor to a fan or pump, shap
 ## What it does
 
 - Dark monitoring overview with temperature and flow gauges, large RPM readings, PWM bars and simultaneous temperature/RPM history.
+- Optional lower display limit for each flow meter: readings below its reliable range appear as `< 40 l/h`, for example. Raw readings remain available in Devices and History.
 - Independent curves with selectable temperature inputs and output channels.
 - QUADRO fan/pump control, including hardware curves, startup temperature, minimum, maximum and fallback duty.
 - Motherboard fan headers exposed by LibreHardwareMonitor 0.9.6.
@@ -37,7 +38,9 @@ The application begins in **read-only monitoring** when its service is not insta
 4. In **Settings**, choose **Install Lutra service…** and accept Windows' administrator prompt. The monitor exits while the installer copies files. Reopen Lutra from the Start menu.
 5. Add a curve, select its input/output and limits, then **Apply changes**. Read back the resulting RPM and test loss of input before leaving the system unattended.
 
-The installer uses `%ProgramFiles%\Lutra` and `%ProgramData%\Lutra`. It does not disable, uninstall or modify other cooling software. An existing Lutra configuration is preserved on upgrade. Alarms need the monitor running (visible or in the notification area) for desktop notifications; logging continues in the service.
+The installer uses `%ProgramFiles%\Lutra` and `%ProgramData%\Lutra`. It does not disable, uninstall or modify other cooling software. An existing Lutra configuration is preserved on upgrade. Alarms need the monitor running (visible or in the notification area) and Windows notifications enabled for desktop notifications; logging continues in the service. In the installed copy, enable **Settings → Alarm notifications → Start monitor when I sign in** to start quietly in the notification area. Opening Lutra again brings the existing monitor forward.
+
+**Settings → Flow meter display** sets a display-only lower limit per sensor (0 disables it). A below-range indication includes raw zero readings; it cannot distinguish a stopped flow from a flow too small for the sensor to measure. Missing or stale readings still show as unavailable. This preference never changes cooling, sensor calibration, recorded history or alarm evaluation.
 
 From version 0.5, use **About & updates → Check for updates → Install update** to update an installed copy. Preview versions include newer previews by default. Windows requests administrator approval; settings and history are retained. See [update verification and recovery](docs/UPDATES.md).
 

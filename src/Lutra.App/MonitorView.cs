@@ -40,7 +40,8 @@ public sealed partial class MainWindow
                 double? threshold = starts.Length > 0 ? starts.Min() : null;
                 string note = sensor.Kind == SensorKind.Flow ? Ui.T("Instantaneous flow", "Hetkellinen virtaus")
                     : threshold.HasValue ? Ui.T("Curve starts at ", "Käyrän alkuraja ") + threshold.Value.ToString("0.#") + " °C" : sensor.Name;
-                var meter = new LiveInstrument(sensor, title, color, coolant ? 60 : sensor.Kind == SensorKind.Flow ? 200 : 100, threshold, note);
+                var meter = new LiveInstrument(sensor, title, color, coolant ? 60 : sensor.Kind == SensorKind.Flow ? 200 : 100, threshold, note,
+                    sensor.Kind == SensorKind.Flow ? DisplayPreferences.FlowLowerLimit(sensor.Id) : 0);
                 instruments.Add(meter); gauges.Children.Add(meter);
             }
             layout.Children.Add(gauges);
@@ -156,13 +157,16 @@ internal sealed class LiveInstrument : Border
     private readonly Dial dial;
     private readonly TextBlock value, stateLabel, heading;
     private readonly Grid face;
-    public LiveInstrument(SensorInfo sensor, string title, string color, double maximum, double? threshold, string note)
+    private readonly double flowLowerLimit;
+    public LiveInstrument(SensorInfo sensor, string title, string color, double maximum, double? threshold, string note, double flowLowerLimit = 0)
     {
+        MonitorPreferences.ValidateLimit(flowLowerLimit); this.flowLowerLimit = sensor.Kind == SensorKind.Flow ? flowLowerLimit : 0;
         Sensor = sensor; Title = title; Background = Ui.Surface; Padding = new(16); Margin = new(6, 0, 6, 0);
         heading = Ui.Text(title, 17, bold: true);
         dial = new() { Width = 110, Height = 114, Maximum = maximum, Threshold = threshold, Trace = Ui.Color(color), Margin = new(0, 0, 12, 0) };
         value = Ui.Text("—", 38, color); value.TextWrapping = TextWrapping.NoWrap; value.Typography.NumeralAlignment = FontNumeralAlignment.Tabular;
-        var reading = Ui.Stack(value, Ui.Text(sensor.Unit, 13, "#596763")); reading.VerticalAlignment = VerticalAlignment.Center;
+        var valueHost = new Viewbox { Child = value, Stretch = Stretch.Uniform, StretchDirection = StretchDirection.DownOnly, HorizontalAlignment = HorizontalAlignment.Left };
+        var reading = Ui.Stack(valueHost, Ui.Text(sensor.Unit, 13, "#596763")); reading.VerticalAlignment = VerticalAlignment.Center;
         face = Ui.Columns((122, dial), (0, reading)); face.Margin = new(0, 8, 0, 4);
         stateLabel = Ui.Text(note, 12, "#596763"); stateLabel.MinHeight = 32;
         Child = Ui.Stack(heading, face, stateLabel); ToolTip = sensor.Name + " · " + sensor.DeviceId;
@@ -179,11 +183,16 @@ internal sealed class LiveInstrument : Border
     public void Update(RuntimeState state, DateTimeOffset now)
     {
         double? number = state.Values.FirstOrDefault(v => v.Id == Sensor.Id && v.IsFresh(now))?.Value;
-        value.Text = number?.ToString(Sensor.Kind == SensorKind.Flow ? "0.#" : "0.0") ?? "—";
+        bool belowLimit = number.HasValue && flowLowerLimit > 0 && number.Value < flowLowerLimit;
+        value.Text = belowLimit ? "< " + flowLowerLimit.ToString("0.##") : number?.ToString(Sensor.Kind == SensorKind.Flow ? "0.#" : "0.0") ?? "—";
         bool alarm = state.Alarms.Any(a => a.SensorId == Sensor.Id);
-        stateLabel.Text = !number.HasValue ? Ui.T("Sensor unavailable", "Anturi ei saatavilla") : alarm ? Ui.T("Temperature alarm", "Lämpötilahälytys") : (string)Tag;
+        stateLabel.Text = !number.HasValue ? Ui.T("Sensor unavailable", "Anturi ei saatavilla") : alarm ? Ui.T("Temperature alarm", "Lämpötilahälytys")
+            : belowLimit ? Ui.T("Below measurement range", "Alle mittausrajan") : (string)Tag;
         stateLabel.Foreground = alarm || !number.HasValue ? Ui.Warning : Ui.Muted;
-        dial.Value = number; dial.InvalidateVisual();
+        // Below-range readings are not a precise measurement: never draw a fabricated value on the dial.
+        dial.Value = belowLimit ? null : number; dial.InvalidateVisual();
+        ToolTip = Sensor.Name + " · " + Sensor.DeviceId + (flowLowerLimit > 0 ? "\n" + Ui.T("Display limit: ", "Näyttöraja: ") + flowLowerLimit.ToString("0.##") + " " + Sensor.Unit
+            + "\n" + Ui.T("Raw values, including zero, remain in All sensor readings and History.", "Raaka-arvot, myös nolla, säilyvät kaikissa anturilukemissa ja historiassa.") : "");
         AutomationProperties.SetName(this, Title + ": " + value.Text + " " + Sensor.Unit + ". " + stateLabel.Text);
     }
 }
