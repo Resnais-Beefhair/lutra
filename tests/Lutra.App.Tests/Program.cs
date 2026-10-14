@@ -62,6 +62,29 @@ internal static class Program
             Assert(flags["coolant"].Text == "Not triggered");
             ((IDisposable)Field(window, "tray").GetValue(window)!).Dispose();
         });
+        Test("Live instruments distinguish zero from an unavailable reading", () => {
+            var sensor = Demo.Catalog.Sensors.Single(s => s.Kind == SensorKind.Flow);
+            var instrument = new LiveInstrument(sensor, "Flow", "#B8ABEA", 200, null, "Instantaneous flow");
+            var state = Demo.State(Demo.Configuration()); var now = DateTimeOffset.UtcNow;
+            instrument.Update(state with { Values = [new(sensor.Id, 0, now)] }, now);
+            Assert(AutomationProperties.GetName(instrument).Contains("0 l/h"));
+            instrument.Update(state with { Values = [new(sensor.Id, 15, now.AddSeconds(-10))] }, now);
+            Assert(AutomationProperties.GetName(instrument).Contains("— l/h") && AutomationProperties.GetName(instrument).Contains("unavailable"));
+        });
+        Test("Output instruments show actual stopped RPM and fresh PWM", () => {
+            var rule = Demo.Configuration().Curves.Single(r => r.Id == "radiator");
+            var output = Demo.Catalog.Outputs.Single(o => o.Id == rule.OutputId);
+            var instrument = new OutputInstrument(rule, output, Demo.Catalog);
+            instrument.Update(Demo.State(Demo.Configuration()), DateTimeOffset.UtcNow);
+            Assert(AutomationProperties.GetName(instrument).Contains("0 rpm, 0 %") && AutomationProperties.GetName(instrument).Contains("Stopped"));
+            instrument.Update(Demo.State(Demo.Configuration()) with { Values = [] }, DateTimeOffset.UtcNow);
+            Assert(AutomationProperties.GetName(instrument).Contains("— rpm, — %"));
+        });
+        Test("Motherboard RPM is not guessed from its control index", () => {
+            var rule = Demo.Configuration().Curves.Single(r => r.Id == "case");
+            var instrument = new OutputInstrument(rule, Demo.Catalog.Outputs.Single(o => o.Id == rule.OutputId), Demo.Catalog);
+            Assert(instrument.RpmId == null);
+        });
         Console.WriteLine($"{passed} UI tests passed; {failed} failed."); app.Shutdown(); return failed == 0 ? 0 : 1;
     }
     private static FieldInfo Field(object target, string name) => target.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic)!;
