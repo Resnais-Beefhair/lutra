@@ -6,6 +6,8 @@ Cooling control for Windows. Connect a temperature sensor to a fan or pump, shap
 
 **Preview software.** QUADRO and motherboard control are implemented, but hardware support is deliberately bounded. See the [compatibility matrix](docs/COMPATIBILITY.md) before handing over cooling.
 
+A [physical QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx4090.md) documents one Lutra 0.6.0-preview.1 setup, measured pump/fan response, return to quiet RPM and the exact recovery criteria that remained unverified.
+
 ![Lutra dark monitoring overview with labelled synthetic data](docs/images/overview.png)
 
 ## What it does
@@ -71,7 +73,7 @@ Windows x64 and .NET 10 SDK:
 .\tools\Build.ps1 -Package
 ```
 
-The package is self-contained and pins the runtime patch in the build script. The solution has separate Core, Hardware, Service and WPF App projects. Tests never write to hardware. The optional read-only probe is:
+The package is self-contained and pins the runtime patch in `Directory.Build.props`. The solution has separate Core, Hardware, Service and WPF App projects. Tests never write to hardware. The optional read-only probe is:
 
 ```powershell
 dotnet run --project tests/Lutra.Tests -c Release -- --probe

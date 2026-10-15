@@ -1,5 +1,13 @@
 # Preview validation
 
+## Lutra 0.6.0-preview.1 physical load test — 2026-10-15
+
+See the [QUADRO / RTX 4090 report](validation/2026-10-15-quadro-rtx4090.md) for the hardware inventory, current curve settings, measured plot and test boundaries. In 535 samples over approximately nine minutes, pump/fan duty followed the configured curves and actual speeds returned to 801–803 rpm / 0 rpm. Peak coolant/GPU temperatures were 42.11 °C / 64 °C; saved application and controller settings were unchanged.
+
+The exact-command cooldown criterion (20% pump and 0% fans) was **not met**: GPU remained at 41 °C and coolant at about 39.5 °C. The report preserves the harness's stricter `Passed: false` result and distinguishes it from the observed return to quiet physical RPM. This run did not repeat fault/fallback commissioning or actuate motherboard outputs.
+
+## Earlier development validation
+
 Development validation, 2026-10-14:
 
 - Release builds for Core, Hardware, Service and WPF App.
@@ -19,5 +27,5 @@ Lutra.exe --demo
 Lutra.exe --demo --page curves --language fi --width 1120 --height 900 --capture C:\Temp\lutra.png
 ```
 
-Screenshots in this repository use synthetic data and do not contain a user's serial numbers or telemetry. Source output and packaged output must both be checked; producing a new package does not replace an installed controller.
+Application UI screenshots in this repository use synthetic data. The physical-validation report above additionally contains a processed measurement plot with no device identifiers. Private raw telemetry and configurations are not published. Source output and packaged output must both be checked; producing a new package does not replace an installed controller.
 
