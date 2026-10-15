@@ -10,6 +10,8 @@ The service checks for Aquasuite or Vesi before applying or feeding controls. Th
 
 IPC is a bounded named pipe, denied to network logons, allowed only to LocalSystem, administrators and the installation owner. ProgramData is writable only by System/administrators; the owner can read it. The request protocol does not accept paths, executable names or arbitrary hardware commands.
 
+Four independent pipe connections keep an idle client from blocking other clients. Reading a request has a three-second deadline; an accepted operation retains a separate 25-second deadline. Device changes still pass through the controller's serial queue, and payloads remain limited to 1 MiB. A missing/invalid owner SID or an unexpected listener failure is logged and included in `state.json` errors while cooling continues with its saved configuration. The transport retries after a delay without loosening the ACL. Restoring a valid owner file allows the listeners to start again.
+
 ## Configuration and writes
 
 Rules are validated before writes: unique enabled output ownership, valid monotonic points, finite 0–100% limits, supported output and temperature input, nonzero held pump minimum, minimum pump fallback of 50%. That floor does not replace a manufacturer's device-specific requirement.

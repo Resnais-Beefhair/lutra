@@ -158,6 +158,7 @@ internal static class Program
             var instrument = new OutputInstrument(rule, Demo.Catalog.Outputs.Single(o => o.Id == rule.OutputId), Demo.Catalog);
             Assert(instrument.RpmId == null);
         });
+        ChartTests.Run(Test);
         Console.WriteLine($"{passed} UI tests passed; {failed} failed."); app.Shutdown(); return failed == 0 ? 0 : 1;
     }
     private static FieldInfo Field(object target, string name) => target.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic)!;

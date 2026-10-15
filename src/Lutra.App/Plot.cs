@@ -122,9 +122,16 @@ internal sealed class CurvePlot : Plot
 }
 internal sealed class HistoryPlot : Plot
 {
+    public HistoryPlot() { UpdateAccessibility(); }
     public HistoryPoint[] Points { get; set; } = [];
+    public string SensorName { get; set; } = "";
+    public DateTimeOffset From { get; set; }
+    public DateTimeOffset To { get; set; }
     public string Unit { get; set; } = "°C";
     public string Empty { get; set; } = "";
+    public void UpdateAccessibility() => ChartAccessibility.Update(this, Ui.T("History", "Historia") + (SensorName.Length > 0 ? ": " + SensorName : ""),
+        From, To, [(SensorName, Points)], Unit);
+    protected override AutomationPeer OnCreateAutomationPeer() => new ChartAutomationPeer(this);
     protected override void OnRender(DrawingContext dc)
     {
         var valid = Points.Where(p => p.Value.HasValue).ToArray();

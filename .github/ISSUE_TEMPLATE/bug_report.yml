@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible problem with Lutra.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For cooling failures, return the affected output to a known working controller or BIOS profile first.
+        **Remove serial numbers, device identifiers, usernames and private paths from everything you share.**
+        Do not upload full configurations, telemetry, USB traces or unredacted logs. Report vulnerabilities privately through [Security](https://github.com/Resnais-Beefhair/lutra/security/policy).
+  - type: input
+    id: version
+    attributes:
+      label: Lutra version
+      description: Copy the full version from About & updates.
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version and build
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and drivers
+      description: Controller model/firmware, motherboard model, relevant sensors and outputs, and PawnIO version if used. No serial numbers.
+    validations:
+      required: true
+  - type: dropdown
+    id: service
+    attributes:
+      label: Lutra Windows service
+      options: [Installed and running, Installed but stopped, Not installed, Unknown]
+    validations:
+      required: true
+  - type: input
+    id: controllers
+    attributes:
+      label: Other cooling or hardware-monitoring software
+      description: Include which applications/services were running.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps, expected result and actual result
+      description: Include whether the problem occurs after startup, resume or applying a curve.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Minimal redacted service.log excerpt (optional)
+      description: Paste only relevant lines after removing serial numbers, identifiers, personal paths and other private information.
+      render: text

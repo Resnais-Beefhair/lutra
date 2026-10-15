@@ -1,0 +1,35 @@
+name: Hardware support request
+description: Request support for a specific controller or motherboard.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [compatibility](https://github.com/Resnais-Beefhair/lutra/blob/main/docs/COMPATIBILITY.md) first.
+        **Do not include serial numbers, device identifiers, full system reports, configurations or USB traces.**
+        Unsupported devices stay read-only. A request does not establish that writing to a device is safe.
+  - type: input
+    id: model
+    attributes:
+      label: Exact model and firmware
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Lutra, Windows and PawnIO versions
+      description: Mark PawnIO as not used where applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Current behavior and desired support
+      description: Describe visible sensors, outputs, limitations and other running cooling software.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Public documentation
+      description: Manufacturer specifications or open protocol documentation, if available. No private captures or proprietary decompiled code.

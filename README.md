@@ -64,7 +64,7 @@ Coordinate text edits are deliberately separate from the graph until **Update po
 
 ## Build
 
-Windows x64 and .NET 8 SDK:
+Windows x64 and .NET 10 SDK:
 
 ```powershell
 .\tools\Build.ps1

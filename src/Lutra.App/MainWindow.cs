@@ -81,7 +81,7 @@ public sealed partial class MainWindow : Window
         var root = new Grid { Background = Ui.Color("#F0F2F0") }; root.ColumnDefinitions.Add(new() { Width = new(176) }); root.ColumnDefinitions.Add(new());
         var rail = new DockPanel { Background = Ui.Color("#252E2C") };
         var brand = Ui.Row(Ui.Mark(32), Ui.Text("Lutra", 25, "#FFFFFF", true)); brand.Margin = new(22, 25, 0, 28); DockPanel.SetDock(brand, Dock.Top); rail.Children.Add(brand);
-        var railFooter = Ui.Stack(Ui.Text("Lutra 0.5", 12, "#D0DDD7"), Ui.Text(Ui.T("Cooling control", "Jäähdytyksen ohjaus"), 11, "#B4C6BE"));
+        var railFooter = Ui.Stack(Ui.Text("Lutra " + AppUpdate.CurrentVersion, 12, "#D0DDD7"), Ui.Text(Ui.T("Cooling control", "Jäähdytyksen ohjaus"), 11, "#B4C6BE"));
         railFooter.Margin = new(23, 0, 10, 22); DockPanel.SetDock(railFooter, Dock.Bottom); rail.Children.Add(railFooter);
         var nav = new StackPanel { Margin = new(12, 0, 12, 0) };
         foreach (var (key, english, finnish) in new[] { ("overview", "Overview", "Yleiskuva"), ("curves", "Control curves", "Säätökäyrät"), ("alarms", "Alarms", "Hälytykset"), ("history", "History", "Historia"), ("devices", "Devices", "Laitteet"), ("settings", "Settings", "Asetukset"), ("about", "About & updates", "Tietoja ja päivitykset") })
@@ -187,7 +187,7 @@ public sealed partial class MainWindow : Window
             if (page == "overview" && historyPlot != null && !demo && selectedHistory != null)
             {
                 historyPlot.Points = recent.Select(f => new HistoryPoint(f.Time, f.Values.FirstOrDefault(v => v.Id == selectedHistory && v.IsFresh(f.Time))?.Value)).ToArray();
-                historyPlot.InvalidateVisual();
+                historyPlot.UpdateAccessibility(); historyPlot.InvalidateVisual();
             }
             foreach (var alarm in state.Alarms)
             {
