@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net8.0-windows7.0": {
+    "net10.0-windows7.0": {
       "BlackSharp.Core": {
         "type": "Transitive",
         "resolved": "1.0.7",
@@ -29,9 +29,9 @@
           "HidSharp": "2.6.4",
           "Mono.Posix.NETStandard": "1.0.0",
           "RAMSPDToolkit-NDD": "1.4.2",
+          "System.IO.FileSystem.AccessControl": "5.0.0",
           "System.IO.Ports": "10.0.3",
-          "System.Management": "10.0.2",
-          "System.Threading.AccessControl": "10.0.3"
+          "System.Management": "10.0.2"
         }
       },
       "Mono.Posix.NETStandard": {
@@ -151,10 +151,10 @@
         "resolved": "10.0.3",
         "contentHash": "L1gcOL5kcfeeujKQbqJmpeTLsT0c6DeaJ9w6PY9oZ+/WESyya+Zj7StKguXR5j93o3o86FjcN05yufpoCz7R2g=="
       },
-      "System.CodeDom": {
+      "System.IO.FileSystem.AccessControl": {
         "type": "Transitive",
-        "resolved": "10.0.2",
-        "contentHash": "eih1MnL4tnSjHUhzae0dmpu50Sm0s54faHZc8yhzYfmubAubkBIIulYYN28fasD1m41mhl6Cenhs9/F0aLv3FA=="
+        "resolved": "5.0.0",
+        "contentHash": "SxHB3nuNrpptVk+vZ/F+7OHEpoHUIKKMl02bUmYHQr1r+glbZQxs7pRtsf4ENO29TVm2TH3AEeep2fJcy92oYw=="
       },
       "System.IO.Ports": {
         "type": "Transitive",
@@ -167,20 +167,12 @@
       "System.Management": {
         "type": "Transitive",
         "resolved": "10.0.2",
-        "contentHash": "eFftuy3i844lVKCb4lJvvjKfcvPVcW8KrAdSaIOcRL42/Fisj46hwUs8Bky+4avzMe5Snm5t7aSayOI1mybYXg==",
-        "dependencies": {
-          "System.CodeDom": "10.0.2"
-        }
-      },
-      "System.Threading.AccessControl": {
-        "type": "Transitive",
-        "resolved": "10.0.3",
-        "contentHash": "PO3IM2ZXOJTjuuFDYMP62i290J41y891C+ytTa1HCDUo5FdywK/Ro6jflWHmbgZ2tz62EhRDa8WIT2vVJX45AQ=="
+        "contentHash": "eFftuy3i844lVKCb4lJvvjKfcvPVcW8KrAdSaIOcRL42/Fisj46hwUs8Bky+4avzMe5Snm5t7aSayOI1mybYXg=="
       },
       "Lutra": {
         "type": "Project",
         "dependencies": {
-          "Lutra.Hardware": "[0.4.0, )"
+          "Lutra.Hardware": "[0.6.0-preview.1, )"
         }
       },
       "lutra.core": {
@@ -190,11 +182,11 @@
         "type": "Project",
         "dependencies": {
           "LibreHardwareMonitorLib": "[0.9.6, )",
-          "Lutra.Core": "[0.4.0, )"
+          "Lutra.Core": "[0.6.0-preview.1, )"
         }
       }
     },
-    "net8.0-windows7.0/win-x64": {
+    "net10.0-windows7.0/win-x64": {
       "LibreHardwareMonitorLib": {
         "type": "Transitive",
         "resolved": "0.9.6",
@@ -204,9 +196,9 @@
           "HidSharp": "2.6.4",
           "Mono.Posix.NETStandard": "1.0.0",
           "RAMSPDToolkit-NDD": "1.4.2",
+          "System.IO.FileSystem.AccessControl": "5.0.0",
           "System.IO.Ports": "10.0.3",
-          "System.Management": "10.0.2",
-          "System.Threading.AccessControl": "10.0.3"
+          "System.Management": "10.0.2"
         }
       },
       "Mono.Posix.NETStandard": {
@@ -294,6 +286,11 @@
         "resolved": "10.0.3",
         "contentHash": "L1gcOL5kcfeeujKQbqJmpeTLsT0c6DeaJ9w6PY9oZ+/WESyya+Zj7StKguXR5j93o3o86FjcN05yufpoCz7R2g=="
       },
+      "System.IO.FileSystem.AccessControl": {
+        "type": "Transitive",
+        "resolved": "5.0.0",
+        "contentHash": "SxHB3nuNrpptVk+vZ/F+7OHEpoHUIKKMl02bUmYHQr1r+glbZQxs7pRtsf4ENO29TVm2TH3AEeep2fJcy92oYw=="
+      },
       "System.IO.Ports": {
         "type": "Transitive",
         "resolved": "10.0.3",
@@ -305,15 +302,7 @@
       "System.Management": {
         "type": "Transitive",
         "resolved": "10.0.2",
-        "contentHash": "eFftuy3i844lVKCb4lJvvjKfcvPVcW8KrAdSaIOcRL42/Fisj46hwUs8Bky+4avzMe5Snm5t7aSayOI1mybYXg==",
-        "dependencies": {
-          "System.CodeDom": "10.0.2"
-        }
-      },
-      "System.Threading.AccessControl": {
-        "type": "Transitive",
-        "resolved": "10.0.3",
-        "contentHash": "PO3IM2ZXOJTjuuFDYMP62i290J41y891C+ytTa1HCDUo5FdywK/Ro6jflWHmbgZ2tz62EhRDa8WIT2vVJX45AQ=="
+        "contentHash": "eFftuy3i844lVKCb4lJvvjKfcvPVcW8KrAdSaIOcRL42/Fisj46hwUs8Bky+4avzMe5Snm5t7aSayOI1mybYXg=="
       }
     }
   }

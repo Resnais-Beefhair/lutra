@@ -159,6 +159,7 @@ Test("IPC rejects oversized payload before allocation", () => {
 });
 AlarmTests.Run(Test);
 UpdateTests.Run(Test);
+ControlServerTests.Run(Test);
 Console.WriteLine($"{passed} passed; {failed} failed.");
 return failed == 0 ? 0 : 1;
 

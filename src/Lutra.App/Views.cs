@@ -110,13 +110,16 @@ public sealed partial class MainWindow
         int generation = ++historyGeneration; var plot = historyPlot; var summary = historySummary; string sensor = selectedHistory;
         var info = state.Catalog.Sensors.FirstOrDefault(s => s.Id == sensor);
         plot.Unit = info?.Unit ?? "";
+        plot.SensorName = info?.Name ?? "";
+        var until = DateTimeOffset.UtcNow; var range = page == "overview" ? TimeSpan.FromMinutes(15) : historyRange;
+        plot.From = until - range; plot.To = until;
+        plot.Points = []; plot.UpdateAccessibility(); plot.InvalidateVisual();
         try
         {
-            var until = DateTimeOffset.UtcNow; var range = page == "overview" ? TimeSpan.FromMinutes(15) : historyRange;
             HistoryPoint[] data = demo ? Demo.History(sensor, range) : await Task.Run(() => new HistoryStore(Path.Combine(ControlMessages.DataDirectory, "history")).Query(sensor, until - range, until));
             if (generation != historyGeneration || plot != historyPlot) return;
             if (data.Length == 0 && !demo) data = recent.Where(f => f.Time >= until - range).Select(f => new HistoryPoint(f.Time, f.Values.FirstOrDefault(v => v.Id == sensor && v.IsFresh(f.Time))?.Value)).ToArray();
-            plot.Points = data; plot.InvalidateVisual();
+            plot.Points = data; plot.From = until - range; plot.To = until; plot.UpdateAccessibility(); plot.InvalidateVisual();
             var values = data.Where(p => p.Value.HasValue).Select(p => p.Value!.Value).ToArray();
             if (summary != null) summary.Text = (info?.Name ?? "") + "   ·   " + (values.Length == 0 ? Ui.T("Waiting for measurements", "Odotetaan mittauksia")
                 : Ui.T("Min ", "Min ") + values.Min().ToString("0.0") + "  /  " + Ui.T("Max ", "Max ") + values.Max().ToString("0.0") + " " + info?.Unit)

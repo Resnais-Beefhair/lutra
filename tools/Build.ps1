@@ -17,12 +17,21 @@ try {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/Update-Transaction.Tests.ps1
     if ($LASTEXITCODE) { throw 'Updater transaction checks failed.' }
     if ($Package) {
-        $out = Join-Path $root ('artifacts/Lutra-0.5.1-preview.1-win-x64-' + (Get-Date -Format 'yyyyMMddHHmmss'))
-        $runtimeVersion = '8.0.32'
+        [xml]$properties = Get-Content -LiteralPath Directory.Build.props -Raw
+        $version = [string]$properties.Project.PropertyGroup.Version
+        $runtimeVersion = [string]$properties.Project.PropertyGroup.LutraRuntimeVersion
+        if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$' -or $runtimeVersion -notmatch '^10\.0\.\d+$') { throw 'Invalid package or runtime version.' }
+        $out = Join-Path $root ('artifacts/Lutra-' + $version + '-win-x64-' + (Get-Date -Format 'yyyyMMddHHmmss'))
         & dotnet publish src/Lutra.App -c Release -r win-x64 --self-contained true -o $out "-p:RuntimeFrameworkVersion=$runtimeVersion" -p:DebugType=None -p:DebugSymbols=false
         if ($LASTEXITCODE) { throw 'App publish failed.' }
         & dotnet publish src/Lutra.Service -c Release -r win-x64 --self-contained true -o $out "-p:RuntimeFrameworkVersion=$runtimeVersion" -p:DebugType=None -p:DebugSymbols=false
         if ($LASTEXITCODE) { throw 'Service publish failed.' }
+        foreach ($application in @('Lutra', 'Lutra.Service')) {
+            $actualVersion = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $out "$application.dll")).ProductVersion.Split('+')[0]
+            if ($actualVersion -cne $version) { throw "Packaged application version mismatch: $application" }
+            $runtime = (Get-Content -LiteralPath (Join-Path $out "$application.runtimeconfig.json") -Raw | ConvertFrom-Json).runtimeOptions
+            if ($runtime.tfm -ne 'net10.0' -or -not $runtime.includedFrameworks -or @($runtime.includedFrameworks | Where-Object { $_.version -ne $runtimeVersion }).Count) { throw "Packaged runtime mismatch: $application" }
+        }
         New-Item -ItemType Directory -Path (Join-Path $out 'tools') -Force | Out-Null
         Copy-Item -LiteralPath tools/Install-Lutra.ps1,tools/Uninstall-Lutra.ps1,tools/Update-Lutra.ps1,tools/Recover-LutraUpdate.ps1 -Destination (Join-Path $out 'tools')
         Copy-Item -LiteralPath README.md,DESIGN.md,CONTRIBUTING.md,SECURITY.md,LICENSE,THIRD-PARTY-NOTICES.md -Destination $out
@@ -38,7 +47,8 @@ try {
             }
         }
         Get-ChildItem -LiteralPath $out -Recurse -File | Get-FileHash -Algorithm SHA256 | Select-Object Hash,@{Name='File';Expression={$_.Path.Substring($out.Length+1)}} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $out 'sha256.json') -Encoding UTF8
-        $zip = $out + '.zip'
+        $zip = Join-Path $root ('artifacts/Lutra-' + $version + '-win-x64.zip')
+        if (Test-Path -LiteralPath $zip) { throw "Package already exists: $zip. Move it aside before building again." }
         Compress-Archive -LiteralPath $out -DestinationPath $zip
         Get-FileHash -LiteralPath $zip -Algorithm SHA256 | Format-List
         Write-Output "Package: $zip"

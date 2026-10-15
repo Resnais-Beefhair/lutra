@@ -145,7 +145,7 @@ public sealed partial class MainWindow
                 var live = recent.Where(f => f.Time >= chart.From).Select(f => new HistoryPoint(f.Time, f.Values.FirstOrDefault(v => v.Id == series.Id && v.IsFresh(f.Time))?.Value));
                 series.Points = saved.Concat(live).Where(p => p.Time >= chart.From && p.Time <= now).GroupBy(p => p.Time).Select(g => g.Last()).OrderBy(p => p.Time).ToArray();
             }
-            chart.InvalidateVisual();
+            chart.UpdateAccessibility(); chart.InvalidateVisual();
         }
     }
 }
@@ -244,6 +244,7 @@ internal sealed class OutputInstrument : Border
 
 internal sealed class Dial : FrameworkElement
 {
+    protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => new DecorativeDialPeer(this);
     public double? Value { get; set; }
     public double Maximum { get; set; } = 100;
     public double? Threshold { get; set; }
@@ -272,10 +273,15 @@ internal sealed record MonitorTrace(string Id, string Name, string Color)
 }
 internal sealed class MultiTracePlot : FrameworkElement
 {
+    public MultiTracePlot() { UpdateAccessibility(); }
     public MonitorTrace[] Series { get; set; } = [];
     public string Unit { get; set; } = "";
     public DateTimeOffset From { get; set; }
     public DateTimeOffset To { get; set; }
+    public void UpdateAccessibility() => ChartAccessibility.Update(this,
+        Unit == "rpm" ? Ui.T("Rotation speed trends", "Kierrosnopeuskäyrät") : Ui.T("Temperature trends", "Lämpötilakäyrät"),
+        From, To, Series.Select(s => (s.Name, s.Points)), Unit);
+    protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => new ChartAutomationPeer(this);
     protected override void OnRender(DrawingContext dc)
     {
         Rect area = new(42, 14, Math.Max(1, ActualWidth - 57), Math.Max(1, ActualHeight - 42));

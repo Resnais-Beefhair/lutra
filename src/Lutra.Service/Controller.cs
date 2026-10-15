@@ -1,8 +1,5 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.IO.Pipes;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using Lutra.Core;
 using Lutra.Hardware;
 
@@ -16,12 +13,14 @@ internal sealed class Controller
     private RuntimeState state = new(DateTimeOffset.UtcNow, "Starting", new([], [], []), [], [], [], new());
     private long lastTick = Environment.TickCount64;
     private string lastLog = "";
+    private readonly object logGate = new();
     public async Task RunAsync(CancellationToken token)
     {
         using var single = new Mutex(false, @"Global\Lutra.Control.Owner", out bool first);
         if (!first) throw new IOException("Another Lutra controller is already running.");
         using var ipcStop = CancellationTokenSource.CreateLinkedTokenSource(token);
-        var server = Serve(ipcStop.Token);
+        var ipc = new ControlServer(directory, HandleRequest, Log);
+        var server = ipc.RunAsync(ipcStop.Token);
         // If a vendor read blocks the control thread, SCM restarts the process. QUADRO uses its own watchdog.
         using var watchdog = new Timer(_ => { if (Environment.TickCount64 - Interlocked.Read(ref lastTick) > 20000) Environment.Exit(2); }, null, 5000, 5000);
         HardwareSession? hardware = null;
@@ -101,6 +100,7 @@ internal sealed class Controller
                     errors.Add(e.GetBaseException().Message);
                     hardware?.Dispose(); hardware = null; configured = false;
                 }
+                if (ipc.Error is { } ipcError) errors.Add(ipcError);
                 var now = DateTimeOffset.UtcNow;
                 var events = alarms.Evaluate(configuration.Alarms, values, now);
                 state = new(now, configured ? "Running" : "Monitoring", hardware?.Catalog ?? state.Catalog, values, events, errors.Distinct().ToArray(), configuration);
@@ -131,36 +131,13 @@ internal sealed class Controller
         }
         return false;
     }
-    private async Task Serve(CancellationToken token)
+    private async Task<ServiceReply> HandleRequest(ServiceRequest request, CancellationToken token)
     {
-        string owner = File.ReadAllText(Path.Combine(directory, "owner.sid")).Trim();
-        var security = new PipeSecurity();
-        security.AddAccessRule(new(new SecurityIdentifier(WellKnownSidType.NetworkSid, null), PipeAccessRights.FullControl, AccessControlType.Deny));
-        foreach (var sid in new[] { new SecurityIdentifier(owner), new SecurityIdentifier(WellKnownSidType.LocalSystemSid, null),
-                     new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null) })
-            security.AddAccessRule(new(sid, PipeAccessRights.FullControl, AccessControlType.Allow));
-        while (!token.IsCancellationRequested)
-        {
-            using var pipe = NamedPipeServerStreamAcl.Create(ControlMessages.PipeName, PipeDirection.InOut, 1,
-                PipeTransmissionMode.Byte, PipeOptions.Asynchronous, 4096, 4096, security);
-            try
-            {
-                await pipe.WaitForConnectionAsync(token);
-                using var timeout = CancellationTokenSource.CreateLinkedTokenSource(token); timeout.CancelAfter(TimeSpan.FromSeconds(25));
-                var request = await ControlMessages.ReadAsync<ServiceRequest>(pipe, timeout.Token);
-                ServiceReply reply;
-                if (request.Action == "state") reply = new(true, "", state);
-                else if (request.Action == "apply")
-                {
-                    var completion = new TaskCompletionSource<ServiceReply>(TaskCreationOptions.RunContinuationsAsynchronously);
-                    requests.Enqueue(new(request, completion, timeout.Token));
-                    reply = await completion.Task.WaitAsync(timeout.Token);
-                }
-                else reply = new(false, "Unknown command.");
-                await ControlMessages.WriteAsync(pipe, reply, timeout.Token);
-            }
-            catch (Exception e) when (e is IOException or OperationCanceledException or System.Text.Json.JsonException or InvalidDataException) { }
-        }
+        if (request.Action == "state") return new(true, "", Volatile.Read(ref state));
+        if (request.Action != "apply") return new(false, "Unknown command.");
+        var completion = new TaskCompletionSource<ServiceReply>(TaskCreationOptions.RunContinuationsAsynchronously);
+        requests.Enqueue(new(request, completion, token));
+        return await completion.Task.WaitAsync(token);
     }
     private void Publish(RuntimeState next)
     {
@@ -171,13 +148,16 @@ internal sealed class Controller
     }
     private void Log(string message)
     {
-        try
+        lock (logGate)
         {
-            string path = Path.Combine(directory, "service.log");
-            if (File.Exists(path) && new FileInfo(path).Length > 2_000_000) File.Move(path, path + ".1", true);
-            File.AppendAllText(path, DateTimeOffset.UtcNow.ToString("O") + " " + message + Environment.NewLine);
+            try
+            {
+                string path = Path.Combine(directory, "service.log");
+                if (File.Exists(path) && new FileInfo(path).Length > 2_000_000) File.Move(path, path + ".1", true);
+                File.AppendAllText(path, DateTimeOffset.UtcNow.ToString("O") + " " + message + Environment.NewLine);
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException) { }
         }
-        catch (Exception e) when (e is IOException or UnauthorizedAccessException) { }
     }
 }
 
