@@ -1,13 +1,13 @@
 [
   {
-    "package": "BlackSharp.Core/1.0.7",
+    "package": "BlackSharp.Core/1.2.2",
     "license": "MPL-2.0",
     "licenseUrl": "https://licenses.nuget.org/MPL-2.0",
     "projectUrl": "https://github.com/Blacktempel/BlackSharp",
     "authors": "BlackSharp.Core"
   },
   {
-    "package": "DiskInfoToolkit/1.1.2",
+    "package": "DiskInfoToolkit/2.2.1",
     "license": "MPL-2.0",
     "licenseUrl": "https://licenses.nuget.org/MPL-2.0",
     "projectUrl": "https://github.com/Blacktempel/DiskInfoToolkit",
@@ -21,7 +21,7 @@
     "authors": "James F. Bellinger"
   },
   {
-    "package": "LibreHardwareMonitorLib/0.9.6",
+    "package": "LibreHardwareMonitorLib/0.9.7-pre767",
     "license": "MPL-2.0",
     "licenseUrl": "https://licenses.nuget.org/MPL-2.0",
     "projectUrl": "https://github.com/LibreHardwareMonitor/LibreHardwareMonitor",
@@ -35,154 +35,147 @@
     "authors": "Microsoft"
   },
   {
-    "package": "RAMSPDToolkit-NDD/1.4.2",
+    "package": "RAMSPDToolkit-NDD/1.6.2",
     "license": "MPL-2.0",
     "licenseUrl": "https://licenses.nuget.org/MPL-2.0",
     "projectUrl": "https://github.com/Blacktempel/RAMSPDToolkit",
     "authors": "RAMSPDToolkit-NDD"
   },
   {
-    "package": "runtime.android-arm.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.android-arm.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.android-arm64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.android-arm64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.android-x64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.android-x64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.android-x86.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.android-x86.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-arm.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-arm.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-arm64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-arm64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-bionic-arm64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-bionic-arm64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-bionic-x64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-bionic-x64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-musl-arm.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-musl-arm.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-musl-arm64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-musl-arm64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-musl-x64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-musl-x64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.linux-x64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.linux-x64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.maccatalyst-arm64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.maccatalyst-arm64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.maccatalyst-x64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.maccatalyst-x64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.osx-arm64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.osx-arm64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "runtime.osx-x64.runtime.native.System.IO.Ports/10.0.3",
+    "package": "runtime.osx-x64.runtime.native.System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "System.CodeDom/10.0.2",
+    "package": "System.IO.FileSystem.AccessControl/5.0.0",
+    "license": "MIT",
+    "licenseUrl": "https://licenses.nuget.org/MIT",
+    "projectUrl": "https://github.com/dotnet/runtime",
+    "authors": "Microsoft"
+  },
+  {
+    "package": "System.IO.Ports/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",
     "authors": "Microsoft"
   },
   {
-    "package": "System.IO.Ports/10.0.3",
-    "license": "MIT",
-    "licenseUrl": "https://licenses.nuget.org/MIT",
-    "projectUrl": "https://dot.net/",
-    "authors": "Microsoft"
-  },
-  {
-    "package": "System.Management/10.0.2",
-    "license": "MIT",
-    "licenseUrl": "https://licenses.nuget.org/MIT",
-    "projectUrl": "https://dot.net/",
-    "authors": "Microsoft"
-  },
-  {
-    "package": "System.Threading.AccessControl/10.0.3",
+    "package": "System.Management/10.0.13",
     "license": "MIT",
     "licenseUrl": "https://licenses.nuget.org/MIT",
     "projectUrl": "https://dot.net/",

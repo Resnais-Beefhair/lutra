@@ -1,5 +1,9 @@
 # Preview validation
 
+## Local CPU_FAN commissioning — 2026-10-19
+
+See the [ASRock CPU_FAN1 report](validation/2026-10-19-asrock-cpu-fan.md) for a local build using the corrected LibreHardwareMonitor prerelease. A Ryzen 7 7800X3D temperature curve drove fan speed from approximately 509 to 1256 RPM and back to 509 RPM, with strict 30% minimum recovery. The existing QUADRO curves, four alarms and complete controller settings were preserved. Production safety fallback and firmware-mode restoration were checked. The first cold handback check failed its rotating-fan condition; a separate warm test confirmed the BIOS temperature response. The report retains both results and the test boundaries. This local build is not a published GitHub release.
+
 ## Lutra 0.6.0-preview.1 physical load test — 2026-10-15
 
 See the [QUADRO / RTX 4090 report](validation/2026-10-15-quadro-rtx4090.md) for the hardware inventory, current curve settings, measured plot and test boundaries. In 535 samples over approximately nine minutes, pump/fan duty followed the configured curves and actual speeds returned to 801–803 rpm / 0 rpm. Peak coolant/GPU temperatures were 42.11 °C / 64 °C; saved application and controller settings were unchanged.

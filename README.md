@@ -16,7 +16,7 @@ A [physical QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx40
 - Optional lower display limit for each flow meter: readings below its reliable range appear as `< 40 l/h`, for example. Raw readings remain available in Devices and History.
 - Independent curves with selectable temperature inputs and output channels.
 - QUADRO fan/pump control, including hardware curves, startup temperature, minimum, maximum and fallback duty.
-- Motherboard fan headers exposed by LibreHardwareMonitor 0.9.6.
+- Motherboard fan headers exposed by LibreHardwareMonitor 0.9.7-pre767.
 - Drag or numerically edit any of 16 points; straighten a curve between its endpoints.
 - Pump minimum duty below its start temperature.
 - Optional extra safety temperature per curve.
