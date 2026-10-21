@@ -1,5 +1,9 @@
 # Preview validation
 
+## Local GPU-driver recovery fix — 2026-10-21
+
+See the [GPU driver recovery report](validation/2026-10-21-gpu-driver-recovery.md) for the observed post-update GPU-temperature loss, correct pump fallback and recovery. Local build 0.6.1-local.1 adds bounded GPU rediscovery, a persisted process-restart budget and a protected manual command. Tests cover permanent loss, invalid data, sensor identity and real high-temperature safety. A separate read-only fault simulation and live GPU-only command were checked; the actual driver installation was not repeated and the clean-process escalation was not forced against production cooling. Configuration and raw QUADRO settings stayed unchanged.
+
 ## Local CPU_FAN commissioning — 2026-10-19
 
 See the [ASRock CPU_FAN1 report](validation/2026-10-19-asrock-cpu-fan.md) for a local build using the corrected LibreHardwareMonitor prerelease. A Ryzen 7 7800X3D temperature curve drove fan speed from approximately 509 to 1256 RPM and back to 509 RPM, with strict 30% minimum recovery. The existing QUADRO curves, four alarms and complete controller settings were preserved. Production safety fallback and firmware-mode restoration were checked. The first cold handback check failed its rotating-fan condition; a separate warm test confirmed the BIOS temperature response. The report retains both results and the test boundaries. This local build is not a published GitHub release.

@@ -28,6 +28,12 @@ A [physical QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx40
 
 No RGB features. No Aquasuite installation, UI assets or executable code required. This project is independent of Aqua Computer, EK, Noctua and LibreHardwareMonitor.
 
+If a GPU driver update interrupts temperature readings, Lutra keeps the configured safe fallback and automatically retries GPU sensor discovery. Persistent failure can trigger one controlled service restart; the restart budget is persisted to prevent restart loops. See [recovery behavior](docs/ARCHITECTURE.md#missing-data). To request GPU rediscovery manually from PowerShell without changing saved curves:
+
+```powershell
+& "$env:ProgramFiles\Lutra\Lutra.Service.exe" --refresh-gpu
+```
+
 ## Run
 
 Download the Windows x64 ZIP from [Releases](https://github.com/Resnais-Beefhair/lutra/releases), or [build from source](#build). Extract it into a normal folder and run `Lutra.exe`. The **Windows build** workflow also provides packages for development commits.

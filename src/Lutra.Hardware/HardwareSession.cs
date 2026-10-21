@@ -96,6 +96,12 @@ public sealed class HardwareSession : IDisposable
             foreach (var child in hardware.SubHardware) Visit(child);
         }
     }
+    /// <summary>Recreate GPU handles after driver changes without releasing QUADRO or motherboard control.</summary>
+    public void RefreshGpuSensors()
+    {
+        computer.IsGpuEnabled = false;
+        computer.IsGpuEnabled = true;
+    }
     public async Task Configure(AppConfiguration config, string backups, CancellationToken token)
     {
         if (!writable) throw new InvalidOperationException("Monitoring cannot change hardware.");

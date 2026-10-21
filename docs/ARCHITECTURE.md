@@ -30,6 +30,12 @@ Withholding the complete packet matters: observed QUADRO behavior does not immed
 
 A 20-second process watchdog and Windows service recovery handle a stalled host loop. They do not guarantee a motherboard's fan duty changes after an OS/kernel/driver crash. Set suitable BIOS defaults and validate hardware behavior. There is no automatic machine shutdown feature.
 
+Configured GPU temperature inputs have a separate driver-recovery path. After 15 seconds without valid readings, the service recreates only the GPU sensor groups; QUADRO ownership and motherboard control remain active. It retries after another 30 seconds. If the input remains unavailable for a further 30 seconds, it durably records a restart budget, disposes normally and reports a service failure so Windows' configured recovery starts a fresh process. No stored temperature is substituted for missing data, no input is reassigned, and the ordinary fallback rules stay in effect.
+
+The restart budget survives in `gpu-recovery.json`: one automatic process restart per uninterrupted outage and no more than one in 15 minutes, even across transient recoveries. Three consecutive valid samples clear the outage flag without clearing that cooldown. A missing GPU then receives GPU-only retries every five minutes. An unreadable budget or a failed budget write blocks the process restart. Console mode only retries GPU discovery. Genuine high temperatures do not trigger reconnection.
+
+An installation owner can also request `refresh-gpu` over the existing protected pipe, or run `Lutra.Service.exe --refresh-gpu`. This recreates GPU sensor groups on the controller thread without changing configuration or applying a draft. The reply confirms that discovery was restarted, not that a missing sensor has already recovered.
+
 ## Data and notifications
 
 The service records one frame every five seconds to UTC daily JSONL files, with 1–30 days of retention. Files can be read while appending. Queries keep first/last samples, minima/maxima and missing-data markers while downsampling. Gaps between service sessions are marked. A zero flow or RPM measurement remains a real zero.
