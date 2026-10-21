@@ -178,8 +178,8 @@ public sealed partial class MainWindow
         files.Margin = new(0, 18, 0, 0);
         var about = Ui.Panel(Ui.Stack(Ui.Text(Ui.T("Compatibility", "Yhteensopivuus"), 19, bold: true), Ui.Text(Ui.T("Independent cooling control for Windows. Built around explicit device support and local data. No Aquasuite installation is needed.",
                 "Itsenäinen jäähdytysohjain Windowsille. Selkeä laitetuki ja paikallinen mittaustieto. Aquasuite-asennusta ei tarvita."), 13, "#596763"),
-            Ui.Text(Ui.T("QUADRO writes: firmware 1033 / structure 3. Motherboard headers: LibreHardwareMonitor 0.9.6. Physical compatibility must be checked per board.",
-                "QUADRO-kirjoitus: laiteohjelmisto 1033 / rakenne 3. Emolevyn lähdöt: LibreHardwareMonitor 0.9.6. Fyysinen yhteensopivuus tarkistetaan emolevykohtaisesti."), 12, "#596763")));
+            Ui.Text(Ui.T("QUADRO writes: firmware 1033 / structure 3. Motherboard headers: LibreHardwareMonitor 0.9.7-pre767. Physical compatibility must be checked per board.",
+                "QUADRO-kirjoitus: laiteohjelmisto 1033 / rakenne 3. Emolevyn lähdöt: LibreHardwareMonitor 0.9.7-pre767. Fyysinen yhteensopivuus tarkistetaan emolevykohtaisesti."), 12, "#596763")));
         about.Margin = new(0, 18, 0, 0);
         return Ui.Columns((0, Ui.Stack(preferences, FlowDisplaySettingsView(), files)), (22, new Border()), (0, Ui.Stack(service, about, StartupSettings())));
     }
