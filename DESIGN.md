@@ -419,6 +419,12 @@ The curve editor keeps sixteen nodes, a mint response line (2.5 DIPs), unselecte
 
 Left/right select a point; up/down edit response. Dragging and labeled numeric fields remain available. Pending point/endpoint edits use amber notices and require their explicit update action before Apply. Longer history uses the shared dark axes and a mint trace (2 DIPs), preserving gaps.
 
+### Devices and GPU sensor discovery
+
+The Devices page begins with a GPU sensor recovery action, visible even when no graphics card is detected. The secondary button is labeled “Rediscover GPU sensors” or “Tunnista GPU-anturit uudelleen”. A short explanation links it to missing temperatures after a driver update and states that curves remain unchanged.
+
+The button disables during its request, settings application, software updates, disconnection and demo mode. Inline text distinguishes waiting, discovery restarted and failure; a polite automation live region exposes that feedback. A restarted discovery does not claim that readings have returned. The background service retains control and its configured sensor-loss fallback. The action never captures or applies a draft. Tests cover these states and both languages; a live button integration check confirmed the request and fresh GPU readings with the same service process.
+
 ### About & updates
 
 The identity panel carries the current version and project, release and issue links. The adjacent update panel has a preview-release checkbox, an explicit status, check/install actions and conditional cancellation. Release notes appear when a release is available.
