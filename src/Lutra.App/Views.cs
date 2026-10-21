@@ -130,6 +130,7 @@ public sealed partial class MainWindow
     private FrameworkElement DevicesView()
     {
         var layout = new StackPanel();
+        layout.Children.Add(GpuRefreshView());
         foreach (var device in state.Catalog.Devices)
         {
             var title = Ui.Text(device.Name, 19, bold: true);
