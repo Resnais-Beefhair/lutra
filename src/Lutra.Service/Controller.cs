@@ -14,7 +14,7 @@ internal sealed class Controller
     private long lastTick = Environment.TickCount64;
     private string lastLog = "";
     private readonly object logGate = new();
-    public async Task RunAsync(CancellationToken token)
+    public async Task RunAsync(CancellationToken token, bool allowGpuProcessRestart = true)
     {
         using var single = new Mutex(false, @"Global\Lutra.Control.Owner", out bool first);
         if (!first) throw new IOException("Another Lutra controller is already running.");
@@ -29,6 +29,16 @@ internal sealed class Controller
         Curves.Validate(configuration);
         var history = new HistoryStore(Path.Combine(directory, "history"));
         var alarms = new AlarmEngine();
+        string recoveryPath = Path.Combine(directory, "gpu-recovery.json");
+        GpuRecoveryCheckpoint checkpoint;
+        try { checkpoint = File.Exists(recoveryPath) ? JsonFiles.Read<GpuRecoveryCheckpoint>(recoveryPath)
+            ?? throw new InvalidDataException("Empty GPU recovery checkpoint.") : new(); }
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException or System.Text.Json.JsonException or InvalidDataException)
+        {
+            checkpoint = new(true, DateTimeOffset.UtcNow);
+            Log("GPU recovery: restart budget could not be read; process restart is blocked until valid GPU inputs recover. " + e.Message);
+        }
+        var gpuRecovery = new GpuRecovery(checkpoint, allowGpuProcessRestart);
         bool configured = false;
         DateTimeOffset retryAfter = default;
         try
@@ -37,6 +47,7 @@ internal sealed class Controller
             {
                 Interlocked.Exchange(ref lastTick, Environment.TickCount64);
                 var errors = new List<string>(); SensorValue[] values = [];
+                bool restartForGpu = false;
                 try
                 {
                     hardware ??= new(true, configuration.MotherboardEnabled);
@@ -67,32 +78,66 @@ internal sealed class Controller
                         else try
                         {
                             if (competing) throw new IOException("Stop the other cooling service before applying Lutra controls.");
-                            var proposed = pending.Request.Configuration ?? throw new InvalidDataException("Configuration is missing.");
-                            Curves.Validate(proposed);
-                            if (proposed.MotherboardEnabled != configuration.MotherboardEnabled)
+                            if (pending.Request.Action == "refresh-gpu")
                             {
-                                hardware!.Dispose(); hardware = new(true, proposed.MotherboardEnabled);
-                                await Task.Delay(600, token); hardware.Update(); configured = false;
+                                hardware!.RefreshGpuSensors();
+                                Log("GPU sensors: manual rediscovery requested. Cooling configuration unchanged.");
+                                pending.Reply.TrySetResult(new(true, "GPU sensor discovery restarted. Existing cooling settings are unchanged; fallback remains active until valid readings return."));
                             }
-                            Curves.Validate(proposed, hardware!.Catalog);
-                            // Preflight persistence before touching devices; the directory ACL is set by the installer.
-                            string staged = Path.Combine(directory, "configuration.pending.json");
-                            JsonFiles.Save(staged, proposed);
-                            try
+                            else
                             {
-                                await hardware.Configure(proposed, Path.Combine(directory, "backups"), pending.Token);
-                                File.Move(staged, configPath, true);
-                                configuration = proposed; configured = true;
-                                pending.Reply.TrySetResult(new(true, "Configuration applied and verified."));
+                                var proposed = pending.Request.Configuration ?? throw new InvalidDataException("Configuration is missing.");
+                                Curves.Validate(proposed);
+                                if (proposed.MotherboardEnabled != configuration.MotherboardEnabled)
+                                {
+                                    hardware!.Dispose(); hardware = new(true, proposed.MotherboardEnabled);
+                                    await Task.Delay(600, token); hardware.Update(); configured = false;
+                                }
+                                Curves.Validate(proposed, hardware!.Catalog);
+                                // Preflight persistence before touching devices; the directory ACL is set by the installer.
+                                string staged = Path.Combine(directory, "configuration.pending.json");
+                                JsonFiles.Save(staged, proposed);
+                                try
+                                {
+                                    await hardware.Configure(proposed, Path.Combine(directory, "backups"), pending.Token);
+                                    File.Move(staged, configPath, true);
+                                    configuration = proposed; configured = true;
+                                    pending.Reply.TrySetResult(new(true, "Configuration applied and verified."));
+                                }
+                                catch
+                                {
+                                    configured = false; retryAfter = default;
+                                    throw;
+                                }
+                                finally { if (File.Exists(staged)) File.Delete(staged); }
                             }
-                            catch
-                            {
-                                configured = false; retryAfter = default;
-                                throw;
-                            }
-                            finally { if (File.Exists(staged)) File.Delete(staged); }
                         }
                         catch (Exception e) { pending.Reply.TrySetResult(new(false, e.GetBaseException().Message)); }
+                    }
+                    if (!competing)
+                    {
+                        var recovery = gpuRecovery.Evaluate(configuration, values, DateTimeOffset.UtcNow);
+                        bool saved = true;
+                        if (gpuRecovery.Checkpoint != checkpoint)
+                        {
+                            try { JsonFiles.Save(recoveryPath, gpuRecovery.Checkpoint); checkpoint = gpuRecovery.Checkpoint; }
+                            catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+                            {
+                                saved = false;
+                                errors.Add("GPU recovery restart budget could not be saved; process restart is blocked: " + e.Message);
+                            }
+                        }
+                        if (recovery == GpuRecoveryAction.RefreshSensors)
+                        {
+                            Log("GPU temperature input unavailable: refreshing GPU sensors. QUADRO and motherboard ownership retained.");
+                            try { hardware!.RefreshGpuSensors(); }
+                            catch (Exception e) { errors.Add("GPU sensor rediscovery: " + e.GetBaseException().Message); }
+                        }
+                        else if (recovery == GpuRecoveryAction.RestartProcess && saved)
+                        {
+                            restartForGpu = true;
+                            Log("GPU sensors did not recover after two refreshes. Restart budget saved; requesting a clean service restart.");
+                        }
                     }
                 }
                 catch (Exception e) when (e is not OperationCanceledException)
@@ -107,6 +152,9 @@ internal sealed class Controller
                 Publish(state);
                 try { history.Append(new(now, values), configuration.RetentionDays); }
                 catch (Exception e) when (e is IOException or UnauthorizedAccessException) { Log("History: " + e.Message); }
+                // Throw outside the session retry block: normal disposal restores owned board channels,
+                // then SCM's configured recovery starts a fresh process with fresh native driver state.
+                if (restartForGpu) throw new IOException("GPU inputs remain unavailable; requesting Windows service recovery. Safe device fallback remains configured.");
                 Interlocked.Exchange(ref lastTick, Environment.TickCount64);
                 await Task.Delay(750, token);
             }
@@ -134,7 +182,7 @@ internal sealed class Controller
     private async Task<ServiceReply> HandleRequest(ServiceRequest request, CancellationToken token)
     {
         if (request.Action == "state") return new(true, "", Volatile.Read(ref state));
-        if (request.Action != "apply") return new(false, "Unknown command.");
+        if (request.Action is not ("apply" or "refresh-gpu")) return new(false, "Unknown command.");
         var completion = new TaskCompletionSource<ServiceReply>(TaskCreationOptions.RunContinuationsAsynchronously);
         requests.Enqueue(new(request, completion, token));
         return await completion.Task.WaitAsync(token);

@@ -16,7 +16,7 @@ A [physical QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx40
 - Optional lower display limit for each flow meter: readings below its reliable range appear as `< 40 l/h`, for example. Raw readings remain available in Devices and History.
 - Independent curves with selectable temperature inputs and output channels.
 - QUADRO fan/pump control, including hardware curves, startup temperature, minimum, maximum and fallback duty.
-- Motherboard fan headers exposed by LibreHardwareMonitor 0.9.6.
+- Motherboard fan headers exposed by LibreHardwareMonitor 0.9.7-pre767.
 - Drag or numerically edit any of 16 points; straighten a curve between its endpoints.
 - Pump minimum duty below its start temperature.
 - Optional extra safety temperature per curve.
@@ -27,6 +27,12 @@ A [physical QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx40
 - About page with project links and on-demand GitHub updates, package checksum verification and recovery of the previous installation.
 
 No RGB features. No Aquasuite installation, UI assets or executable code required. This project is independent of Aqua Computer, EK, Noctua and LibreHardwareMonitor.
+
+If a GPU driver update interrupts temperature readings, Lutra keeps the configured safe fallback and automatically retries GPU sensor discovery. Persistent failure can trigger one controlled service restart; the restart budget is persisted to prevent restart loops. See [recovery behavior](docs/ARCHITECTURE.md#missing-data). To request GPU rediscovery manually from PowerShell without changing saved curves:
+
+```powershell
+& "$env:ProgramFiles\Lutra\Lutra.Service.exe" --refresh-gpu
+```
 
 ## Run
 

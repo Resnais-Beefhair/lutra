@@ -1,4 +1,5 @@
 using LibreHardwareMonitor.Hardware;
+using System.Reflection;
 using Lutra.Core;
 using SensorValue = Lutra.Core.SensorValue;
 
@@ -7,6 +8,8 @@ namespace Lutra.Hardware;
 /// <summary>One owner, one update thread. No drivers are installed and no outputs are written during discovery.</summary>
 public sealed class HardwareSession : IDisposable
 {
+    private static readonly string LibraryVersion = typeof(Computer).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
+        .InformationalVersion.Split('+')[0];
     private readonly Computer computer;
     private readonly List<QuadroConnection> quadros = [];
     private readonly Dictionary<string, IControl> boardOutputs = [];
@@ -72,7 +75,7 @@ public sealed class HardwareSession : IDisposable
             try { hardware.Update(); } catch (Exception e) { errors.Add(hardware.Name + ": " + e.Message); fresh = false; }
             bool board = hardware.HardwareType == HardwareType.SuperIO;
             bool canControl = board && hardware.Sensors.Any(s => s.Control != null);
-            devices.Add(new(id, hardware.Name, "", 0, "LibreHardwareMonitor 0.9.6", canControl));
+            devices.Add(new(id, hardware.Name, "", 0, "LibreHardwareMonitor " + LibraryVersion, canControl));
             foreach (var sensor in hardware.Sensors)
             {
                 SensorKind? kind = sensor.SensorType switch { SensorType.Temperature => SensorKind.Temperature, SensorType.Fan => SensorKind.Speed,
@@ -92,6 +95,12 @@ public sealed class HardwareSession : IDisposable
             }
             foreach (var child in hardware.SubHardware) Visit(child);
         }
+    }
+    /// <summary>Recreate GPU handles after driver changes without releasing QUADRO or motherboard control.</summary>
+    public void RefreshGpuSensors()
+    {
+        computer.IsGpuEnabled = false;
+        computer.IsGpuEnabled = true;
     }
     public async Task Configure(AppConfiguration config, string backups, CancellationToken token)
     {

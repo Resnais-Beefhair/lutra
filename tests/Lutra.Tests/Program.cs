@@ -3,6 +3,45 @@ using System.Text;
 using System.Text.Json;
 using Lutra.Core;
 using Lutra.Hardware;
+using Lutra.Service;
+
+if (args.Contains("--probe-gpu-recovery"))
+{
+    var config = JsonFiles.Read<AppConfiguration>(Path.Combine(ControlMessages.DataDirectory, "configuration.json"))!;
+    var selected = config.Curves.Where(r => r.Enabled).SelectMany(r => new[] { r.SensorId, r.SafetySensorId })
+        .Where(id => id?.StartsWith("lhm/gpu-", StringComparison.Ordinal) == true).Cast<string>().Distinct().ToHashSet();
+    if (selected.Count == 0) throw new IOException("No configured GPU input for this read-only probe.");
+    using var hardware = new HardwareSession(false, false);
+    await Task.Delay(1800);
+    var baseline = hardware.Update();
+    if (!selected.All(id => baseline.Any(v => v.Id == id && v.IsFresh(DateTimeOffset.UtcNow))))
+        throw new IOException("Read-only probe needs initially healthy selected GPU inputs.");
+    var recovery = new GpuRecovery(allowProcessRestart: false);
+    var start = DateTimeOffset.UtcNow;
+    GpuRecoveryAction action;
+    do
+    {
+        var values = hardware.Update().Where(v => !selected.Contains(v.Id)).ToArray();
+        action = recovery.Evaluate(config, values, DateTimeOffset.UtcNow);
+        if (DateTimeOffset.UtcNow - start > TimeSpan.FromSeconds(22)) throw new IOException("GPU recovery did not request discovery after simulated input loss.");
+        if (action == GpuRecoveryAction.None) await Task.Delay(700);
+    } while (action == GpuRecoveryAction.None);
+    if (action != GpuRecoveryAction.RefreshSensors) throw new IOException("First recovery action was not GPU-only rediscovery.");
+    hardware.RefreshGpuSensors();
+    SensorValue[] recovered = [];
+    for (int i = 0; i < 3; i++)
+    {
+        await Task.Delay(800);
+        recovered = hardware.Update();
+        if (!selected.All(id => recovered.Any(v => v.Id == id && v.IsFresh(DateTimeOffset.UtcNow))))
+            throw new IOException("Selected GPU input did not return after GPU rediscovery.");
+        recovery.Evaluate(config, recovered, DateTimeOffset.UtcNow);
+    }
+    Console.WriteLine(JsonSerializer.Serialize(new { ReadOnly = true, SimulatedInputLoss = true,
+        ElapsedSeconds = (DateTimeOffset.UtcNow - start).TotalSeconds, Action = action.ToString(),
+        Baseline = baseline.Where(v => selected.Contains(v.Id)).ToArray(), Recovered = recovered.Where(v => selected.Contains(v.Id)).ToArray() }, JsonFiles.Options));
+    return 0;
+}
 
 if (args.Contains("--probe"))
 {
@@ -160,6 +199,7 @@ Test("IPC rejects oversized payload before allocation", () => {
 AlarmTests.Run(Test);
 UpdateTests.Run(Test);
 ControlServerTests.Run(Test);
+GpuRecoveryTests.Run(Test);
 Console.WriteLine($"{passed} passed; {failed} failed.");
 return failed == 0 ? 0 : 1;
 
