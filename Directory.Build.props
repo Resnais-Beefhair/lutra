@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>0.6.1-preview.1</Version>
+    <Version>0.6.1-preview.2</Version>
     <LutraRuntimeVersion>10.0.13</LutraRuntimeVersion>
     <Authors>Lutra contributors</Authors>
     <Deterministic>true</Deterministic>

@@ -37,7 +37,7 @@ public sealed partial class MainWindow
         var check = Ui.Button(Ui.T("Check for updates", "Tarkista päivitykset"), () => _ = CheckForUpdates()); check.IsEnabled = !updateBusy && !demo; buttons.Children.Add(check);
         if (availableUpdate != null)
         {
-            var install = Ui.Button(Ui.T("Install update", "Asenna päivitys"), () => _ = InstallUpdate(), true); install.IsEnabled = !updateBusy && !dirty && AppUpdate.IsInstalled && !demo; buttons.Children.Add(install);
+            var install = Ui.Button(Ui.T("Install update", "Asenna päivitys"), () => _ = InstallUpdate(), true); install.IsEnabled = !updateBusy && !busy && !dirty && AppUpdate.IsInstalled && !demo; buttons.Children.Add(install);
         }
         if (updateBusy) buttons.Children.Add(Ui.Button(Ui.T("Cancel", "Peruuta"), () => updateCancellation?.Cancel()));
         updates.Children.Add(buttons);
@@ -72,7 +72,7 @@ public sealed partial class MainWindow
     }
     private async Task InstallUpdate()
     {
-        if (updateBusy || demo || dirty || availableUpdate == null) return;
+        if (updateBusy || busy || demo || dirty || availableUpdate == null) return;
         updateBusy = true; updateMessage = Ui.T("Downloading update…", "Ladataan päivitystä…"); updateCancellation = new(); Render();
         try
         {

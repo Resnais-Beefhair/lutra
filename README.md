@@ -28,7 +28,7 @@ A [physical QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx40
 
 No RGB features. No Aquasuite installation, UI assets or executable code required. This project is independent of Aqua Computer, EK, Noctua and LibreHardwareMonitor.
 
-If a GPU driver update interrupts temperature readings, Lutra keeps the configured safe fallback and automatically retries GPU sensor discovery. Persistent failure can trigger one controlled service restart; the restart budget is persisted to prevent restart loops. See [recovery behavior](docs/ARCHITECTURE.md#missing-data). To request GPU rediscovery manually from PowerShell without changing saved curves:
+If a GPU driver update interrupts temperature readings, Lutra keeps the configured safe fallback and automatically retries GPU sensor discovery. Persistent failure can trigger one controlled service restart; the restart budget is persisted to prevent restart loops. See [recovery behavior](docs/ARCHITECTURE.md#missing-data). To request GPU rediscovery manually, open **Devices → Rediscover GPU sensors** (Finnish: **Laitteet → Tunnista GPU-anturit uudelleen**). The service continues controlling cooling, and saved curves and unapplied edits remain unchanged. The confirmation means discovery has restarted; fallback remains active until valid readings return. The same operation is also available from PowerShell:
 
 ```powershell
 & "$env:ProgramFiles\Lutra\Lutra.Service.exe" --refresh-gpu

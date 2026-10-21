@@ -76,6 +76,7 @@ public sealed partial class MainWindow : Window
     {
         Ui.Language = Ui.Language == "fi" ? "fi" : "en";
         curveForm = null; captureForm = null; readingGrid = null; historyPlot = null; historySummary = null;
+        gpuRefreshButton = null; gpuRefreshStatus = null;
         temperatureTraces = null; speedTraces = null;
         alarmLabels.Clear();
         var root = new Grid { Background = Ui.Color("#F0F2F0") }; root.ColumnDefinitions.Add(new() { Width = new(176) }); root.ColumnDefinitions.Add(new());
@@ -210,6 +211,7 @@ public sealed partial class MainWindow : Window
         status.Foreground = state.Alarms.Length > 0 ? Ui.Danger : state.Errors.Length > 0 ? Ui.Warning : Ui.Accent;
         draftLabel.Text = dirty ? Ui.T("Unapplied changes", "Muutoksia odottaa käyttöönottoa") : Ui.T("No pending changes", "Ei odottavia muutoksia");
         if (apply != null) apply.IsEnabled = !busy && (demo || canApply) && dirty && curveForm?.HasPendingCoordinates != true;
+        RefreshGpuAction();
     }
     private void Refresh()
     {

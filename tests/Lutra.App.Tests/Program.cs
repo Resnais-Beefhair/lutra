@@ -158,6 +158,7 @@ internal static class Program
             var instrument = new OutputInstrument(rule, Demo.Catalog.Outputs.Single(o => o.Id == rule.OutputId), Demo.Catalog);
             Assert(instrument.RpmId == null);
         });
+        GpuRefreshTests.Run(Test);
         ChartTests.Run(Test);
         Console.WriteLine($"{passed} UI tests passed; {failed} failed."); app.Shutdown(); return failed == 0 ? 0 : 1;
     }
