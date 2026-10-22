@@ -159,6 +159,7 @@ internal static class Program
             Assert(instrument.RpmId == null);
         });
         GpuRefreshTests.Run(Test);
+        OverviewTests.Run(Test);
         ChartTests.Run(Test);
         Console.WriteLine($"{passed} UI tests passed; {failed} failed."); app.Shutdown(); return failed == 0 ? 0 : 1;
     }
