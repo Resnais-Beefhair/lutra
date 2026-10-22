@@ -4,14 +4,14 @@
     "net10.0-windows7.0": {
       "LibreHardwareMonitorLib": {
         "type": "Direct",
-        "requested": "[0.9.7-pre767, )",
-        "resolved": "0.9.7-pre767",
-        "contentHash": "PEt35PiNl0tGpqXcbjFF2uRc5Sr4SurI/fdmYO7k6VE8n7XLGkxWq2M7K9qBE2K7Kxpo2ehPptafRBsg6rdLxg==",
+        "requested": "[0.9.7-pre769, )",
+        "resolved": "0.9.7-pre769",
+        "contentHash": "Pq9C/GK87BzF0zsXn1togfaee0Dx7thc/9oJ7OUUVdsUbFb5IZDX/zF0N2jm5P2Cy26B6THzCcmbKn82ic3QZQ==",
         "dependencies": {
           "DiskInfoToolkit": "2.2.1",
           "HidSharp": "2.6.4",
           "Mono.Posix.NETStandard": "1.0.0",
-          "RAMSPDToolkit-NDD": "1.6.2",
+          "RAMSPDToolkit-NDD": "1.6.3",
           "System.IO.FileSystem.AccessControl": "5.0.0",
           "System.IO.Ports": "10.0.13",
           "System.Management": "10.0.13"
@@ -42,8 +42,8 @@
       },
       "RAMSPDToolkit-NDD": {
         "type": "Transitive",
-        "resolved": "1.6.2",
-        "contentHash": "2O5D0mICXGkqTWVrenw0Che/GrO0V98JUOJ5v71vngw8ZsWQfXl0TjVi/PzXpDq0JfeeZh84BJr5DbPPS9uLyw==",
+        "resolved": "1.6.3",
+        "contentHash": "TUSHvrkbj7T8FAEtYxYnZKcTfFeGnannYAK0bD4VqDlmMtfAo+kyUSrRaCb51K8xJVlL07UVSkSd6rXl3tSMMA==",
         "dependencies": {
           "BlackSharp.Core": "1.2.2",
           "System.Management": "10.0.12"
@@ -185,14 +185,14 @@
     "net10.0-windows7.0/win-x64": {
       "LibreHardwareMonitorLib": {
         "type": "Direct",
-        "requested": "[0.9.7-pre767, )",
-        "resolved": "0.9.7-pre767",
-        "contentHash": "PEt35PiNl0tGpqXcbjFF2uRc5Sr4SurI/fdmYO7k6VE8n7XLGkxWq2M7K9qBE2K7Kxpo2ehPptafRBsg6rdLxg==",
+        "requested": "[0.9.7-pre769, )",
+        "resolved": "0.9.7-pre769",
+        "contentHash": "Pq9C/GK87BzF0zsXn1togfaee0Dx7thc/9oJ7OUUVdsUbFb5IZDX/zF0N2jm5P2Cy26B6THzCcmbKn82ic3QZQ==",
         "dependencies": {
           "DiskInfoToolkit": "2.2.1",
           "HidSharp": "2.6.4",
           "Mono.Posix.NETStandard": "1.0.0",
-          "RAMSPDToolkit-NDD": "1.6.2",
+          "RAMSPDToolkit-NDD": "1.6.3",
           "System.IO.FileSystem.AccessControl": "5.0.0",
           "System.IO.Ports": "10.0.13",
           "System.Management": "10.0.13"
