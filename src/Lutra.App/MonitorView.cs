@@ -18,13 +18,10 @@ public sealed partial class MainWindow
         instruments.Clear(); outputInstruments.Clear();
         var layout = new StackPanel();
         var rules = active.Curves.Where(r => r.Enabled).ToArray();
-        var candidates = rules.SelectMany(r => new[] { r.SafetySensorId, r.SensorId }).Where(id => id != null).Distinct()
-            .Select(id => state.Catalog.Sensors.FirstOrDefault(s => s.Id == id && s.Kind == SensorKind.Temperature)).OfType<SensorInfo>().ToArray();
-        if (candidates.Length == 0) candidates = state.Catalog.Sensors.Where(s => s.Kind == SensorKind.Temperature).Take(3).ToArray();
-        var temperatures = candidates.OrderByDescending(s => rules.Any(r => r.IsPump && r.SafetySensorId == s.Id)).Take(3).ToArray();
+        var temperatures = OverviewSensors.Temperatures(state.Catalog, rules);
         var flow = state.Catalog.Sensors.FirstOrDefault(s => s.Kind == SensorKind.Flow && rules.Any(r => r.OutputId.StartsWith(s.DeviceId + "/", StringComparison.Ordinal)))
             ?? state.Catalog.Sensors.FirstOrDefault(s => s.Kind == SensorKind.Flow);
-        var shown = temperatures.Take(flow != null ? 2 : 3).Concat(flow != null ? [flow] : []).ToArray();
+        var shown = temperatures.Concat(flow != null ? [flow] : []).ToArray();
         if (shown.Length == 0)
             layout.Children.Add(Ui.Panel(Ui.Stack(Ui.Text(Ui.T("Waiting for your cooling sensors", "Odotetaan jäähdytyksen antureita"), 22, bold: true),
                 Ui.Text(Ui.T("Connect a device or choose the inputs for your control curves. Live instruments will appear here.", "Liitä laite tai valitse säätökäyrien anturit. Mittarit ilmestyvät tähän."), 14, "#596763"))));
@@ -34,8 +31,9 @@ public sealed partial class MainWindow
             foreach (var sensor in shown)
             {
                 bool coolant = rules.Any(r => r.IsPump && r.SafetySensorId == sensor.Id) && sensor.NativeIndex.HasValue;
-                string title = coolant ? Ui.T("Coolant", "Vesi") : sensor.Kind == SensorKind.Flow ? Ui.T("Flow", "Virtaus") : sensor.Name;
-                string color = sensor.Kind == SensorKind.Flow ? "#B8ABEA" : coolant ? "#6DC5EA" : "#E4C584";
+                bool cpu = OverviewSensors.IsCpu(sensor.Id);
+                string title = cpu ? Ui.T("CPU temperature", "CPU:n lämpötila") : coolant ? Ui.T("Coolant", "Vesi") : sensor.Kind == SensorKind.Flow ? Ui.T("Flow", "Virtaus") : sensor.Name;
+                string color = sensor.Kind == SensorKind.Flow ? "#B8ABEA" : cpu ? Ui.AccentHex : coolant ? "#6DC5EA" : "#E4C584";
                 var starts = rules.Where(r => r.SensorId == sensor.Id).Select(r => r.StartupTemperature).ToArray();
                 double? threshold = starts.Length > 0 ? starts.Min() : null;
                 string note = sensor.Kind == SensorKind.Flow ? Ui.T("Instantaneous flow", "Hetkellinen virtaus")
@@ -72,7 +70,11 @@ public sealed partial class MainWindow
         temperatureTraces = new() { Height = 190, Unit = "°C" };
         speedTraces = new() { Height = 190, Unit = "rpm" };
         var colors = new[] { "#6DC5EA", "#E4C584", "#B8ABEA", "#72D3AE" };
-        temperatureTraces.Series = temperatures.Select((s, i) => new MonitorTrace(s.Id, instruments.FirstOrDefault(m => m.Sensor.Id == s.Id)?.Title ?? s.Name, colors[i % colors.Length])).ToArray();
+        temperatureTraces.Series = temperatures.Select((s, i) =>
+        {
+            var meter = instruments.FirstOrDefault(m => m.Sensor.Id == s.Id);
+            return new MonitorTrace(s.Id, meter?.Title ?? s.Name, meter?.TraceColor ?? colors[i % colors.Length]);
+        }).ToArray();
         speedTraces.Series = outputInstruments.Where(o => o.RpmId != null).Select((o, i) => new MonitorTrace(o.RpmId!, o.Rule.Name, colors[i % colors.Length])).ToArray();
         var chartPanels = new List<Border>();
         FrameworkElement Chart(MultiTracePlot plot)
@@ -91,14 +93,20 @@ public sealed partial class MainWindow
         layout.Children.Add(new Expander { Header = Ui.T("All sensor readings", "Kaikki anturilukemat"), Content = readingGrid });
         // Keep the monitoring instruments and both traces in the first viewport on short desktop windows.
         // Reflow density in place so resizing never rebuilds live history or interrupts monitoring.
-        bool? compact = null;
+        bool? compact = null, compactGauges = null;
         void FitViewport()
         {
             double windowHeight = ActualHeight > 0 ? ActualHeight : Height;
+            double windowWidth = ActualWidth > 0 ? ActualWidth : Width;
             bool next = windowHeight < 900;
+            bool smallGauges = next || shown.Length == 4 && windowWidth < 1360;
+            if (compactGauges != smallGauges)
+            {
+                compactGauges = smallGauges;
+                foreach (var instrument in instruments) instrument.SetCompact(smallGauges);
+            }
             temperatureTraces.Height = speedTraces.Height = next ? 120 : Math.Clamp(windowHeight - 750, 150, 190);
             if (compact == next) return; compact = next;
-            foreach (var instrument in instruments) instrument.SetCompact(next);
             foreach (var instrument in outputInstruments) instrument.SetCompact(next);
             outputsHeader.Margin = historyHeader.Margin = next ? new Thickness(0, 10, 0, 8) : new Thickness(0, 22, 0, 12);
             foreach (var button in ranges.Children.OfType<Button>().Append(edit))
@@ -154,6 +162,7 @@ internal sealed class LiveInstrument : Border
 {
     public SensorInfo Sensor { get; }
     public string Title { get; }
+    public string TraceColor { get; }
     private readonly Dial dial;
     private readonly TextBlock value, stateLabel, heading;
     private readonly Grid face;
@@ -161,7 +170,7 @@ internal sealed class LiveInstrument : Border
     public LiveInstrument(SensorInfo sensor, string title, string color, double maximum, double? threshold, string note, double flowLowerLimit = 0)
     {
         MonitorPreferences.ValidateLimit(flowLowerLimit); this.flowLowerLimit = sensor.Kind == SensorKind.Flow ? flowLowerLimit : 0;
-        Sensor = sensor; Title = title; Background = Ui.Surface; Padding = new(16); Margin = new(6, 0, 6, 0);
+        Sensor = sensor; Title = title; TraceColor = color; Background = Ui.Surface; Padding = new(16); Margin = new(6, 0, 6, 0);
         heading = Ui.Text(title, 17, bold: true);
         dial = new() { Width = 110, Height = 114, Maximum = maximum, Threshold = threshold, Trace = Ui.Color(color), Margin = new(0, 0, 12, 0) };
         value = Ui.Text("—", 38, color); value.TextWrapping = TextWrapping.NoWrap; value.Typography.NumeralAlignment = FontNumeralAlignment.Tabular;

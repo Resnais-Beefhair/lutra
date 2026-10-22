@@ -340,7 +340,7 @@ Overview has a native **window-height threshold (900 DIPs)**. Below it, the same
 | Trend panel inset | 10 DIPs | 14 DIPs |
 | Each trend plot height | 120 DIPs | `clamp(windowHeight − 750, 150, 190)` DIPs |
 
-At the default height, each trend plot is (170 DIPs). Up to three temperature/flow instruments share a UniformGrid. Enabled outputs use one column for one rule, three for three rules, otherwise two. Adjacent instrument edges are separated by (12 DIPs). Temperature and RPM panels are equal-width columns with a gap (12 DIPs); full sensor readings sit in an expander below the trends. These arrangements describe Overview, not every future page.
+At the default height, each trend plot is (170 DIPs). Up to three temperature instruments plus flow share a UniformGrid. When four instruments are shown below a window width of (1360 DIPs), their faces use the existing compact sizing independently of the page's height-based density. Enabled outputs use one column for one rule, three for three rules, otherwise two. Adjacent instrument edges are separated by (12 DIPs). Temperature and RPM panels are equal-width columns with a gap (12 DIPs); full sensor readings sit in an expander below the trends. These arrangements describe Overview, not every future page.
 
 ### Editing and information pages
 
@@ -408,6 +408,8 @@ A borderless surface presents the output/rule name, mint duty percentage, actual
 Fresh zero is shown as zero with stopped/start-threshold text. Missing output shows an em dash and a dimmed empty bar (opacity 0.25). An unmapped RPM remains an em dash with “RPM not mapped”, even when PWM is available. The code only assigns an RPM-to-output relationship where its device mapping is explicit; it does not estimate RPM from duty.
 
 ### Simultaneous monitoring trends
+
+Overview prioritizes the coolant safety input, pump input and configured CPU temperature, retaining the CPU dial when flow is present. Without a configured CPU input it can use an available CPU package or Tctl/Tdie sensor. A missing configured CPU retains its identity and shows unavailable. The CPU instrument and its temperature trace share the mint accent; coolant, GPU and flow retain cyan, amber and violet. The CPU label is localized as “CPU temperature” or “CPU:n lämpötila”.
 
 Two adjacent plots show temperature and RPM together. Each has named colored legends, local-time labels, a unit and horizontal guides. Traces use (2-DIP) strokes; guides use (0.6 DIP). A recent endpoint receives a dot with radius (3 DIPs).
 
