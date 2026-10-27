@@ -34,6 +34,14 @@ If a GPU driver update interrupts temperature readings, Lutra keeps the configur
 & "$env:ProgramFiles\Lutra\Lutra.Service.exe" --refresh-gpu
 ```
 
+## The PC behind Lutra
+
+<p><img src="docs/images/lutra-pc.jpg" width="960" alt="The PC running Lutra, with turquoise coolant tubing and a dual-tower CPU cooler."></p>
+
+Lutra is running on this PC, controlling the water pump from GPU temperature, the radiator fans from coolant temperature, and the CPU fan from CPU temperature.
+
+For measured behavior and hardware-specific limits, see the [QUADRO / RTX 4090 load test](docs/validation/2026-10-15-quadro-rtx4090.md) and [CPU fan validation](docs/validation/2026-10-19-asrock-cpu-fan.md).
+
 ## Run
 
 Download the Windows x64 ZIP from [Releases](https://github.com/Resnais-Beefhair/lutra/releases), or [build from source](#build). Extract it into a normal folder and run `Lutra.exe`. The **Windows build** workflow also provides packages for development commits.
