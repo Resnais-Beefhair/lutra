@@ -1,4 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><TargetFramework>net10.0-windows</TargetFramework><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
-  <ItemGroup><ProjectReference Include="../Lutra.Core/Lutra.Core.csproj" /><PackageReference Include="LibreHardwareMonitorLib" Version="0.9.7-pre767" /></ItemGroup>
+  <ItemGroup><ProjectReference Include="../Lutra.Core/Lutra.Core.csproj" /><PackageReference Include="LibreHardwareMonitorLib" Version="0.9.7-pre776" /></ItemGroup>
 </Project>
